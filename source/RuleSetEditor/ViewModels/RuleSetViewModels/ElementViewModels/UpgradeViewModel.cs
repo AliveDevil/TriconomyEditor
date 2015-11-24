@@ -24,6 +24,7 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels.ElementViewModels
             {
                 RaiseSetIfChanged(ref upgrade, value);
                 Level = ReactiveProperty.FromObject(Upgrade, u => u.Level);
+                Level.PropertyChanged += OnPropertyChanged;
             }
         }
     }

@@ -1,5 +1,4 @@
-﻿using Reactive.Bindings;
-using RuleSet.Menus;
+﻿using RuleSet.Menus;
 
 namespace RuleSetEditor.ViewModels.RuleSetViewModels.ToolbarViewModels
 {

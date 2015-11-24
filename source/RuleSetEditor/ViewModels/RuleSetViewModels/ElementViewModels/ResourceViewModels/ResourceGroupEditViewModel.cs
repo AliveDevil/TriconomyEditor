@@ -46,7 +46,7 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels.ElementViewModels.ResourceV
             {
                 RaiseSetIfChanged(ref resourceGroup, value);
                 Name = ResourceGroup.Name;
-                Resources = ResourceGroup.ResourceList.CreateDerivedCollection(r => new ResourceInfoViewModel() { RuleSetViewModel = RuleSetViewModel, Resource = r });
+                Resources = ResourceGroup.ResourceList.CreateDerivedCollection(r => new ResourceInfoViewModel() { RuleSetViewModel = RuleSetViewModel, Resource = r }, null, (l, r) => l.Name.Value.CompareTo(r.Name.Value));
             }
         }
 
@@ -65,7 +65,7 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels.ElementViewModels.ResourceV
         protected override void OnRuleSetChanged()
         {
             base.OnRuleSetChanged();
-            AvailableResources = RuleSetViewModel.ElementList.CreateDerivedCollection(e => new ResourceInfoViewModel() { Resource = (ResourceViewModel)e, RuleSetViewModel = RuleSetViewModel }, e => e is ResourceViewModel);
+            AvailableResources = RuleSetViewModel.ElementList.CreateDerivedCollection(e => new ResourceInfoViewModel() { Resource = (ResourceViewModel)e, RuleSetViewModel = RuleSetViewModel }, e => e is ResourceViewModel, (l, r) => l.Name.Value.CompareTo(r.Name.Value));
         }
     }
 }

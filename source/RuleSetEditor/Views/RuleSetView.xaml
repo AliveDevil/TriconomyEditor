@@ -63,9 +63,8 @@
                                   CommandParameter="{x:Type rulesetviewmodels:BuildingListViewModel}"
                                   IsChecked="{Binding View, Converter={StaticResource ViewCheckedConverter}, ConverterParameter={x:Type rulesetviewmodels:BuildingListViewModel}, Mode=OneWay}" />
                     <ToggleButton Content="Resource Bar"
-                                  Command="{Binding OpenView}"
-                                  CommandParameter="{x:Type rulesetviewmodels:BuildingListViewModel}"
-                                  IsChecked="{Binding View, Converter={StaticResource ViewCheckedConverter}, ConverterParameter={x:Type rulesetviewmodels:BuildingListViewModel}, Mode=OneWay}" />
+								  Command="{Binding OpenResourceBar}"
+								  IsChecked="{Binding View, Converter={StaticResource ViewCheckedConverter}, ConverterParameter={x:Type toolbarviewmodels:ResourceBarViewModel}, Mode=OneWay}" />
                     <ToggleButton Content="Toolbar"
                                   Command="{Binding OpenToolbar}"
                                   IsChecked="{Binding View, Converter={StaticResource ViewCheckedConverter}, ConverterParameter={x:Type toolbarviewmodels:ToolbarViewModel}, Mode=OneWay}" />

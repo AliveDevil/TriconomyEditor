@@ -37,8 +37,11 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels.ElementViewModels.WorldReso
             {
                 RaiseSetIfChanged(ref worldResource, value);
                 Name = WorldResource.Name.ToReadOnlyReactiveProperty();
+                Name.PropertyChanged += OnPropertyChanged;
                 Resource = WorldResource.Resource.ToReadOnlyReactiveProperty();
+                Resource.PropertyChanged += OnPropertyChanged;
                 Variants = WorldResource.Variants.ToReadOnlyReactiveProperty();
+                Variants.PropertyChanged += OnPropertyChanged;
             }
         }
 

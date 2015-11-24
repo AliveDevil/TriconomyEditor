@@ -1,0 +1,51 @@
+﻿<UserControl x:Class="RuleSetEditor.Views.RuleSetViews.ToolbarViews.ResourceBarView"
+			 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+			 xmlns:local="clr-namespace:RuleSetEditor.Views.RuleSetViews.ToolbarViews"
+			 mc:Ignorable="d"
+			 d:DesignHeight="300"
+			 d:DesignWidth="300">
+	<Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="*" />
+			<RowDefinition Height="Auto" />
+		</Grid.RowDefinitions>
+
+		<Label Content="Resource Bar"
+			   HorizontalContentAlignment="Center"
+			   FontWeight="Light"
+			   FontSize="18" />
+
+		<ListView ItemsSource="{Binding Resources}"
+				  SelectedItem="{Binding SelectedResource}"
+				  IsSynchronizedWithCurrentItem="True"
+				  HorizontalContentAlignment="Stretch"
+				  Grid.Row="1">
+			<ListView.ItemTemplate>
+				<DataTemplate>
+					<Label Content="{Binding Name.Value}" />
+				</DataTemplate>
+			</ListView.ItemTemplate>
+		</ListView>
+
+		<Grid Grid.Row="2">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="Auto"
+								  SharedSizeGroup="LabelFieldGroup" />
+				<ColumnDefinition Width="*" />
+				<ColumnDefinition Width="Auto" />
+			</Grid.ColumnDefinitions>
+			<Label Content="Resource" />
+			<ComboBox SelectedItem="{Binding SelectedResource}"
+					  ItemsSource="{Binding AvailableResources}"
+					  IsSynchronizedWithCurrentItem="True"
+					  Grid.Column="1" />
+			<Button Content="Add"
+					Command="{Binding AddResourceCommand}"
+					Grid.Column="2" />
+		</Grid>
+	</Grid>
+</UserControl>

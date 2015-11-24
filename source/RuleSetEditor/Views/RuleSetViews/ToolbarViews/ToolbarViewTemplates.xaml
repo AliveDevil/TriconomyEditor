@@ -1,17 +1,20 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:vm="clr-namespace:RuleSetEditor.ViewModels.RuleSetViewModels.ToolbarViewModels"
-                    xmlns:local="clr-namespace:RuleSetEditor.Views.RuleSetViews.ToolbarViews">
-    <DataTemplate DataType="{x:Type vm:OpenToolbarItemViewModel}">
-        <local:OpenToolbarItemView />
-    </DataTemplate>
-    <DataTemplate DataType="{x:Type vm:PlaceBuildingItemViewModel}">
-        <local:PlaceBuildingItemView />
-    </DataTemplate>
-    <DataTemplate DataType="{x:Type vm:ToolbarViewModel}">
-        <local:ToolbarView />
-    </DataTemplate>
-    <DataTemplate DataType="{x:Type vm:ToolbarEditViewModel}">
-        <local:ToolbarEditView />
-    </DataTemplate>
+					xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+					xmlns:vm="clr-namespace:RuleSetEditor.ViewModels.RuleSetViewModels.ToolbarViewModels"
+					xmlns:local="clr-namespace:RuleSetEditor.Views.RuleSetViews.ToolbarViews">
+	<DataTemplate DataType="{x:Type vm:OpenToolbarItemViewModel}">
+		<local:OpenToolbarItemView />
+	</DataTemplate>
+	<DataTemplate DataType="{x:Type vm:PlaceBuildingItemViewModel}">
+		<local:PlaceBuildingItemView />
+	</DataTemplate>
+	<DataTemplate DataType="{x:Type vm:ToolbarViewModel}">
+		<local:ToolbarView />
+	</DataTemplate>
+	<DataTemplate DataType="{x:Type vm:ToolbarEditViewModel}">
+		<local:ToolbarEditView />
+	</DataTemplate>
+	<DataTemplate DataType="{x:Type vm:ResourceBarViewModel}">
+		<local:ResourceBarView />
+	</DataTemplate>
 </ResourceDictionary>

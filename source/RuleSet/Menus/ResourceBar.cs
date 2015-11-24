@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
+using RuleSet.Elements;
 
 namespace RuleSet.Menus
 {
     public class ResourceBar : SerializedObject
     {
-
+        public List<Resource> Resources { get; set; } = new List<Resource>();
     }
 }

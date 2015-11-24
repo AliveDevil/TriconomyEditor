@@ -33,6 +33,7 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels.ElementViewModels
             {
                 return new UpgradeViewModel() { RuleSetViewModel = RuleSetViewModel, Upgrade = u };
             }));
+            UpgradeList.ChangeTrackingEnabled = true;
             UpgradeList.BeforeItemsAdded.Subscribe(u => Building.Upgrades.Add(u.Upgrade));
             UpgradeList.BeforeItemsRemoved.Subscribe(u => Building.Upgrades.Remove(u.Upgrade));
         }

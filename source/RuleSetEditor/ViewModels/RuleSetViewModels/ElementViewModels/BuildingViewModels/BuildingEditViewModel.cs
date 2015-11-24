@@ -36,6 +36,7 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels.ElementViewModels.BuildingV
                 Name = Building.Name;
                 Variants = Building.Variants;
                 UpgradeList = Building.UpgradeList.CreateDerivedCollection(u => new UpgradeInfoViewModel() { RuleSetViewModel = RuleSetViewModel, Upgrade = u }, null, (l, r) => l.Upgrade.Level.Value.CompareTo(r.Upgrade.Level.Value));
+                UpgradeList.ChangeTrackingEnabled = true;
             }
         }
 

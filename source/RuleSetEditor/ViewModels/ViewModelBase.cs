@@ -28,6 +28,11 @@ namespace RuleSetEditor.ViewModels
             disposed = true;
         }
 
+        protected void OnPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            PropertyChanged?.Invoke(sender, e);
+        }
+
         protected void RaiseSetIfChanged<T>(ref T field, T value, [CallerMemberName]string propertyName = null)
         {
             if (Equals(field, value)) return;

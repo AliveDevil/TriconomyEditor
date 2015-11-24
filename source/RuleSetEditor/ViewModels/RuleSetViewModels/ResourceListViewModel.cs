@@ -90,7 +90,7 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels
         protected override void OnRuleSetChanged()
         {
             base.OnRuleSetChanged();
-            Resources = RuleSetViewModel.ElementList.CreateDerivedCollection(e => new ResourceInfoViewModel() { Resource = (ResourceViewModel)e }, e => e is ResourceViewModel);
+            Resources = RuleSetViewModel.ElementList.CreateDerivedCollection(e => new ResourceInfoViewModel() { Resource = (ResourceViewModel)e }, e => e is ResourceViewModel, (l, r) => l.Name.Value.CompareTo(r.Name.Value));
         }
     }
 }

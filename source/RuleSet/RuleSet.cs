@@ -36,6 +36,8 @@ namespace RuleSet
 
         public string Name { get; set; }
 
+        public ResourceBar ResourceBar { get; set; }
+
         public Toolbar Toolbar { get; set; }
 
         public static RuleSet Load(TextReader textReader)

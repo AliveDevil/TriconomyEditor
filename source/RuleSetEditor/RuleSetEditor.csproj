@@ -153,6 +153,7 @@
     <Compile Include="ViewModels\RuleSetViewModels\RuleSetViewModelBase.cs" />
     <Compile Include="ViewModels\RuleSetViewModels\ToolbarViewModels\OpenToolbarItemViewModel.cs" />
     <Compile Include="ViewModels\RuleSetViewModels\ToolbarViewModels\PlaceBuildingItemViewModel.cs" />
+    <Compile Include="ViewModels\RuleSetViewModels\ToolbarViewModels\ResourceBarViewModel.cs" />
     <Compile Include="ViewModels\RuleSetViewModels\ToolbarViewModels\ToolbarEditViewModel.cs" />
     <Compile Include="ViewModels\RuleSetViewModels\ToolbarViewModels\ToolbarItemViewModel.cs" />
     <Compile Include="ViewModels\RuleSetViewModels\ToolbarViewModels\ToolbarViewModel.cs" />
@@ -190,6 +191,9 @@
     </Compile>
     <Compile Include="Views\RuleSetViews\ToolbarViews\PlaceBuildingItemView.xaml.cs">
       <DependentUpon>PlaceBuildingItemView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\RuleSetViews\ToolbarViews\ResourceBarView.xaml.cs">
+      <DependentUpon>ResourceBarView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\RuleSetViews\ToolbarViews\ToolbarEditView.xaml.cs">
       <DependentUpon>ToolbarEditView.xaml</DependentUpon>
@@ -287,6 +291,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\RuleSetViews\ToolbarViews\PlaceBuildingItemView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\RuleSetViews\ToolbarViews\ResourceBarView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -19,11 +19,12 @@ namespace RuleSetEditor.ViewModels
         private ReactiveList<ElementViewModel> elementList;
         private Stack<IView> loadedViews = new Stack<IView>();
         private ReactiveProperty<string> nameProperty;
+        private RelayCommand openResourceBarView;
         private RelayCommand openToolbarCommand;
         private RelayCommand<Type> openViewCommand;
+        private ReactiveProperty<ResourceBarViewModel> resourceBarProperty;
         private RuleSet.RuleSet ruleSet;
         private string sourceFilePath;
-
         private ReactiveProperty<ToolbarViewModel> toolbarProperty;
 
         public ReactiveList<ElementViewModel> ElementList
@@ -36,6 +37,17 @@ namespace RuleSetEditor.ViewModels
         {
             get { return nameProperty; }
             private set { RaiseSetIfChanged(ref nameProperty, value); }
+        }
+
+        public RelayCommand OpenResourceBar
+        {
+            get
+            {
+                return openResourceBarView ?? (openResourceBarView = new RelayCommand(() =>
+                {
+                    Set(ResourceBar.Value);
+                }));
+            }
         }
 
         public RelayCommand OpenToolbar
@@ -58,6 +70,12 @@ namespace RuleSetEditor.ViewModels
                     Set((ViewModelBase)Activator.CreateInstance(t));
                 }));
             }
+        }
+
+        public ReactiveProperty<ResourceBarViewModel> ResourceBar
+        {
+            get { return resourceBarProperty; }
+            private set { RaiseSetIfChanged(ref resourceBarProperty, value); }
         }
 
         public RuleSet.RuleSet RuleSet
@@ -89,6 +107,7 @@ namespace RuleSetEditor.ViewModels
 
                     return viewModel;
                 }).Where(e => e != null));
+                ElementList.ChangeTrackingEnabled = true;
 
                 foreach (var item in ElementList)
                     item.DeferChanged = false;
@@ -100,6 +119,11 @@ namespace RuleSetEditor.ViewModels
                     t => t.Toolbar,
                     t => new ToolbarViewModel() { RuleSetViewModel = this, Toolbar = t ?? new Toolbar() },
                     t => t?.Toolbar);
+
+                ResourceBar = ReactiveProperty.FromObject(RuleSet,
+                    r => r.ResourceBar,
+                    r => new ResourceBarViewModel() { RuleSetViewModel = this, ResourceBar = r ?? new ResourceBar() },
+                    r => r?.ResourceBar);
 
                 Set<RuleSetViewModels.LandingPageViewModel>();
             }

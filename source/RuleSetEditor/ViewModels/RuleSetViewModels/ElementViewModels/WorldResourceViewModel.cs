@@ -42,17 +42,21 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels.ElementViewModels
         {
             base.OnElementChanged();
             Amount = ReactiveProperty.FromObject(WorldResource, w => w.Amount);
+            Amount.PropertyChanged += OnPropertyChanged;
             Resource = ReactiveProperty.FromObject(WorldResource,
                 r => r.Resource,
                 r => Resources.SingleOrDefault(e => e.Resource == r),
                 r => r?.Resource);
+            Resource.PropertyChanged += OnPropertyChanged;
             Variants = ReactiveProperty.FromObject(WorldResource, r => r.Variants);
+            Variants.PropertyChanged += OnPropertyChanged;
         }
 
         protected override void OnRuleSetChanged()
         {
             base.OnRuleSetChanged();
-            Resources = RuleSetViewModel.ElementList.CreateDerivedCollection(e => (ResourceViewModel)e, e => e is ResourceViewModel);
+            Resources = RuleSetViewModel.ElementList.CreateDerivedCollection(e => (ResourceViewModel)e, e => e is ResourceViewModel, (l, r) => l.Name.Value.CompareTo(r.Name.Value));
+            Resources.ChangeTrackingEnabled = true;
         }
     }
 }

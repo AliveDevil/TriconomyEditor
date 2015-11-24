@@ -23,6 +23,7 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels.ElementViewModels.ResourceV
             {
                 RaiseSetIfChanged(ref resource, value);
                 Name = Resource.Name.ToReadOnlyReactiveProperty();
+                Name.PropertyChanged += OnPropertyChanged;
             }
         }
 

@@ -23,6 +23,7 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels.ElementViewModels.BuildingV
             {
                 RaiseSetIfChanged(ref upgrade, value);
                 Level = Upgrade.Level.ToReadOnlyReactiveProperty();
+                upgrade.PropertyChanged += OnPropertyChanged;
             }
         }
     }
