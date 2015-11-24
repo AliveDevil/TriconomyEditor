@@ -61,7 +61,7 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels
         protected override void OnRuleSetChanged()
         {
             base.OnRuleSetChanged();
-            Jobs = RuleSetViewModel.ElementList.CreateDerivedCollection(e => new JobInfoViewModel() { Job = (JobViewModel)e }, e => e is JobViewModel);
+            Jobs = RuleSetViewModel.ElementList.CreateDerivedCollection(e => new JobInfoViewModel() { Job = (JobViewModel)e }, e => e is JobViewModel, (l, r) => l.Name.Value.CompareTo(r.Name.Value));
         }
     }
 }
