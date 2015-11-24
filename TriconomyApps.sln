@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RuleSetEditor", "source\RuleSetEditor\RuleSetEditor.csproj", "{690706E7-B94F-4D33-B1A0-AA3E91700592}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RuleSet", "source\RuleSet\RuleSet.csproj", "{431056F5-E9EE-4112-BC91-B7123E3A7A6D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RuleSetPrompt", "source\RuleSetPrompt\RuleSetPrompt.csproj", "{4E5FEA70-E667-4C46-809A-E4312CF199F7}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{690706E7-B94F-4D33-B1A0-AA3E91700592}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{690706E7-B94F-4D33-B1A0-AA3E91700592}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{690706E7-B94F-4D33-B1A0-AA3E91700592}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{690706E7-B94F-4D33-B1A0-AA3E91700592}.Release|Any CPU.Build.0 = Release|Any CPU
+		{431056F5-E9EE-4112-BC91-B7123E3A7A6D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{431056F5-E9EE-4112-BC91-B7123E3A7A6D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{431056F5-E9EE-4112-BC91-B7123E3A7A6D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{431056F5-E9EE-4112-BC91-B7123E3A7A6D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4E5FEA70-E667-4C46-809A-E4312CF199F7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4E5FEA70-E667-4C46-809A-E4312CF199F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4E5FEA70-E667-4C46-809A-E4312CF199F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4E5FEA70-E667-4C46-809A-E4312CF199F7}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

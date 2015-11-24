@@ -1,0 +1,85 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{431056F5-E9EE-4112-BC91-B7123E3A7A6D}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>RuleSet</RootNamespace>
+    <AssemblyName>RuleSet</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Newtonsoft.Json.7.0.1\lib\net35\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="DeferredJsonSerializer.cs" />
+    <Compile Include="Effects\AddRecipeEffect.cs" />
+    <Compile Include="Effects\ExtendSettlerAmountEffect.cs" />
+    <Compile Include="Effects\ExtendStorageEffect.cs" />
+    <Compile Include="Effects\GatherResourceEffect.cs" />
+    <Compile Include="Effects\HabitEffect.cs" />
+    <Compile Include="Effects\StorageEffect.cs" />
+    <Compile Include="Effects\UseResourceEffect.cs" />
+    <Compile Include="Effects\WorkplaceEffect.cs" />
+    <Compile Include="Elements\Building.cs" />
+    <Compile Include="Condition.cs" />
+    <Compile Include="Effect.cs" />
+    <Compile Include="Element.cs" />
+    <Compile Include="Elements\Job.cs" />
+    <Compile Include="Elements\RecipePart.cs" />
+    <Compile Include="Elements\ResourceGroup.cs" />
+    <Compile Include="Extensions.cs" />
+    <Compile Include="Menus\OpenToolbarItem.cs" />
+    <Compile Include="Menus\PlaceBuildingItem.cs" />
+    <Compile Include="Menus\ResourceBar.cs" />
+    <Compile Include="Menus\Toolbar.cs" />
+    <Compile Include="Menus\ToolbarItem.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Elements\Resource.cs" />
+    <Compile Include="RuleSet.cs" />
+    <Compile Include="SerializedObject.cs" />
+    <Compile Include="Upgrade.cs" />
+    <Compile Include="Elements\WorldResource.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

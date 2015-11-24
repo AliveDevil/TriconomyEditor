@@ -1,0 +1,11 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+					xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+					xmlns:vm="clr-namespace:RuleSetEditor.ViewModels.RuleSetViewModels.ElementViewModels.ResourceViewModels"
+					xmlns:local="clr-namespace:RuleSetEditor.Views.RuleSetViews.ResourceViews">
+	<DataTemplate DataType="{x:Type vm:ResourceEditViewModel}">
+		<local:ResourceEditView />
+	</DataTemplate>
+	<DataTemplate DataType="{x:Type vm:ResourceGroupEditViewModel}">
+		<local:ResourceGroupEditView />
+	</DataTemplate>
+</ResourceDictionary>
