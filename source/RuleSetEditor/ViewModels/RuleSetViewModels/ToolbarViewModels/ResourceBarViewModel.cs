@@ -35,17 +35,7 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels.ToolbarViewModels
 
         public ResourceBar ResourceBar
         {
-            get
-            {
-                return resourceBar;
-            }
-            set
-            {
-                RaiseSetIfChanged(ref resourceBar, value);
-                Resources = new ReactiveList<ResourceViewModel>(ResourceBar.Resources.Select(r => (ResourceViewModel)RuleSetViewModel.ElementList.First(e => e is ResourceViewModel && e.Element == r)));
-                Resources.BeforeItemsAdded.Subscribe(r => ResourceBar.Resources.Add(r.Resource));
-                Resources.BeforeItemsRemoved.Subscribe(r => ResourceBar.Resources.Remove(r.Resource));
-            }
+            get { return RuleSetViewModel.RuleSet.ResourceBar; }
         }
 
         public ReactiveList<ResourceViewModel> Resources
@@ -64,6 +54,9 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels.ToolbarViewModels
         {
             base.OnRuleSetChanged();
             AvailableResources = RuleSetViewModel.ElementList.CreateDerivedCollection(e => new ResourceInfoViewModel() { Resource = (ResourceViewModel)e, RuleSetViewModel = RuleSetViewModel }, e => e is ResourceViewModel);
+            Resources = new ReactiveList<ResourceViewModel>(ResourceBar.Resources.Select(r => (ResourceViewModel)RuleSetViewModel.ElementList.First(e => e is ResourceViewModel && e.Element == r)));
+            Resources.BeforeItemsAdded.Subscribe(r => ResourceBar.Resources.Add(r.Resource));
+            Resources.BeforeItemsRemoved.Subscribe(r => ResourceBar.Resources.Remove(r.Resource));
         }
     }
 }
