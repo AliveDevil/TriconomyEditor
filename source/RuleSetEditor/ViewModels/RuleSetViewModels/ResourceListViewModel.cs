@@ -1,4 +1,5 @@
-﻿using ReactiveUI;
+﻿using System.Linq;
+using ReactiveUI;
 using RuleSet.Elements;
 using RuleSetEditor.ViewModels.RuleSetViewModels.ElementViewModels;
 using RuleSetEditor.ViewModels.RuleSetViewModels.ElementViewModels.ResourceViewModels;
@@ -20,14 +21,7 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels
             {
                 return addResourceCommand ?? (addResourceCommand = new RelayCommand(() =>
                 {
-                    RuleSetViewModel.ElementList.Add(new ResourceViewModel()
-                    {
-                        RuleSetViewModel = RuleSetViewModel,
-                        Element = new Resource()
-                        {
-                            Name = "New Resource"
-                        }
-                    });
+                    AddAndSelectNewResource<ResourceViewModel, Resource>("New Resource");
                 }));
             }
         }
@@ -38,14 +32,7 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels
             {
                 return addResourceGroupCommand ?? (addResourceGroupCommand = new RelayCommand(() =>
                 {
-                    RuleSetViewModel.ElementList.Add(new ResourceGroupViewModel()
-                    {
-                        RuleSetViewModel = RuleSetViewModel,
-                        Element = new ResourceGroup()
-                        {
-                            Name = "New Resource Group"
-                        }
-                    });
+                    AddAndSelectNewResource<ResourceGroupViewModel, ResourceGroup>("New Resource Group");
                 }));
             }
         }
@@ -56,6 +43,7 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels
             {
                 return editResourceCommand ?? (editResourceCommand = new RelayCommand<ResourceInfoViewModel>(resource =>
                 {
+                    SelectedResource = resource;
                     if (resource.Resource is ResourceGroupViewModel)
                         ViewStack.Push<ResourceGroupEditViewModel>()._(_ => _.ResourceGroup = (ResourceGroupViewModel)resource.Resource);
                     else
@@ -91,6 +79,22 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels
         {
             base.OnRuleSetChanged();
             Resources = RuleSetViewModel.ElementList.CreateDerivedCollection(e => new ResourceInfoViewModel() { Resource = (ResourceViewModel)e }, e => e is ResourceViewModel, (l, r) => l.Name.Value.CompareTo(r.Name.Value));
+        }
+
+        private void AddAndSelectNewResource<TViewModel, TItem>(string name)
+                                                    where TViewModel : ResourceViewModel, new()
+            where TItem : Resource, new()
+        {
+            TViewModel model = new TViewModel()
+            {
+                RuleSetViewModel = RuleSetViewModel,
+                Element = new TItem()
+                {
+                    Name = name
+                }
+            };
+            RuleSetViewModel.ElementList.Add(model);
+            SelectedResource = Resources.SingleOrDefault(r => r.Resource == model);
         }
     }
 }

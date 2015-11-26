@@ -1,4 +1,5 @@
-﻿using ReactiveUI;
+﻿using System.Linq;
+using ReactiveUI;
 using RuleSet.Elements;
 using RuleSetEditor.ViewModels.RuleSetViewModels.ElementViewModels;
 using RuleSetEditor.ViewModels.RuleSetViewModels.ElementViewModels.WorldResourceViewModels;
@@ -19,7 +20,9 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels
             {
                 return addWorldResourceCommand ?? (addWorldResourceCommand = new RelayCommand(() =>
                 {
-                    RuleSetViewModel.ElementList.Add(new WorldResourceViewModel() { RuleSetViewModel = RuleSetViewModel, Element = new WorldResource() { Name = "New World Resource" } });
+                    WorldResourceViewModel model = new WorldResourceViewModel() { RuleSetViewModel = RuleSetViewModel, Element = new WorldResource() { Name = "New World Resource" } };
+                    RuleSetViewModel.ElementList.Add(model);
+                    SelectedWorldResource = WorldResources.SingleOrDefault(r => r.WorldResource == model);
                 }));
             }
         }
@@ -30,6 +33,7 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels
             {
                 return editWorldResourceCommand ?? (editWorldResourceCommand = new RelayCommand<WorldResourceInfoViewModel>(worldResource =>
                 {
+                    SelectedWorldResource = worldResource;
                     ViewStack.Push<WorldResourceEditViewModel>()._(_ => _.WorldResource = worldResource.WorldResource);
                 }));
             }

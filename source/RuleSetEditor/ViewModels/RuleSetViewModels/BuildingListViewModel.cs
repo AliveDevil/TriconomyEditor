@@ -1,4 +1,5 @@
-﻿using ReactiveUI;
+﻿using System.Linq;
+using ReactiveUI;
 using RuleSet.Elements;
 using RuleSetEditor.ViewModels.RuleSetViewModels.ElementViewModels;
 using RuleSetEditor.ViewModels.RuleSetViewModels.ElementViewModels.BuildingViewModels;
@@ -19,7 +20,9 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels
             {
                 return addBuildingCommand ?? (addBuildingCommand = new RelayCommand(() =>
                 {
-                    RuleSetViewModel.ElementList.Add(new BuildingViewModel() { RuleSetViewModel = RuleSetViewModel, Element = new Building() { Name = "New Building" } });
+                    BuildingViewModel model = new BuildingViewModel() { RuleSetViewModel = RuleSetViewModel, Element = new Building() { Name = "New Building" } };
+                    RuleSetViewModel.ElementList.Add(model);
+                    SelectedBuilding = Buildings.SingleOrDefault(r => r.Building == model);
                 }));
             }
         }
@@ -36,6 +39,7 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels
             {
                 return editBuildingCommand ?? (editBuildingCommand = new RelayCommand<BuildingInfoViewModel>(building =>
                 {
+                    SelectedBuilding = building;
                     ViewStack.Push<BuildingEditViewModel>()._(_ => _.Building = building.Building);
                 }));
             }
@@ -58,12 +62,6 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels
             set { RaiseSetIfChanged(ref selectedBuilding, value); }
         }
 
-        protected override void OnRuleSetChanged()
-        {
-            base.OnRuleSetChanged();
-            Buildings = RuleSetViewModel.ElementList.CreateDerivedCollection(e => new BuildingInfoViewModel() { Building = (BuildingViewModel)e }, e => e is BuildingViewModel, (l, r) => l.Name.Value.CompareTo(r.Name.Value));
-        }
-
         protected override void Dispose(bool disposing)
         {
             if (disposing)
@@ -71,6 +69,12 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels
                 Buildings.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        protected override void OnRuleSetChanged()
+        {
+            base.OnRuleSetChanged();
+            Buildings = RuleSetViewModel.ElementList.CreateDerivedCollection(e => new BuildingInfoViewModel() { Building = (BuildingViewModel)e }, e => e is BuildingViewModel, (l, r) => l.Name.Value.CompareTo(r.Name.Value));
         }
     }
 }

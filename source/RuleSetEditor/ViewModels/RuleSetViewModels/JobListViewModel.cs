@@ -1,4 +1,5 @@
-﻿using ReactiveUI;
+﻿using System.Linq;
+using ReactiveUI;
 using RuleSet.Elements;
 using RuleSetEditor.ViewModels.RuleSetViewModels.ElementViewModels;
 using RuleSetEditor.ViewModels.RuleSetViewModels.ElementViewModels.JobViewModels;
@@ -19,7 +20,9 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels
             {
                 return addJobCommand ?? (addJobCommand = new RelayCommand(() =>
                 {
-                    RuleSetViewModel.ElementList.Add(new JobViewModel() { RuleSetViewModel = RuleSetViewModel, Element = new Job() { Name = "New Job" } });
+                    JobViewModel model = new JobViewModel() { RuleSetViewModel = RuleSetViewModel, Element = new Job() { Name = "New Job" } };
+                    RuleSetViewModel.ElementList.Add(model);
+                    SelectedJob = Jobs.SingleOrDefault(r => r.Job == model);
                 }));
             }
         }
@@ -30,6 +33,7 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels
             {
                 return editJobCommand ?? (editJobCommand = new RelayCommand<JobInfoViewModel>(job =>
                 {
+                    SelectedJob = job;
                     ViewStack.Push<JobEditViewModel>()._(_ => _.Job = job.Job);
                 }));
             }
