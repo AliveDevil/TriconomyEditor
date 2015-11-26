@@ -21,7 +21,6 @@ namespace RuleSetEditor.ViewModels
         private ReactiveProperty<string> nameProperty;
         private RelayCommand openToolbarCommand;
         private RelayCommand<Type> openViewCommand;
-        private ReactiveProperty<ResourceBarViewModel> resourceBarProperty;
         private RuleSet.RuleSet ruleSet;
         private string sourceFilePath;
         private ReactiveProperty<ToolbarViewModel> toolbarProperty;
