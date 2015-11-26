@@ -67,8 +67,9 @@
 								  CommandParameter="{x:Type toolbarviewmodels:ResourceBarViewModel}"
 								  IsChecked="{Binding View, Converter={StaticResource ViewCheckedConverter}, ConverterParameter={x:Type toolbarviewmodels:ResourceBarViewModel}, Mode=OneWay}" />
                     <ToggleButton Content="Toolbar"
-                                  Command="{Binding OpenToolbar}"
-                                  IsChecked="{Binding View, Converter={StaticResource ViewCheckedConverter}, ConverterParameter={x:Type toolbarviewmodels:ToolbarViewModel}, Mode=OneWay}" />
+								  Command="{Binding OpenView}"
+								  CommandParameter="{x:Type toolbarviewmodels:ToolbarViewModel}"
+								  IsChecked="{Binding View, Converter={StaticResource ViewCheckedConverter}, ConverterParameter={x:Type toolbarviewmodels:ToolbarViewModel}, Mode=OneWay}" />
                 </StackPanel>
                 <Button Content="Close"
                         Grid.Row="1" />

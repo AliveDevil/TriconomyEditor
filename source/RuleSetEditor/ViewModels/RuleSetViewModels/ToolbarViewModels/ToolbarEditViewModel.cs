@@ -7,6 +7,7 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels.ToolbarViewModels
         private RelayCommand addOpenToolbarItemCommand;
         private RelayCommand addPlaceBuildingItemCommand;
         private RelayCommand<ToolbarItemViewModel> editToolbarItemCommand;
+        private RelayCommand removeToolbarItemCommand;
         private ToolbarItemViewModel selectedToolbarItem;
         private ToolbarViewModel toolbar;
 
@@ -16,7 +17,7 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels.ToolbarViewModels
             {
                 return addOpenToolbarItemCommand ?? (addOpenToolbarItemCommand = new RelayCommand(() =>
                 {
-                    Toolbar.ToolbarItems.Add(new OpenToolbarItemViewModel() { RuleSetViewModel = RuleSetViewModel, MenuItem = new OpenToolbarItem() { Toolbar = new Toolbar() { Name = "New Toolbar" } } });
+                    AddAndSelectNewToolbarItem<OpenToolbarItemViewModel, OpenToolbarItem>();
                 }));
             }
         }
@@ -27,9 +28,18 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels.ToolbarViewModels
             {
                 return addPlaceBuildingItemCommand ?? (addPlaceBuildingItemCommand = new RelayCommand(() =>
                 {
-                    Toolbar.ToolbarItems.Add(new PlaceBuildingItemViewModel() { RuleSetViewModel = RuleSetViewModel, MenuItem = new PlaceBuildingItem() });
+                    AddAndSelectNewToolbarItem<PlaceBuildingItemViewModel, PlaceBuildingItem>();
                 }));
             }
+        }
+
+        private void AddAndSelectNewToolbarItem<TViewModel, TItem>()
+            where TViewModel : ToolbarItemViewModel, new()
+            where TItem : ToolbarItem, new()
+        {
+            TViewModel model = new TViewModel() { RuleSetViewModel = RuleSetViewModel, MenuItem = new TItem() };
+            Toolbar.ToolbarItems.Add(model);
+            SelectedToolbarItem = model;
         }
 
         public RelayCommand<ToolbarItemViewModel> EditToolbarItemCommand
@@ -38,7 +48,19 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels.ToolbarViewModels
             {
                 return editToolbarItemCommand ?? (editToolbarItemCommand = new RelayCommand<ToolbarItemViewModel>(t =>
                 {
+                    SelectedToolbarItem = t;
                     ViewStack.Push(t);
+                }));
+            }
+        }
+
+        public RelayCommand RemoveToolbarItemCommand
+        {
+            get
+            {
+                return removeToolbarItemCommand ?? (removeToolbarItemCommand = new RelayCommand(() =>
+                {
+                    Toolbar.ToolbarItems.Remove(SelectedToolbarItem);
                 }));
             }
         }

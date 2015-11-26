@@ -37,6 +37,7 @@
 								  SharedSizeGroup="LabelFieldGroup" />
 				<ColumnDefinition Width="*" />
 				<ColumnDefinition Width="Auto" />
+				<ColumnDefinition Width="Auto" />
 			</Grid.ColumnDefinitions>
 			<Label Content="Resource" />
 			<ComboBox SelectedItem="{Binding SelectedResource}"
@@ -46,6 +47,10 @@
 			<Button Content="Add"
 					Command="{Binding AddResourceCommand}"
 					Grid.Column="2" />
+
+			<Button Content="Remove"
+					Command="{Binding RemoveResourceCommand}"
+					Grid.Column="3" />
 		</Grid>
 	</Grid>
 </UserControl>

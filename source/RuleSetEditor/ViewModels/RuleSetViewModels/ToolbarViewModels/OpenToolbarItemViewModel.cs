@@ -20,7 +20,7 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels.ToolbarViewModels
             base.OnMenuItemChanged();
             Toolbar = ReactiveProperty.FromObject(OpenToolbar,
                 t => t.Toolbar,
-                t => new ToolbarViewModel() { RuleSetViewModel = RuleSetViewModel, Toolbar = t },
+                t => new ToolbarViewModel() { Toolbar = t, RuleSetViewModel = RuleSetViewModel },
                 t => t?.Toolbar);
         }
     }

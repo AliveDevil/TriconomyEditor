@@ -11,8 +11,8 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels.ToolbarViewModels
     {
         private RelayCommand addResourceCommand;
         private IReactiveDerivedList<ResourceInfoViewModel> availableResources;
-        private ResourceBar resourceBar;
-        private ReactiveList<ResourceViewModel> resources;
+        private RelayCommand removeResourceCommand;
+        private ReactiveList<ResourceInfoViewModel> resources;
         private ResourceInfoViewModel selectedResource;
 
         public RelayCommand AddResourceCommand
@@ -21,8 +21,8 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels.ToolbarViewModels
             {
                 return addResourceCommand ?? (addResourceCommand = new RelayCommand(() =>
                 {
-                    if (Resources.Contains(SelectedResource.Resource)) return;
-                    Resources.Add(SelectedResource.Resource);
+                    if (Resources.Contains(SelectedResource)) return;
+                    Resources.Add(SelectedResource);
                 }));
             }
         }
@@ -33,12 +33,23 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels.ToolbarViewModels
             private set { RaiseSetIfChanged(ref availableResources, value); }
         }
 
+        public RelayCommand RemoveResourceCommand
+        {
+            get
+            {
+                return removeResourceCommand ?? (removeResourceCommand = new RelayCommand(() =>
+                {
+                    Resources.Remove(SelectedResource);
+                }));
+            }
+        }
+
         public ResourceBar ResourceBar
         {
             get { return RuleSetViewModel.RuleSet.ResourceBar; }
         }
 
-        public ReactiveList<ResourceViewModel> Resources
+        public ReactiveList<ResourceInfoViewModel> Resources
         {
             get { return resources; }
             private set { RaiseSetIfChanged(ref resources, value); }
@@ -53,10 +64,18 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels.ToolbarViewModels
         protected override void OnRuleSetChanged()
         {
             base.OnRuleSetChanged();
-            AvailableResources = RuleSetViewModel.ElementList.CreateDerivedCollection(e => new ResourceInfoViewModel() { Resource = (ResourceViewModel)e, RuleSetViewModel = RuleSetViewModel }, e => e is ResourceViewModel);
-            Resources = new ReactiveList<ResourceViewModel>(ResourceBar.Resources.Select(r => (ResourceViewModel)RuleSetViewModel.ElementList.First(e => e is ResourceViewModel && e.Element == r)));
-            Resources.BeforeItemsAdded.Subscribe(r => ResourceBar.Resources.Add(r.Resource));
-            Resources.BeforeItemsRemoved.Subscribe(r => ResourceBar.Resources.Remove(r.Resource));
+            AvailableResources = RuleSetViewModel.ElementList.CreateDerivedCollection(e => new ResourceInfoViewModel()
+            {
+                Resource = (ResourceViewModel)e,
+                RuleSetViewModel = RuleSetViewModel
+            }, e => e is ResourceViewModel, (l, r) => l.Name.Value.CompareTo(r.Name.Value));
+            Resources = new ReactiveList<ResourceInfoViewModel>(ResourceBar.Resources.Select(r => new ResourceInfoViewModel()
+            {
+                Resource = (ResourceViewModel)RuleSetViewModel.ElementList.FirstOrDefault(e => e is ResourceViewModel && e.Element == r),
+                RuleSetViewModel = RuleSetViewModel
+            }).Where(r => r.Resource != null));
+            Resources.BeforeItemsAdded.Subscribe(r => ResourceBar.Resources.Add(r.Resource.Resource));
+            Resources.BeforeItemsRemoved.Subscribe(r => ResourceBar.Resources.Remove(r.Resource.Resource));
         }
     }
 }

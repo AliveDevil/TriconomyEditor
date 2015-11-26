@@ -21,7 +21,6 @@
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="Auto" />
-            <ColumnDefinition Width="Auto" />
         </Grid.ColumnDefinitions>
         <Label Content="Name"
                Grid.Row="1"
@@ -29,13 +28,13 @@
         <TextBox Text="{Binding Toolbar.Name.Value, UpdateSourceTrigger=PropertyChanged}"
                  Grid.Row="1"
                  Grid.Column="1"
-                 Grid.ColumnSpan="4" />
+                 Grid.ColumnSpan="3" />
         <ListView ItemsSource="{Binding Toolbar.ToolbarItems}"
                   SelectedItem="{Binding SelectedToolbarItem}"
                   IsSynchronizedWithCurrentItem="True"
                   HorizontalContentAlignment="Stretch"
                   Grid.Row="2"
-                  Grid.ColumnSpan="5"
+                  Grid.ColumnSpan="4"
                   Grid.IsSharedSizeScope="True">
             <ListView.Resources>
                 <DataTemplate DataType="{x:Type vm:OpenToolbarItemViewModel}">
@@ -70,17 +69,25 @@
                 </DataTemplate>
             </ListView.Resources>
         </ListView>
-        <Button Content="Add OpenToolbar"
-                Command="{Binding AddOpenToolbarItemCommand}"
-                Grid.Row="3"
-                Grid.Column="2" />
-        <Button Content="Add PlaceBuilding"
-                Command="{Binding AddPlaceBuildingItemCommand}"
-                Grid.Row="3"
-                Grid.Column="3" />
+
+		<Button Content="Add"
+				Grid.Row="3"
+				Grid.Column="2"
+				Click="Button_Click">
+			<Button.ContextMenu>
+				<ContextMenu Placement="Bottom"
+							 DataContext="{Binding RelativeSource={RelativeSource Self}, Path=PlacementTarget.DataContext}">
+					<MenuItem Header="OpenToolbar"
+							  Command="{Binding AddOpenToolbarItemCommand}" />
+					<MenuItem Header="PlaceBuilding"
+							  Command="{Binding AddPlaceBuildingItemCommand}" />
+				</ContextMenu>
+			</Button.ContextMenu>
+		</Button>
+
         <Button Content="Remove"
                 Command="{Binding RemoveToolbarItemCommand}"
                 Grid.Row="3"
-                Grid.Column="4" />
+                Grid.Column="3" />
     </Grid>
 </UserControl>

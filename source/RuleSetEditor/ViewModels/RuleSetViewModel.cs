@@ -7,7 +7,6 @@ using libUIStack;
 using Reactive.Bindings;
 using ReactiveUI;
 using RuleSet.Elements;
-using RuleSet.Menus;
 using RuleSetEditor.ViewModels.RuleSetViewModels;
 using RuleSetEditor.ViewModels.RuleSetViewModels.ElementViewModels;
 using RuleSetEditor.ViewModels.RuleSetViewModels.ToolbarViewModels;
@@ -60,7 +59,7 @@ namespace RuleSetEditor.ViewModels
                 }));
             }
         }
-        
+
         public RuleSet.RuleSet RuleSet
         {
             get
@@ -97,11 +96,6 @@ namespace RuleSetEditor.ViewModels
 
                 ElementList.BeforeItemsAdded.Subscribe(e => RuleSet.Elements.Add(e.Element));
                 ElementList.BeforeItemsRemoved.Subscribe(e => RuleSet.Elements.Remove(e?.Element));
-
-                Toolbar = ReactiveProperty.FromObject(RuleSet,
-                    t => t.Toolbar,
-                    t => new ToolbarViewModel() { RuleSetViewModel = this, Toolbar = t ?? new Toolbar() },
-                    t => t?.Toolbar);
 
                 Set<RuleSetViewModels.LandingPageViewModel>();
             }
@@ -172,7 +166,7 @@ namespace RuleSetEditor.ViewModels
         private void ClearInternal()
         {
             while (loadedViews.Count > 0)
-                loadedViews.Pop().Dispose();
+                PopInternal();
         }
 
         private void PopInternal()

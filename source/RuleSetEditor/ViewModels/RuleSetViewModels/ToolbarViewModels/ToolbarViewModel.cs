@@ -15,6 +15,8 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels.ToolbarViewModels
         private ReactiveProperty<string> nameProperty;
         private Toolbar toolbar;
         private ReactiveList<ToolbarItemViewModel> toolbarItems;
+        private IDisposable itemAddedSubscription;
+        private IDisposable itemsRemovedSubscription;
 
         public ReactiveProperty<string> Name
         {
@@ -24,40 +26,8 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels.ToolbarViewModels
 
         public Toolbar Toolbar
         {
-            get
-            {
-                return toolbar;
-            }
-            set
-            {
-                RaiseSetIfChanged(ref toolbar, value);
-                Name = ReactiveProperty.FromObject(Toolbar, t => t.Name);
-                ToolbarItems = new ReactiveList<ToolbarItemViewModel>(Toolbar.Items.Select(i =>
-                {
-                    ToolbarItemViewModel menuItem = null;
-                    if (i is PlaceBuildingItem)
-                        menuItem = new PlaceBuildingItemViewModel();
-                    else if (i is OpenToolbarItem)
-                        menuItem = new OpenToolbarItemViewModel();
-
-                    if (menuItem != null)
-                    {
-                        menuItem.DeferChanged = true;
-                        menuItem.RuleSetViewModel = RuleSetViewModel;
-                        menuItem.MenuItem = i;
-                    }
-
-                    return menuItem;
-                }).Where(i => i != null));
-
-                foreach (var item in ToolbarItems)
-                    item.DeferChanged = false;
-
-                ToolbarItems.BeforeItemsAdded.Subscribe(i => Toolbar.Items.Add(i.MenuItem));
-                ToolbarItems.BeforeItemsRemoved.Subscribe(i => Toolbar.Items.Remove(i.MenuItem));
-
-                Set<ToolbarEditViewModel>();
-            }
+            get { return toolbar; }
+            set { RaiseSetIfChanged(ref toolbar, value); }
         }
 
         public ReactiveList<ToolbarItemViewModel> ToolbarItems
@@ -116,10 +86,47 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels.ToolbarViewModels
             return view;
         }
 
+        protected override void OnRuleSetChanged()
+        {
+            base.OnRuleSetChanged();
+
+            if (Toolbar == null)
+            {
+                Toolbar = RuleSetViewModel.RuleSet.Toolbar;
+            }
+
+            Name = ReactiveProperty.FromObject(Toolbar, t => t.Name);
+            ToolbarItems = new ReactiveList<ToolbarItemViewModel>(Toolbar.Items.Select(i =>
+            {
+                ToolbarItemViewModel menuItem = null;
+                if (i is PlaceBuildingItem)
+                    menuItem = new PlaceBuildingItemViewModel();
+                else if (i is OpenToolbarItem)
+                    menuItem = new OpenToolbarItemViewModel();
+
+                if (menuItem != null)
+                {
+                    menuItem.DeferChanged = true;
+                    menuItem.RuleSetViewModel = RuleSetViewModel;
+                    menuItem.MenuItem = i;
+                }
+
+                return menuItem;
+            }).Where(i => i != null));
+
+            foreach (var item in ToolbarItems)
+                item.DeferChanged = false;
+
+            itemAddedSubscription = ToolbarItems.BeforeItemsAdded.Subscribe(i => Toolbar.Items.Add(i.MenuItem));
+            itemsRemovedSubscription = ToolbarItems.BeforeItemsRemoved.Subscribe(i => Toolbar.Items.Remove(i.MenuItem));
+
+            Set<ToolbarEditViewModel>();
+        }
+
         private void ClearInternal()
         {
             while (loadedViews.Count > 0)
-                loadedViews.Pop().Dispose();
+                PopInternal();
         }
 
         private void PopInternal()
@@ -146,6 +153,23 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels.ToolbarViewModels
                 ((RuleSetViewModelBase)view).RuleSetViewModel = RuleSetViewModel;
             if (view is ToolbarEditViewModel)
                 ((ToolbarEditViewModel)view).Toolbar = this;
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                Name.Dispose();
+                itemAddedSubscription.Dispose();
+                itemsRemovedSubscription.Dispose();
+                ClearInternal();
+                foreach (var item in ToolbarItems)
+                {
+                    item.Dispose();
+                }
+                ToolbarItems.Clear();
+            }
+            base.Dispose(disposing);
         }
 
         private void UpdateCurrentView()

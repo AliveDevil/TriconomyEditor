@@ -63,5 +63,14 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels
             base.OnRuleSetChanged();
             Buildings = RuleSetViewModel.ElementList.CreateDerivedCollection(e => new BuildingInfoViewModel() { Building = (BuildingViewModel)e }, e => e is BuildingViewModel, (l, r) => l.Name.Value.CompareTo(r.Name.Value));
         }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                Buildings.Dispose();
+            }
+            base.Dispose(disposing);
+        }
     }
 }
