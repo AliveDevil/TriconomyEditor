@@ -23,5 +23,14 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels.ToolbarViewModels
                 t => new ToolbarViewModel() { Toolbar = t, RuleSetViewModel = RuleSetViewModel },
                 t => t?.Toolbar);
         }
+
+        protected override void OnViewStackChanged()
+        {
+            Toolbar.Value.ViewStack = ViewStack;
+        }
+
+        protected override void OnRuleSetChanged()
+        {
+        }
     }
 }

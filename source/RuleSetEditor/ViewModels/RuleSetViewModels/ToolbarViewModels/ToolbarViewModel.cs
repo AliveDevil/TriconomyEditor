@@ -8,20 +8,81 @@ using RuleSet.Menus;
 
 namespace RuleSetEditor.ViewModels.RuleSetViewModels.ToolbarViewModels
 {
-    public class ToolbarViewModel : RuleSetViewModelBase, IViewStack
+    public class ToolbarViewModel : RuleSetViewModelBase
     {
+        private RelayCommand addOpenToolbarItemCommand;
+        private RelayCommand addPlaceBuildingItemCommand;
         private IView currentView;
-        private Stack<IView> loadedViews = new Stack<IView>();
-        private ReactiveProperty<string> nameProperty;
-        private Toolbar toolbar;
-        private ReactiveList<ToolbarItemViewModel> toolbarItems;
+        private RelayCommand<ToolbarItemViewModel> editToolbarItemCommand;
         private IDisposable itemAddedSubscription;
         private IDisposable itemsRemovedSubscription;
+        private Stack<IView> loadedViews = new Stack<IView>();
+        private ReactiveProperty<string> nameProperty;
+        private RelayCommand removeToolbarItemCommand;
+        private ToolbarItemViewModel selectedToolbarItem;
+        private Toolbar toolbar;
+        private ReactiveList<ToolbarItemViewModel> toolbarItems;
+
+        public RelayCommand AddOpenToolbarItemCommand
+        {
+            get
+            {
+                return addOpenToolbarItemCommand ?? (addOpenToolbarItemCommand = new RelayCommand(() =>
+                {
+                    AddAndSelectNewToolbarItem<OpenToolbarItemViewModel, OpenToolbarItem>(m =>
+                    {
+                        m.Toolbar = new Toolbar() { Name = "New Toolbar" };
+                    }, null);
+                }));
+            }
+        }
+
+        public RelayCommand AddPlaceBuildingItemCommand
+        {
+            get
+            {
+                return addPlaceBuildingItemCommand ?? (addPlaceBuildingItemCommand = new RelayCommand(() =>
+                {
+                    AddAndSelectNewToolbarItem<PlaceBuildingItemViewModel, PlaceBuildingItem>(null, null);
+                }));
+            }
+        }
+
+        public RelayCommand<ToolbarItemViewModel> EditToolbarItemCommand
+        {
+            get
+            {
+                return editToolbarItemCommand ?? (editToolbarItemCommand = new RelayCommand<ToolbarItemViewModel>(t =>
+                {
+                    ViewStack.Push(t);
+                    SelectedToolbarItem = t;
+                }));
+            }
+        }
 
         public ReactiveProperty<string> Name
         {
             get { return nameProperty; }
             private set { RaiseSetIfChanged(ref nameProperty, value); }
+        }
+
+        public RelayCommand RemoveToolbarItemCommand
+        {
+            get
+            {
+                return removeToolbarItemCommand ?? (removeToolbarItemCommand = new RelayCommand(() =>
+                {
+                    SelectedToolbarItem?.Dispose();
+                    ToolbarItems.Remove(SelectedToolbarItem);
+                    SelectedToolbarItem = null;
+                }));
+            }
+        }
+
+        public ToolbarItemViewModel SelectedToolbarItem
+        {
+            get { return selectedToolbarItem; }
+            set { RaiseSetIfChanged(ref selectedToolbarItem, value); }
         }
 
         public Toolbar Toolbar
@@ -42,48 +103,20 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels.ToolbarViewModels
             private set { RaiseSetIfChanged(ref currentView, value); }
         }
 
-        public void Clear()
+        protected override void Dispose(bool disposing)
         {
-            ClearInternal();
-            UpdateCurrentView();
-        }
-
-        public bool IsOpen(Type viewType)
-        {
-            foreach (var view in loadedViews)
-                if (view.GetType() == viewType)
-                    return true;
-            return false;
-        }
-
-        public void Pop()
-        {
-            PopInternal();
-            UpdateCurrentView();
-        }
-
-        public T Push<T>() where T : IView, new()
-        {
-            return Push(new T());
-        }
-
-        public T Push<T>(T view) where T : IView
-        {
-            PushInternal(view);
-            UpdateCurrentView();
-            return view;
-        }
-
-        public T Set<T>() where T : IView, new()
-        {
-            return Set(new T());
-        }
-
-        public T Set<T>(T view) where T : IView
-        {
-            SetInternal(view);
-            UpdateCurrentView();
-            return view;
+            if (disposing)
+            {
+                Name.Dispose();
+                itemAddedSubscription.Dispose();
+                itemsRemovedSubscription.Dispose();
+                foreach (var item in ToolbarItems)
+                {
+                    item.Dispose();
+                }
+                ToolbarItems.Clear();
+            }
+            base.Dispose(disposing);
         }
 
         protected override void OnRuleSetChanged()
@@ -119,62 +152,19 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels.ToolbarViewModels
 
             itemAddedSubscription = ToolbarItems.BeforeItemsAdded.Subscribe(i => Toolbar.Items.Add(i.MenuItem));
             itemsRemovedSubscription = ToolbarItems.BeforeItemsRemoved.Subscribe(i => Toolbar.Items.Remove(i.MenuItem));
-
-            Set<ToolbarEditViewModel>();
         }
 
-        private void ClearInternal()
+        private TViewModel AddAndSelectNewToolbarItem<TViewModel, TItem>(Action<TItem> itemAction, Action<TViewModel> viewModelAction)
+            where TViewModel : ToolbarItemViewModel, new()
+            where TItem : ToolbarItem, new()
         {
-            while (loadedViews.Count > 0)
-                PopInternal();
-        }
-
-        private void PopInternal()
-        {
-            loadedViews.Pop().Dispose();
-        }
-
-        private void PushInternal(IView view)
-        {
-            SetProperties(view);
-            loadedViews.Push(view);
-        }
-
-        private void SetInternal(IView view)
-        {
-            ClearInternal();
-            PushInternal(view);
-        }
-
-        private void SetProperties(IView view)
-        {
-            view.ViewStack = this;
-            if (view is RuleSetViewModelBase)
-                ((RuleSetViewModelBase)view).RuleSetViewModel = RuleSetViewModel;
-            if (view is ToolbarEditViewModel)
-                ((ToolbarEditViewModel)view).Toolbar = this;
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                Name.Dispose();
-                itemAddedSubscription.Dispose();
-                itemsRemovedSubscription.Dispose();
-                ClearInternal();
-                foreach (var item in ToolbarItems)
-                {
-                    item.Dispose();
-                }
-                ToolbarItems.Clear();
-            }
-            base.Dispose(disposing);
-        }
-
-        private void UpdateCurrentView()
-        {
-            View = loadedViews.Count > 0 ? loadedViews.Peek() : null;
+            TItem item = new TItem();
+            itemAction?.Invoke(item);
+            TViewModel model = new TViewModel() { RuleSetViewModel = RuleSetViewModel, MenuItem = item };
+            viewModelAction?.Invoke(model);
+            ToolbarItems.Add(model);
+            SelectedToolbarItem = model;
+            return model;
         }
     }
 }

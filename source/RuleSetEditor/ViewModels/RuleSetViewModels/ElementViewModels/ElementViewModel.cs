@@ -16,7 +16,7 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels.ElementViewModels
             }
             set
             {
-                RaiseSetIfChanged(ref element, value);
+                if (!RaiseSetIfChanged(ref element, value)) return;
                 Name = ReactiveProperty.FromObject(Element, e => e.Name);
                 Name.PropertyChanged += OnPropertyChanged;
                 if (!DeferChanged)

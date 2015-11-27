@@ -13,7 +13,7 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels
             get { return deferChanged; }
             set
             {
-                RaiseSetIfChanged(ref deferChanged, value);
+                if (!RaiseSetIfChanged(ref deferChanged, value)) return;
                 if (!DeferChanged)
                     while (DeferQueue.Count > 0)
                         DeferQueue.Dequeue()();
@@ -28,7 +28,7 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels
             }
             set
             {
-                RaiseSetIfChanged(ref ruleSetViewModel, value);
+                if (!RaiseSetIfChanged(ref ruleSetViewModel, value)) return;
                 if (!DeferChanged)
                     OnRuleSetChanged();
                 else

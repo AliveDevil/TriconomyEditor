@@ -124,6 +124,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Extensions.cs" />
+    <Compile Include="ViewModels\EffectViewModels\AddRecipeEffectViewModel.cs" />
     <Compile Include="ViewModels\LandingPageViewModel.cs" />
     <Compile Include="ViewModels\RelayCommand.cs" />
     <Compile Include="ViewModels\RelayCommand`1.cs" />
@@ -154,11 +155,13 @@
     <Compile Include="ViewModels\RuleSetViewModels\ToolbarViewModels\OpenToolbarItemViewModel.cs" />
     <Compile Include="ViewModels\RuleSetViewModels\ToolbarViewModels\PlaceBuildingItemViewModel.cs" />
     <Compile Include="ViewModels\RuleSetViewModels\ToolbarViewModels\ResourceBarViewModel.cs" />
-    <Compile Include="ViewModels\RuleSetViewModels\ToolbarViewModels\ToolbarEditViewModel.cs" />
     <Compile Include="ViewModels\RuleSetViewModels\ToolbarViewModels\ToolbarItemViewModel.cs" />
     <Compile Include="ViewModels\RuleSetViewModels\ToolbarViewModels\ToolbarViewModel.cs" />
     <Compile Include="ViewModels\RuleSetViewModels\WorldResourceListViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
+    <Compile Include="Views\EffectViews\AddRecipeEffectView.xaml.cs">
+      <DependentUpon>AddRecipeEffectView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\RuleSetViews\BuildingListView.xaml.cs">
       <DependentUpon>BuildingListView.xaml</DependentUpon>
     </Compile>
@@ -195,9 +198,6 @@
     <Compile Include="Views\RuleSetViews\ToolbarViews\ResourceBarView.xaml.cs">
       <DependentUpon>ResourceBarView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\RuleSetViews\ToolbarViews\ToolbarEditView.xaml.cs">
-      <DependentUpon>ToolbarEditView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\RuleSetViews\ToolbarViews\ToolbarView.xaml.cs">
       <DependentUpon>ToolbarView.xaml</DependentUpon>
     </Compile>
@@ -226,6 +226,14 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Views\EffectViews\AddRecipeEffectView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\EffectViews\EffectViewTemplates.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\LandingPageView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -295,10 +303,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\RuleSetViews\ToolbarViews\ResourceBarView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\RuleSetViews\ToolbarViews\ToolbarEditView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

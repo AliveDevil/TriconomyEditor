@@ -10,12 +10,21 @@ namespace RuleSetEditor.ViewModels
 
         private RelayCommand closeCommand;
         private bool disposed = false;
+        private IViewStack viewStack;
 
         public RelayCommand CloseCommand => closeCommand ?? (closeCommand = new RelayCommand(ViewStack.Pop));
 
         public IViewStack ViewStack
         {
-            get; set;
+            get
+            {
+                return viewStack;
+            }
+            set
+            {
+                if (!RaiseSetIfChanged(ref viewStack, value)) return;
+                OnViewStackChanged();
+            }
         }
 
         public void Dispose()
@@ -33,11 +42,16 @@ namespace RuleSetEditor.ViewModels
             PropertyChanged?.Invoke(sender, e);
         }
 
-        protected void RaiseSetIfChanged<T>(ref T field, T value, [CallerMemberName]string propertyName = null)
+        protected virtual void OnViewStackChanged()
         {
-            if (Equals(field, value)) return;
+        }
+
+        protected bool RaiseSetIfChanged<T>(ref T field, T value, [CallerMemberName]string propertyName = null)
+        {
+            if (Equals(field, value)) return false;
             field = value;
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            return true;
         }
     }
 }

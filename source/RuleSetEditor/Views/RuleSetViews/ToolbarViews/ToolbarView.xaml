@@ -1,26 +1,101 @@
 ﻿<UserControl x:Class="RuleSetEditor.Views.RuleSetViews.ToolbarViews.ToolbarView"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:vm="clr-namespace:RuleSetEditor.ViewModels.RuleSetViewModels.ToolbarViewModels"
-             xmlns:local="clr-namespace:RuleSetEditor.Views.RuleSetViews.ToolbarViews"
-             mc:Ignorable="d"
-             d:DataContext="{d:DesignInstance Type=vm:ToolbarViewModel}"
-             d:DesignHeight="300"
-             d:DesignWidth="300">
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
-        <Label Content="{Binding Name.Value, FallbackValue=None}"
-               ContentStringFormat="Toolbar: {0}"
-               HorizontalContentAlignment="Center"
-               FontWeight="Light"
-               FontSize="18"
-               Grid.Row="0" />
-        <ContentPresenter Content="{Binding View}"
-                          Grid.Row="1" />
-    </Grid>
+			 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+			 xmlns:vm="clr-namespace:RuleSetEditor.ViewModels.RuleSetViewModels.ToolbarViewModels"
+			 xmlns:local="clr-namespace:RuleSetEditor.Views.RuleSetViews.ToolbarViews"
+			 mc:Ignorable="d"
+			 d:DataContext="{d:DesignInstance Type=vm:ToolbarViewModel}"
+			 d:DesignHeight="300"
+			 d:DesignWidth="300">
+	<Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="*" />
+			<RowDefinition Height="Auto" />
+		</Grid.RowDefinitions>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="Auto" />
+			<ColumnDefinition Width="*" />
+			<ColumnDefinition Width="Auto" />
+			<ColumnDefinition Width="Auto" />
+		</Grid.ColumnDefinitions>
+		<Label Content="{Binding Name.Value, FallbackValue=None}"
+			   ContentStringFormat="Toolbar: {0}"
+			   HorizontalContentAlignment="Center"
+			   FontWeight="Light"
+			   FontSize="18"
+			   Grid.ColumnSpan="4"
+			   Grid.Row="0" />
+		<Label Content="Name"
+			   Grid.Row="2"
+			   Grid.Column="0" />
+		<TextBox Text="{Binding Name.Value, UpdateSourceTrigger=PropertyChanged}"
+				 Grid.Row="2"
+				 Grid.Column="1"
+				 Grid.ColumnSpan="3" />
+		<ListView ItemsSource="{Binding ToolbarItems}"
+				  SelectedItem="{Binding SelectedToolbarItem}"
+				  IsSynchronizedWithCurrentItem="True"
+				  HorizontalContentAlignment="Stretch"
+				  Grid.Row="3"
+				  Grid.ColumnSpan="4"
+				  Grid.IsSharedSizeScope="True">
+			<ListView.Resources>
+				<DataTemplate DataType="{x:Type vm:OpenToolbarItemViewModel}">
+					<Grid>
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="*" />
+							<ColumnDefinition Width="Auto"
+											  SharedSizeGroup="EditButtonField" />
+						</Grid.ColumnDefinitions>
+						<Label Content="{Binding Toolbar.Value.Name.Value}"
+							   Grid.Column="0" />
+						<Button Content="Edit"
+								Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=ListView}, Path=DataContext.EditToolbarItemCommand}"
+								CommandParameter="{Binding}"
+								Grid.Column="1" />
+					</Grid>
+				</DataTemplate>
+				<DataTemplate DataType="{x:Type vm:PlaceBuildingItemViewModel}">
+					<Grid>
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="*" />
+							<ColumnDefinition Width="Auto"
+											  SharedSizeGroup="EditButtonField" />
+						</Grid.ColumnDefinitions>
+						<Label Content="{Binding Building.Value.Name.Value}"
+							   Grid.Column="0" />
+						<Button Content="Edit"
+								Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=ListView}, Path=DataContext.EditToolbarItemCommand}"
+								CommandParameter="{Binding}"
+								Grid.Column="1" />
+					</Grid>
+				</DataTemplate>
+			</ListView.Resources>
+		</ListView>
+
+		<Button Content="Add"
+				Grid.Row="4"
+				Grid.Column="2"
+				Click="Button_Click">
+			<Button.ContextMenu>
+				<ContextMenu Placement="Bottom"
+							 DataContext="{Binding RelativeSource={RelativeSource Self}, Path=PlacementTarget.DataContext}">
+					<MenuItem Header="OpenToolbar"
+							  Command="{Binding AddOpenToolbarItemCommand}" />
+					<MenuItem Header="PlaceBuilding"
+							  Command="{Binding AddPlaceBuildingItemCommand}" />
+				</ContextMenu>
+			</Button.ContextMenu>
+		</Button>
+
+		<Button Content="Remove"
+				Command="{Binding RemoveToolbarItemCommand}"
+				Grid.Row="4"
+				Grid.Column="3" />
+	</Grid>
 </UserControl>

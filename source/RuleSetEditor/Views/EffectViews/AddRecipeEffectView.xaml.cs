@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace RuleSetEditor.Views.RuleSetViews.ToolbarViews
+namespace RuleSetEditor.Views.EffectViews
 {
     /// <summary>
-    /// Interaktionslogik für OpenToolbarMenuItem.xaml
+    /// Interaktionslogik für AddRecipeEffectView.xaml
     /// </summary>
-    public partial class OpenToolbarItemView : UserControl
+    public partial class AddRecipeEffectView : UserControl
     {
-        public OpenToolbarItemView()
+        public AddRecipeEffectView()
         {
             InitializeComponent();
         }
