@@ -4,14 +4,9 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels.ElementViewModels.ResourceV
 {
     public class ResourceEditViewModel : RuleSetViewModelBase
     {
-        private ReactiveProperty<string> nameProperty;
         private ResourceViewModel resource;
 
-        public ReactiveProperty<string> Name
-        {
-            get { return nameProperty; }
-            private set { RaiseSetIfChanged(ref nameProperty, value); }
-        }
+        public ReactiveProperty<string> Name { get; private set; }
 
         public ResourceViewModel Resource
         {
@@ -21,7 +16,7 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels.ElementViewModels.ResourceV
             }
             set
             {
-                RaiseSetIfChanged(ref resource, value);
+                if (!RaiseSetIfChanged(ref resource, value)) return;
                 Name = Resource.Name;
             }
         }

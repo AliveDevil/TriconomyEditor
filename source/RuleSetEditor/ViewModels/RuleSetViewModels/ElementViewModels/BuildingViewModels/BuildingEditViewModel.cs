@@ -6,23 +6,20 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels.ElementViewModels.BuildingV
 {
     public class BuildingEditViewModel : RuleSetViewModelBase
     {
-        private RelayCommand addUpgradeCommand;
         private BuildingViewModel building;
         private RelayCommand<UpgradeInfoViewModel> editUpgradeCommand;
         private ReactiveProperty<string> nameProperty;
         private IReactiveDerivedList<UpgradeInfoViewModel> upgradeList;
         private ReactiveProperty<int> variantsProperty;
 
-        public RelayCommand AddUpgradeCommand
+        public RelayCommand AddUpgradeCommand => new RelayCommand(() =>
         {
-            get
+            Building.UpgradeList.Add(new UpgradeViewModel()
             {
-                return addUpgradeCommand ?? (addUpgradeCommand = new RelayCommand(() =>
-                {
-                    Building.UpgradeList.Add(new UpgradeViewModel() { RuleSetViewModel = RuleSetViewModel, Upgrade = new Upgrade() { Level = 0 } });
-                }));
-            }
-        }
+                RuleSetViewModel = RuleSetViewModel,
+                Upgrade = new Upgrade() { Level = 0 }
+            });
+        });
 
         public BuildingViewModel Building
         {
@@ -40,16 +37,10 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels.ElementViewModels.BuildingV
             }
         }
 
-        public RelayCommand<UpgradeInfoViewModel> EditUpgradeCommand
-        {
-            get
-            {
-                return editUpgradeCommand ?? (editUpgradeCommand = new RelayCommand<UpgradeInfoViewModel>(u =>
-                {
-                    ViewStack.Push<UpgradeEditViewModel>()._(_ => _.Upgrade = u.Upgrade);
-                }));
-            }
-        }
+        public RelayCommand<UpgradeInfoViewModel> EditUpgradeCommand => new RelayCommand<UpgradeInfoViewModel>(u =>
+         {
+             ViewStack.Push<UpgradeEditViewModel>()._(_ => _.Upgrade = u.Upgrade);
+         });
 
         public ReactiveProperty<string> Name
         {

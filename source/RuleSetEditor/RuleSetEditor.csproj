@@ -125,6 +125,7 @@
     </ApplicationDefinition>
     <Compile Include="Extensions.cs" />
     <Compile Include="ViewModels\EffectViewModels\AddRecipeEffectViewModel.cs" />
+    <Compile Include="ViewModels\EffectViewModels\RecipePartViewModel.cs" />
     <Compile Include="ViewModels\LandingPageViewModel.cs" />
     <Compile Include="ViewModels\RelayCommand.cs" />
     <Compile Include="ViewModels\RelayCommand`1.cs" />
@@ -145,13 +146,11 @@
     <Compile Include="ViewModels\RuleSetViewModels\ElementViewModels\ResourceViewModels\ResourceGroupEditViewModel.cs" />
     <Compile Include="ViewModels\RuleSetViewModels\ElementViewModels\UpgradeViewModel.cs" />
     <Compile Include="ViewModels\RuleSetViewModels\ElementViewModels\WorldResourceViewModels\WorldResourceEditViewModel.cs" />
-    <Compile Include="ViewModels\RuleSetViewModels\ElementViewModels\WorldResourceViewModels\WorldResourceInfoViewModel.cs" />
     <Compile Include="ViewModels\RuleSetViewModels\ElementViewModels\WorldResourceViewModel.cs" />
     <Compile Include="ViewModels\RuleSetViewModels\JobListViewModel.cs" />
     <Compile Include="ViewModels\RuleSetViewModels\LandingPageViewModel.cs" />
     <Compile Include="ViewModels\RuleSetViewModels\ResourceListViewModel.cs" />
-    <Compile Include="ViewModels\RuleSetViewModels\ElementViewModels\ResourceViewModels\ResourceInfoViewModel.cs" />
-    <Compile Include="ViewModels\RuleSetViewModels\RuleSetViewModelBase.cs" />
+    <Compile Include="ViewModels\RuleSetViewModelBase.cs" />
     <Compile Include="ViewModels\RuleSetViewModels\ToolbarViewModels\OpenToolbarItemViewModel.cs" />
     <Compile Include="ViewModels\RuleSetViewModels\ToolbarViewModels\PlaceBuildingItemViewModel.cs" />
     <Compile Include="ViewModels\RuleSetViewModels\ToolbarViewModels\ResourceBarViewModel.cs" />

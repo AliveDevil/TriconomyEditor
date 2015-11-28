@@ -37,17 +37,12 @@
 					<ColumnDefinition Width="*" />
 				</Grid.ColumnDefinitions>
 				<Label Content="Resources" />
-				<ListView ItemsSource="{Binding Resources}"
+				<ListView ItemsSource="{Binding ResourceList}"
 						  SelectedItem="{Binding SelectedResource}"
 						  IsSynchronizedWithCurrentItem="True"
 						  HorizontalContentAlignment="Stretch"
-						  Grid.Column="1">
-					<ListView.ItemTemplate>
-						<DataTemplate>
-							<Label Content="{Binding}" />
-						</DataTemplate>
-					</ListView.ItemTemplate>
-				</ListView>
+						  DisplayMemberPath="Name.Value"
+						  Grid.Column="1" />
 			</Grid>
 
 			<Grid>
@@ -61,6 +56,7 @@
 				<ComboBox SelectedItem="{Binding SelectedResource}"
 						  ItemsSource="{Binding AvailableResources}"
 						  IsSynchronizedWithCurrentItem="True"
+						  DisplayMemberPath="Name.Value"
 						  Grid.Column="1" />
 				<Button Content="Add"
 						Command="{Binding AddResourceCommand}"

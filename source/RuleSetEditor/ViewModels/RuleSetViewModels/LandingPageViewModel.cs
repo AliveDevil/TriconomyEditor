@@ -38,6 +38,16 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels
             }
         }
 
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                Dispose(ref nameProperty);
+                Dispose(ref saveCommand);
+            }
+            base.Dispose(disposing);
+        }
+
         protected override void OnRuleSetChanged()
         {
             base.OnRuleSetChanged();

@@ -5,36 +5,23 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels.ElementViewModels.ResourceV
 {
     public class ResourceGroupEditViewModel : RuleSetViewModelBase
     {
-        private RelayCommand addResourceCommand;
-        private IReactiveDerivedList<ResourceInfoViewModel> availableResources;
-        private ReactiveProperty<string> nameProperty;
+        private IReactiveDerivedList<ResourceViewModel> availableResources;
         private ResourceGroupViewModel resourceGroup;
-        private IReactiveDerivedList<ResourceInfoViewModel> resources;
-        private ResourceInfoViewModel selectedResource;
+        private ResourceViewModel selectedResource;
 
-        public RelayCommand AddResourceCommand
+        public RelayCommand AddResourceCommand => new RelayCommand(() =>
         {
-            get
-            {
-                return addResourceCommand ?? (addResourceCommand = new RelayCommand(() =>
-                {
-                    if (ResourceGroup.ResourceList.Contains(SelectedResource.Resource)) return;
-                    ResourceGroup.ResourceList.Add(SelectedResource.Resource);
-                }));
-            }
-        }
+            if (ResourceGroup.ResourceList.Contains(SelectedResource)) return;
+            ResourceGroup.ResourceList.Add(SelectedResource);
+        });
 
-        public IReactiveDerivedList<ResourceInfoViewModel> AvailableResources
+        public IReactiveDerivedList<ResourceViewModel> AvailableResources
         {
             get { return availableResources; }
             private set { RaiseSetIfChanged(ref availableResources, value); }
         }
 
-        public ReactiveProperty<string> Name
-        {
-            get { return nameProperty; }
-            private set { RaiseSetIfChanged(ref nameProperty, value); }
-        }
+        public ReactiveProperty<string> Name { get; private set; }
 
         public ResourceGroupViewModel ResourceGroup
         {
@@ -44,19 +31,15 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels.ElementViewModels.ResourceV
             }
             set
             {
-                RaiseSetIfChanged(ref resourceGroup, value);
+                if (!RaiseSetIfChanged(ref resourceGroup, value)) return;
                 Name = ResourceGroup.Name;
-                Resources = ResourceGroup.ResourceList.CreateDerivedCollection(r => new ResourceInfoViewModel() { RuleSetViewModel = RuleSetViewModel, Resource = r }, null, (l, r) => l.Name.Value.CompareTo(r.Name.Value));
+                ResourceList = ResourceGroup.ResourceList;
             }
         }
 
-        public IReactiveDerivedList<ResourceInfoViewModel> Resources
-        {
-            get { return resources; }
-            private set { RaiseSetIfChanged(ref resources, value); }
-        }
+        public ReactiveList<ResourceViewModel> ResourceList { get; private set; }
 
-        public ResourceInfoViewModel SelectedResource
+        public ResourceViewModel SelectedResource
         {
             get { return selectedResource; }
             set { RaiseSetIfChanged(ref selectedResource, value); }
@@ -65,7 +48,7 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels.ElementViewModels.ResourceV
         protected override void OnRuleSetChanged()
         {
             base.OnRuleSetChanged();
-            AvailableResources = RuleSetViewModel.ElementList.CreateDerivedCollection(e => new ResourceInfoViewModel() { Resource = (ResourceViewModel)e, RuleSetViewModel = RuleSetViewModel }, e => e is ResourceViewModel, (l, r) => l.Name.Value.CompareTo(r.Name.Value));
+            AvailableResources = RuleSetViewModel.ElementList.CreateDerivedCollection(e => (ResourceViewModel)e, e => e is ResourceViewModel, (l, r) => l.Name.Value.CompareTo(r.Name.Value));
         }
     }
 }

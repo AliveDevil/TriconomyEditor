@@ -43,6 +43,7 @@
 			<ComboBox SelectedItem="{Binding SelectedResource}"
 					  ItemsSource="{Binding AvailableResources}"
 					  IsSynchronizedWithCurrentItem="True"
+					  DisplayMemberPath="Name.Value"
 					  Grid.Column="1" />
 			<Button Content="Add"
 					Command="{Binding AddResourceCommand}"

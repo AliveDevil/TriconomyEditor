@@ -17,7 +17,7 @@
 		<ContentPresenter Content="{Binding Toolbar.Value}" />
 		<Button Content="Back"
 				Command="{Binding CloseCommand}"
-				HorizontalAlignment="Right"
+				HorizontalAlignment="Left"
 				Grid.Row="1" />
 	</Grid>
 </UserControl>

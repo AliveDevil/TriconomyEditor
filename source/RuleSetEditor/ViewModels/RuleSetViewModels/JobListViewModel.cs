@@ -8,36 +8,21 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels
 {
     public class JobListViewModel : RuleSetViewModelBase
     {
-        private RelayCommand addJobCommand;
-        private RelayCommand<JobInfoViewModel> editJobCommand;
         private IReactiveDerivedList<JobInfoViewModel> jobs;
-        private RelayCommand removeJobCommand;
         private JobInfoViewModel selectedJob;
 
-        public RelayCommand AddJobCommand
+        public RelayCommand AddJobCommand => new RelayCommand(() =>
         {
-            get
-            {
-                return addJobCommand ?? (addJobCommand = new RelayCommand(() =>
-                {
-                    JobViewModel model = new JobViewModel() { RuleSetViewModel = RuleSetViewModel, Element = new Job() { Name = "New Job" } };
-                    RuleSetViewModel.ElementList.Add(model);
-                    SelectedJob = Jobs.SingleOrDefault(r => r.Job == model);
-                }));
-            }
-        }
+            JobViewModel model = new JobViewModel() { RuleSetViewModel = RuleSetViewModel, Element = new Job() { Name = "New Job" } };
+            RuleSetViewModel.ElementList.Add(model);
+            SelectedJob = Jobs.SingleOrDefault(r => r.Job == model);
+        });
 
-        public RelayCommand<JobInfoViewModel> EditJobCommand
+        public RelayCommand<JobInfoViewModel> EditJobCommand => new RelayCommand<JobInfoViewModel>(job =>
         {
-            get
-            {
-                return editJobCommand ?? (editJobCommand = new RelayCommand<JobInfoViewModel>(job =>
-                {
-                    SelectedJob = job;
-                    ViewStack.Push<JobEditViewModel>()._(_ => _.Job = job.Job);
-                }));
-            }
-        }
+            SelectedJob = job;
+            ViewStack.Push<JobEditViewModel>()._(_ => _.Job = job.Job);
+        });
 
         public IReactiveDerivedList<JobInfoViewModel> Jobs
         {
@@ -45,21 +30,27 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels
             private set { RaiseSetIfChanged(ref jobs, value); }
         }
 
-        public RelayCommand RemoveJobCommand
+        public RelayCommand RemoveJobCommand => new RelayCommand(() =>
         {
-            get
-            {
-                return removeJobCommand ?? (removeJobCommand = new RelayCommand(() =>
-                {
-                    RuleSetViewModel.ElementList.Remove(SelectedJob?.Job);
-                }));
-            }
-        }
+            RuleSetViewModel.ElementList.Remove(SelectedJob?.Job);
+        });
 
         public JobInfoViewModel SelectedJob
         {
             get { return selectedJob; }
             set { RaiseSetIfChanged(ref selectedJob, value); }
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                Dispose(ref jobs);
+                AddJobCommand.Dispose();
+                EditJobCommand.Dispose();
+                RemoveJobCommand.Dispose();
+            }
+            base.Dispose(disposing);
         }
 
         protected override void OnRuleSetChanged()

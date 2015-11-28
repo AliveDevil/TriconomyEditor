@@ -60,12 +60,13 @@
                 <Label Content="Resource" />
                 <ComboBox SelectedItem="{Binding Resource.Value}"
                           ItemsSource="{Binding Resources}"
+						  DisplayMemberPath="Name.Value"
                           Grid.Column="1" />
             </Grid>
         </StackPanel>
         <Button Content="Back"
                 Command="{Binding CloseCommand}"
-                HorizontalAlignment="Right"
+                HorizontalAlignment="Left"
                 Grid.Row="1" />
     </Grid>
 </UserControl>

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace RuleSetEditor.ViewModels.EffectViewModels
 {
-    class AddRecipeEffectViewModel
+    public class AddRecipeEffectViewModel : RuleSetViewModelBase
     {
     }
 }

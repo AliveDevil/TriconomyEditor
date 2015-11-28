@@ -1,6 +1,6 @@
-﻿using Reactive.Bindings;
+﻿using System.Linq;
+using Reactive.Bindings;
 using ReactiveUI;
-using System.Linq;
 using RuleSet.Menus;
 using RuleSetEditor.ViewModels.RuleSetViewModels.ElementViewModels;
 
@@ -17,14 +17,14 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels.ToolbarViewModels
             private set { RaiseSetIfChanged(ref buildingProperty, value); }
         }
 
-        public PlaceBuildingItem PlaceBuilding => (PlaceBuildingItem)MenuItem;
-
         public IReactiveDerivedList<BuildingViewModel> Buildings
         {
             get { return buildings; }
             private set { RaiseSetIfChanged(ref buildings, value); }
         }
 
+        public PlaceBuildingItem PlaceBuilding => (PlaceBuildingItem)MenuItem;
+        
         protected override void OnMenuItemChanged()
         {
             base.OnMenuItemChanged();

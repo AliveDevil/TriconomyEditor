@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using libUIStack;
 
@@ -32,8 +33,21 @@ namespace RuleSetEditor.ViewModels
             Dispose(!disposed);
         }
 
+        public void Dispose<T>(ref T t) where T : class, IDisposable
+        {
+            t?.Dispose();
+            t = null;
+        }
+
+        public void Update()
+        {
+            OnPropertyChanged(this, new PropertyChangedEventArgs(string.Empty));
+        }
+
         protected virtual void Dispose(bool disposing)
         {
+            PropertyChanged = null;
+            closeCommand = null;
             disposed = true;
         }
 

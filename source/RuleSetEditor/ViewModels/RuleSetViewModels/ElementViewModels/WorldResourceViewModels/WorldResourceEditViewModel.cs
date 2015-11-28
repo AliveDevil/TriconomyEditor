@@ -2,7 +2,6 @@
 using Reactive.Bindings;
 using Reactive.Bindings.Extensions;
 using ReactiveUI;
-using RuleSetEditor.ViewModels.RuleSetViewModels.ElementViewModels.ResourceViewModels;
 
 namespace RuleSetEditor.ViewModels.RuleSetViewModels.ElementViewModels.WorldResourceViewModels
 {
@@ -10,8 +9,8 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels.ElementViewModels.WorldReso
     {
         private ReactiveProperty<int> amountPropety;
         private ReactiveProperty<string> nameProperty;
-        private ReactiveProperty<ResourceInfoViewModel> resourceProperty;
-        private IReactiveDerivedList<ResourceInfoViewModel> resources;
+        private ReactiveProperty<ResourceViewModel> resourceProperty;
+        private IReactiveDerivedList<ResourceViewModel> resources;
         private ReactiveProperty<int> variantsProperty;
         private WorldResourceViewModel worldResource;
 
@@ -27,13 +26,13 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels.ElementViewModels.WorldReso
             private set { RaiseSetIfChanged(ref nameProperty, value); }
         }
 
-        public ReactiveProperty<ResourceInfoViewModel> Resource
+        public ReactiveProperty<ResourceViewModel> Resource
         {
             get { return resourceProperty; }
             private set { RaiseSetIfChanged(ref resourceProperty, value); }
         }
 
-        public IReactiveDerivedList<ResourceInfoViewModel> Resources
+        public IReactiveDerivedList<ResourceViewModel> Resources
         {
             get { return resources; }
             private set { RaiseSetIfChanged(ref resources, value); }
@@ -55,13 +54,9 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels.ElementViewModels.WorldReso
             {
                 RaiseSetIfChanged(ref worldResource, value);
                 Name = WorldResource.Name;
-                Name.PropertyChanged += OnPropertyChanged;
                 Amount = WorldResource.Amount;
-                Amount.PropertyChanged += OnPropertyChanged;
-                Resource = WorldResource.Resource.ToReactivePropertyAsSynchronized(w => w.Value, w => Resources.SingleOrDefault(r => r.Resource == worldResource.Resource.Value), w => w?.Resource);
-                Resource.PropertyChanged += OnPropertyChanged;
+                Resource = WorldResource.Resource.ToReactivePropertyAsSynchronized(w => w.Value, w => Resources.SingleOrDefault(r => r == worldResource.Resource.Value), w => w);
                 Variants = WorldResource.Variants;
-                Variants.PropertyChanged += OnPropertyChanged;
             }
         }
 
@@ -73,7 +68,7 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels.ElementViewModels.WorldReso
         protected override void OnRuleSetChanged()
         {
             base.OnRuleSetChanged();
-            Resources = RuleSetViewModel.ElementList.CreateDerivedCollection(e => new ResourceInfoViewModel() { Resource = (ResourceViewModel)e, RuleSetViewModel = RuleSetViewModel }, e => e is ResourceViewModel, (l, r) => l.Name.Value.CompareTo(r.Name.Value));
+            Resources = RuleSetViewModel.ElementList.CreateDerivedCollection(e => (ResourceViewModel)e, e => e is ResourceViewModel, (l, r) => l.Name.Value.CompareTo(r.Name.Value));
         }
     }
 }

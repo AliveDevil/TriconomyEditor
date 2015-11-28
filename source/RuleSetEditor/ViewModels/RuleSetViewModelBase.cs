@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace RuleSetEditor.ViewModels.RuleSetViewModels
+namespace RuleSetEditor.ViewModels
 {
     public abstract class RuleSetViewModelBase : ViewModelBase
     {
@@ -10,7 +10,10 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels
 
         public bool DeferChanged
         {
-            get { return deferChanged; }
+            get
+            {
+                return deferChanged;
+            }
             set
             {
                 if (!RaiseSetIfChanged(ref deferChanged, value)) return;
@@ -37,6 +40,15 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels
         }
 
         protected Queue<Action> DeferQueue { get; } = new Queue<Action>();
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                DeferQueue.Clear();
+            }
+            base.Dispose(disposing);
+        }
 
         protected virtual void OnRuleSetChanged()
         {

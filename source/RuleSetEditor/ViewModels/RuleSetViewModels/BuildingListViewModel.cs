@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using ReactiveUI;
 using RuleSet.Elements;
 using RuleSetEditor.ViewModels.RuleSetViewModels.ElementViewModels;
@@ -8,24 +9,15 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels
 {
     public class BuildingListViewModel : RuleSetViewModelBase
     {
-        private RelayCommand addBuildingCommand;
         private IReactiveDerivedList<BuildingInfoViewModel> buildings;
-        private RelayCommand<BuildingInfoViewModel> editBuildingCommand;
-        private RelayCommand removeBuildingCommand;
         private BuildingInfoViewModel selectedBuilding;
 
-        public RelayCommand AddBuildingCommand
+        public RelayCommand AddBuildingCommand => new RelayCommand(() =>
         {
-            get
-            {
-                return addBuildingCommand ?? (addBuildingCommand = new RelayCommand(() =>
-                {
-                    BuildingViewModel model = new BuildingViewModel() { RuleSetViewModel = RuleSetViewModel, Element = new Building() { Name = "New Building" } };
-                    RuleSetViewModel.ElementList.Add(model);
-                    SelectedBuilding = Buildings.SingleOrDefault(r => r.Building == model);
-                }));
-            }
-        }
+            BuildingViewModel model = new BuildingViewModel() { RuleSetViewModel = RuleSetViewModel, Element = new Building() { Name = "New Building" } };
+            RuleSetViewModel.ElementList.Add(model);
+            SelectedBuilding = Buildings.SingleOrDefault(r => r.Building == model);
+        });
 
         public IReactiveDerivedList<BuildingInfoViewModel> Buildings
         {
@@ -33,28 +25,16 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels
             private set { RaiseSetIfChanged(ref buildings, value); }
         }
 
-        public RelayCommand<BuildingInfoViewModel> EditBuildingCommand
+        public RelayCommand<BuildingInfoViewModel> EditBuildingCommand => new RelayCommand<BuildingInfoViewModel>(building =>
         {
-            get
-            {
-                return editBuildingCommand ?? (editBuildingCommand = new RelayCommand<BuildingInfoViewModel>(building =>
-                {
-                    SelectedBuilding = building;
-                    ViewStack.Push<BuildingEditViewModel>()._(_ => _.Building = building.Building);
-                }));
-            }
-        }
+            SelectedBuilding = building;
+            ViewStack.Push<BuildingEditViewModel>()._(_ => _.Building = building.Building);
+        });
 
-        public RelayCommand RemoveBuildingCommand
+        public RelayCommand RemoveBuildingCommand => new RelayCommand(() =>
         {
-            get
-            {
-                return removeBuildingCommand ?? (removeBuildingCommand = new RelayCommand(() =>
-                {
-                    RuleSetViewModel.ElementList.Remove(SelectedBuilding?.Building);
-                }));
-            }
-        }
+            RuleSetViewModel.ElementList.Remove(SelectedBuilding?.Building);
+        });
 
         public BuildingInfoViewModel SelectedBuilding
         {
@@ -66,7 +46,10 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels
         {
             if (disposing)
             {
-                Buildings.Dispose();
+                Dispose(ref buildings);
+                AddBuildingCommand.Dispose();
+                EditBuildingCommand.Dispose();
+                RemoveBuildingCommand.Dispose();
             }
             base.Dispose(disposing);
         }

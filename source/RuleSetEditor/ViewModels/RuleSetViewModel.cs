@@ -7,9 +7,7 @@ using libUIStack;
 using Reactive.Bindings;
 using ReactiveUI;
 using RuleSet.Elements;
-using RuleSetEditor.ViewModels.RuleSetViewModels;
 using RuleSetEditor.ViewModels.RuleSetViewModels.ElementViewModels;
-using RuleSetEditor.ViewModels.RuleSetViewModels.ToolbarViewModels;
 
 namespace RuleSetEditor.ViewModels
 {
@@ -19,11 +17,9 @@ namespace RuleSetEditor.ViewModels
         private ReactiveList<ElementViewModel> elementList;
         private Stack<IView> loadedViews = new Stack<IView>();
         private ReactiveProperty<string> nameProperty;
-        private RelayCommand openToolbarCommand;
         private RelayCommand<Type> openViewCommand;
         private RuleSet.RuleSet ruleSet;
         private string sourceFilePath;
-        private ReactiveProperty<ToolbarViewModel> toolbarProperty;
 
         public ReactiveList<ElementViewModel> ElementList
         {
@@ -35,17 +31,6 @@ namespace RuleSetEditor.ViewModels
         {
             get { return nameProperty; }
             private set { RaiseSetIfChanged(ref nameProperty, value); }
-        }
-
-        public RelayCommand OpenToolbar
-        {
-            get
-            {
-                return openToolbarCommand ?? (openToolbarCommand = new RelayCommand(() =>
-                {
-                    Set(Toolbar.Value);
-                }));
-            }
         }
 
         public RelayCommand<Type> OpenView
@@ -106,12 +91,6 @@ namespace RuleSetEditor.ViewModels
             set { RaiseSetIfChanged(ref sourceFilePath, value); }
         }
 
-        public ReactiveProperty<ToolbarViewModel> Toolbar
-        {
-            get { return toolbarProperty; }
-            private set { RaiseSetIfChanged(ref toolbarProperty, value); }
-        }
-
         public IView View
         {
             get { return currentView; }
@@ -162,6 +141,11 @@ namespace RuleSetEditor.ViewModels
             return view;
         }
 
+        protected override void Dispose(bool disposing)
+        {
+            base.Dispose(disposing);
+        }
+
         private void ClearInternal()
         {
             while (loadedViews.Count > 0)
@@ -190,6 +174,8 @@ namespace RuleSetEditor.ViewModels
             view.ViewStack = this;
             if (view is RuleSetViewModelBase)
                 ((RuleSetViewModelBase)view).RuleSetViewModel = this;
+            if (view is ViewModelBase)
+                ((ViewModelBase)view).Update();
         }
 
         private void UpdateCurrentView()

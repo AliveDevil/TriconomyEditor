@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using libUIStack;
 using Reactive.Bindings;
 using ReactiveUI;
 using RuleSet.Menus;
@@ -10,55 +8,31 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels.ToolbarViewModels
 {
     public class ToolbarViewModel : RuleSetViewModelBase
     {
-        private RelayCommand addOpenToolbarItemCommand;
-        private RelayCommand addPlaceBuildingItemCommand;
-        private IView currentView;
-        private RelayCommand<ToolbarItemViewModel> editToolbarItemCommand;
         private IDisposable itemAddedSubscription;
         private IDisposable itemsRemovedSubscription;
-        private Stack<IView> loadedViews = new Stack<IView>();
         private ReactiveProperty<string> nameProperty;
-        private RelayCommand removeToolbarItemCommand;
         private ToolbarItemViewModel selectedToolbarItem;
         private Toolbar toolbar;
         private ReactiveList<ToolbarItemViewModel> toolbarItems;
 
-        public RelayCommand AddOpenToolbarItemCommand
+        public RelayCommand AddOpenToolbarItemCommand => new RelayCommand(() =>
         {
-            get
+            AddAndSelectNewToolbarItem<OpenToolbarItemViewModel, OpenToolbarItem>(m =>
             {
-                return addOpenToolbarItemCommand ?? (addOpenToolbarItemCommand = new RelayCommand(() =>
-                {
-                    AddAndSelectNewToolbarItem<OpenToolbarItemViewModel, OpenToolbarItem>(m =>
-                    {
-                        m.Toolbar = new Toolbar() { Name = "New Toolbar" };
-                    }, null);
-                }));
-            }
-        }
+                m.Toolbar = new Toolbar() { Name = "New Toolbar" };
+            }, null);
+        });
 
-        public RelayCommand AddPlaceBuildingItemCommand
+        public RelayCommand AddPlaceBuildingItemCommand => new RelayCommand(() =>
         {
-            get
-            {
-                return addPlaceBuildingItemCommand ?? (addPlaceBuildingItemCommand = new RelayCommand(() =>
-                {
-                    AddAndSelectNewToolbarItem<PlaceBuildingItemViewModel, PlaceBuildingItem>(null, null);
-                }));
-            }
-        }
+            AddAndSelectNewToolbarItem<PlaceBuildingItemViewModel, PlaceBuildingItem>(null, null);
+        });
 
-        public RelayCommand<ToolbarItemViewModel> EditToolbarItemCommand
+        public RelayCommand<ToolbarItemViewModel> EditToolbarItemCommand => new RelayCommand<ToolbarItemViewModel>(t =>
         {
-            get
-            {
-                return editToolbarItemCommand ?? (editToolbarItemCommand = new RelayCommand<ToolbarItemViewModel>(t =>
-                {
-                    ViewStack.Push(t);
-                    SelectedToolbarItem = t;
-                }));
-            }
-        }
+            ViewStack.Push(t);
+            SelectedToolbarItem = t;
+        });
 
         public ReactiveProperty<string> Name
         {
@@ -66,18 +40,12 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels.ToolbarViewModels
             private set { RaiseSetIfChanged(ref nameProperty, value); }
         }
 
-        public RelayCommand RemoveToolbarItemCommand
+        public RelayCommand RemoveToolbarItemCommand => new RelayCommand(() =>
         {
-            get
-            {
-                return removeToolbarItemCommand ?? (removeToolbarItemCommand = new RelayCommand(() =>
-                {
-                    SelectedToolbarItem?.Dispose();
-                    ToolbarItems.Remove(SelectedToolbarItem);
-                    SelectedToolbarItem = null;
-                }));
-            }
-        }
+            SelectedToolbarItem?.Dispose();
+            ToolbarItems.Remove(SelectedToolbarItem);
+            SelectedToolbarItem = null;
+        });
 
         public ToolbarItemViewModel SelectedToolbarItem
         {
@@ -87,7 +55,7 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels.ToolbarViewModels
 
         public Toolbar Toolbar
         {
-            get { return toolbar; }
+            get { return toolbar ?? (Toolbar = RuleSetViewModel.RuleSet.Toolbar ?? (RuleSetViewModel.RuleSet.Toolbar = new Toolbar() { Name = "Default" })); }
             set { RaiseSetIfChanged(ref toolbar, value); }
         }
 
@@ -97,24 +65,19 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels.ToolbarViewModels
             private set { RaiseSetIfChanged(ref toolbarItems, value); }
         }
 
-        public IView View
-        {
-            get { return currentView; }
-            private set { RaiseSetIfChanged(ref currentView, value); }
-        }
-
         protected override void Dispose(bool disposing)
         {
             if (disposing)
             {
-                Name.Dispose();
-                itemAddedSubscription.Dispose();
-                itemsRemovedSubscription.Dispose();
-                foreach (var item in ToolbarItems)
-                {
-                    item.Dispose();
-                }
+                Dispose(ref itemAddedSubscription);
+                Dispose(ref itemAddedSubscription);
                 ToolbarItems.Clear();
+
+                Dispose(ref nameProperty);
+                AddOpenToolbarItemCommand.Dispose();
+                AddPlaceBuildingItemCommand.Dispose();
+                EditToolbarItemCommand.Dispose();
+                RemoveToolbarItemCommand.Dispose();
             }
             base.Dispose(disposing);
         }
@@ -122,12 +85,6 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels.ToolbarViewModels
         protected override void OnRuleSetChanged()
         {
             base.OnRuleSetChanged();
-
-            if (Toolbar == null)
-            {
-                Toolbar = RuleSetViewModel.RuleSet.Toolbar;
-            }
-
             Name = ReactiveProperty.FromObject(Toolbar, t => t.Name);
             ToolbarItems = new ReactiveList<ToolbarItemViewModel>(Toolbar.Items.Select(i =>
             {

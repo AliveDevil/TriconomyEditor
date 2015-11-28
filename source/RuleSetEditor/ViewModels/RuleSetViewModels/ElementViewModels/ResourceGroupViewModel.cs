@@ -7,6 +7,8 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels.ElementViewModels
 {
     public class ResourceGroupViewModel : ResourceViewModel
     {
+        private IDisposable beforeItemsAdded;
+        private IDisposable beforeItemsRemoved;
         private ReactiveList<ResourceViewModel> resourcesList;
 
         public ResourceGroup ResourceGroup => (ResourceGroup)Element;
@@ -17,13 +19,26 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels.ElementViewModels
             private set { RaiseSetIfChanged(ref resourcesList, value); }
         }
 
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                beforeItemsAdded.Dispose();
+                beforeItemsRemoved.Dispose();
+                ResourceList.Clear();
+
+                resourcesList = null;
+            }
+            base.Dispose(disposing);
+        }
+
         protected override void OnElementChanged()
         {
             base.OnElementChanged();
             ResourceList = new ReactiveList<ResourceViewModel>(ResourceGroup.Resources.Select(r => (ResourceViewModel)RuleSetViewModel.ElementList.First(e => e is ResourceViewModel && e.Element == r)));
             ResourceList.ChangeTrackingEnabled = true;
-            ResourceList.BeforeItemsAdded.Subscribe(r => ResourceGroup.Resources.Add(r.Resource));
-            ResourceList.BeforeItemsRemoved.Subscribe(r => ResourceGroup.Resources.Remove(r.Resource));
+            beforeItemsAdded = ResourceList.BeforeItemsAdded.Subscribe(r => ResourceGroup.Resources.Add(r.Resource));
+            beforeItemsRemoved = ResourceList.BeforeItemsRemoved.Subscribe(r => ResourceGroup.Resources.Remove(r.Resource));
         }
     }
 }

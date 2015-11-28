@@ -27,5 +27,16 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels.ElementViewModels
                 Level.PropertyChanged += OnPropertyChanged;
             }
         }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                Level.Dispose();
+
+                levelProperty = null;
+            }
+            base.Dispose(disposing);
+        }
     }
 }

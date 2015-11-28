@@ -18,7 +18,6 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels.ElementViewModels
             {
                 if (!RaiseSetIfChanged(ref element, value)) return;
                 Name = ReactiveProperty.FromObject(Element, e => e.Name);
-                Name.PropertyChanged += OnPropertyChanged;
                 if (!DeferChanged)
                     OnElementChanged();
                 else
@@ -30,6 +29,16 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels.ElementViewModels
         {
             get { return nameProperty; }
             private set { RaiseSetIfChanged(ref nameProperty, value); }
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                Name.Dispose();
+                Name = null;
+            }
+            base.Dispose(disposing);
         }
 
         protected virtual void OnElementChanged()

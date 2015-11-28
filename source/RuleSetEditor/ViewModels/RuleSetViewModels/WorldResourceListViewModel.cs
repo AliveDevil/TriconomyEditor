@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using ReactiveUI;
+﻿using ReactiveUI;
 using RuleSet.Elements;
 using RuleSetEditor.ViewModels.RuleSetViewModels.ElementViewModels;
 using RuleSetEditor.ViewModels.RuleSetViewModels.ElementViewModels.WorldResourceViewModels;
@@ -8,64 +7,55 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels
 {
     public class WorldResourceListViewModel : RuleSetViewModelBase
     {
-        private RelayCommand addWorldResourceCommand;
-        private RelayCommand<WorldResourceInfoViewModel> editWorldResourceCommand;
-        private RelayCommand removeWorldResourceCommand;
-        private WorldResourceInfoViewModel selectedWorldResource;
-        private IReactiveDerivedList<WorldResourceInfoViewModel> worldResources;
+        private WorldResourceViewModel selectedWorldResource;
+        private IReactiveDerivedList<WorldResourceViewModel> worldResources;
 
-        public RelayCommand AddWorldResourceCommand
+        public RelayCommand AddWorldResourceCommand => new RelayCommand(() =>
         {
-            get
-            {
-                return addWorldResourceCommand ?? (addWorldResourceCommand = new RelayCommand(() =>
-                {
-                    WorldResourceViewModel model = new WorldResourceViewModel() { RuleSetViewModel = RuleSetViewModel, Element = new WorldResource() { Name = "New World Resource" } };
-                    RuleSetViewModel.ElementList.Add(model);
-                    SelectedWorldResource = WorldResources.SingleOrDefault(r => r.WorldResource == model);
-                }));
-            }
-        }
+            WorldResourceViewModel model = new WorldResourceViewModel() { RuleSetViewModel = RuleSetViewModel, Element = new WorldResource() { Name = "New World Resource" } };
+            RuleSetViewModel.ElementList.Add(model);
+            SelectedWorldResource = model;
+        });
 
-        public RelayCommand<WorldResourceInfoViewModel> EditWorldResourceCommand
+        public RelayCommand<WorldResourceViewModel> EditWorldResourceCommand => new RelayCommand<WorldResourceViewModel>(worldResource =>
         {
-            get
-            {
-                return editWorldResourceCommand ?? (editWorldResourceCommand = new RelayCommand<WorldResourceInfoViewModel>(worldResource =>
-                {
-                    SelectedWorldResource = worldResource;
-                    ViewStack.Push<WorldResourceEditViewModel>()._(_ => _.WorldResource = worldResource.WorldResource);
-                }));
-            }
-        }
+            SelectedWorldResource = worldResource;
+            ViewStack.Push<WorldResourceEditViewModel>()._(_ => _.WorldResource = worldResource);
+        });
 
-        public RelayCommand RemoveWorldResourceCommand
+        public RelayCommand RemoveWorldResourceCommand => new RelayCommand(() =>
         {
-            get
-            {
-                return removeWorldResourceCommand ?? (removeWorldResourceCommand = new RelayCommand(() =>
-                {
-                    RuleSetViewModel.ElementList.Remove(SelectedWorldResource?.WorldResource);
-                }));
-            }
-        }
+            RuleSetViewModel.ElementList.Remove(SelectedWorldResource);
+        });
 
-        public WorldResourceInfoViewModel SelectedWorldResource
+        public WorldResourceViewModel SelectedWorldResource
         {
             get { return selectedWorldResource; }
             set { RaiseSetIfChanged(ref selectedWorldResource, value); }
         }
 
-        public IReactiveDerivedList<WorldResourceInfoViewModel> WorldResources
+        public IReactiveDerivedList<WorldResourceViewModel> WorldResources
         {
             get { return worldResources; }
             private set { RaiseSetIfChanged(ref worldResources, value); }
         }
 
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                Dispose(ref worldResources);
+                AddWorldResourceCommand.Dispose();
+                EditWorldResourceCommand.Dispose();
+                RemoveWorldResourceCommand.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
         protected override void OnRuleSetChanged()
         {
             base.OnRuleSetChanged();
-            WorldResources = RuleSetViewModel.ElementList.CreateDerivedCollection(e => new WorldResourceInfoViewModel() { WorldResource = (WorldResourceViewModel)e }, e => e is WorldResourceViewModel, (l, r) => l.Name.Value.CompareTo(r.Name.Value));
+            WorldResources = RuleSetViewModel.ElementList.CreateDerivedCollection(e => (WorldResourceViewModel)e, e => e is WorldResourceViewModel, (l, r) => l.Name.Value.CompareTo(r.Name.Value));
         }
     }
 }
