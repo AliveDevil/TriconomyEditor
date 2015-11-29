@@ -125,6 +125,7 @@
     </ApplicationDefinition>
     <Compile Include="Extensions.cs" />
     <Compile Include="ViewModels\EffectViewModels\AddRecipeEffectViewModel.cs" />
+    <Compile Include="ViewModels\EffectViewModels\EffectViewModel.cs" />
     <Compile Include="ViewModels\EffectViewModels\RecipePartViewModel.cs" />
     <Compile Include="ViewModels\LandingPageViewModel.cs" />
     <Compile Include="ViewModels\RelayCommand.cs" />

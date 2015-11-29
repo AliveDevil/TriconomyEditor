@@ -1,12 +1,26 @@
-﻿using Reactive.Bindings;
+﻿using System;
+using System.Linq;
+using Reactive.Bindings;
+using ReactiveUI;
 using RuleSet;
+using RuleSet.Effects;
+using RuleSetEditor.ViewModels.EffectViewModels;
 
 namespace RuleSetEditor.ViewModels.RuleSetViewModels.ElementViewModels
 {
     public class UpgradeViewModel : RuleSetViewModelBase
     {
+        private IDisposable beforeEffectAdded;
+        private IDisposable beforeEffectRemoved;
+        private ReactiveList<EffectViewModel> effectList;
         private ReactiveProperty<int> levelProperty;
         private Upgrade upgrade;
+
+        public ReactiveList<EffectViewModel> EffectList
+        {
+            get { return effectList; }
+            private set { RaiseSetIfChanged(ref effectList, value); }
+        }
 
         public ReactiveProperty<int> Level
         {
@@ -25,6 +39,26 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels.ElementViewModels
                 RaiseSetIfChanged(ref upgrade, value);
                 Level = ReactiveProperty.FromObject(Upgrade, u => u.Level);
                 Level.PropertyChanged += OnPropertyChanged;
+
+                EffectList = new ReactiveList<EffectViewModel>(Upgrade.Effects.Select(e =>
+                {
+                    EffectViewModel model = null;
+
+                    if (e is AddRecipeEffect) model = new AddRecipeEffectViewModel();
+
+                    if (model != null)
+                    {
+                        model.RuleSetViewModel = RuleSetViewModel;
+                        model.Effect = e;
+                    }
+
+                    return model;
+                }).Where(e => e != null))
+                {
+                    ChangeTrackingEnabled = true
+                };
+                beforeEffectAdded = EffectList.BeforeItemsAdded.Subscribe(e => Upgrade.Effects.Add(e.Effect));
+                beforeEffectRemoved = EffectList.BeforeItemsRemoved.Subscribe(e => Upgrade.Effects.Remove(e.Effect));
             }
         }
 
@@ -32,9 +66,14 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels.ElementViewModels
         {
             if (disposing)
             {
-                Level.Dispose();
+                Dispose(ref beforeEffectAdded);
+                Dispose(ref beforeEffectRemoved);
+                Dispose(ref levelProperty);
 
-                levelProperty = null;
+                foreach (var item in EffectList)
+                    item.Dispose();
+                EffectList.Clear();
+                effectList = null;
             }
             base.Dispose(disposing);
         }

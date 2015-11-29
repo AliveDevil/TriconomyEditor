@@ -44,5 +44,10 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels.ElementViewModels
         protected virtual void OnElementChanged()
         {
         }
+
+        public override string ToString()
+        {
+            return Element.Name;
+        }
     }
 }

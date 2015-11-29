@@ -11,61 +11,70 @@
 			 d:DesignWidth="300">
 	<Grid>
 		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto" />
 			<RowDefinition Height="*" />
 			<RowDefinition Height="Auto" />
 		</Grid.RowDefinitions>
-		<StackPanel Grid.IsSharedSizeScope="True">
-			<Label Content="{Binding Name.Value, FallbackValue=None}"
-				   ContentStringFormat="Resource Group: {0}"
-				   HorizontalContentAlignment="Center"
-				   FontWeight="Light"
-				   FontSize="18" />
-			<Grid>
-				<Grid.ColumnDefinitions>
-					<ColumnDefinition Width="Auto"
-									  SharedSizeGroup="LabelFieldGroup" />
-					<ColumnDefinition Width="*" />
-				</Grid.ColumnDefinitions>
-				<Label Content="Name" />
-				<TextBox Text="{Binding Name.Value, UpdateSourceTrigger=PropertyChanged}"
-						 Grid.Column="1" />
-			</Grid>
-			<Grid>
-				<Grid.ColumnDefinitions>
-					<ColumnDefinition Width="Auto"
-									  SharedSizeGroup="LabelFieldGroup" />
-					<ColumnDefinition Width="*" />
-				</Grid.ColumnDefinitions>
-				<Label Content="Resources" />
-				<ListView ItemsSource="{Binding ResourceList}"
-						  SelectedItem="{Binding SelectedResource}"
-						  IsSynchronizedWithCurrentItem="True"
-						  HorizontalContentAlignment="Stretch"
-						  DisplayMemberPath="Name.Value"
-						  Grid.Column="1" />
-			</Grid>
+		
+		<Label Content="{Binding Name.Value, FallbackValue=None}"
+			   ContentStringFormat="Resource Group: {0}"
+			   HorizontalContentAlignment="Center"
+			   FontWeight="Light"
+			   FontSize="18" />
+		
+		<ScrollViewer VerticalScrollBarVisibility="Auto"
+					  Grid.Row="1">
+			<StackPanel Grid.IsSharedSizeScope="True">
+				<Grid>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="Auto"
+										  SharedSizeGroup="LabelFieldGroup" />
+						<ColumnDefinition Width="*" />
+					</Grid.ColumnDefinitions>
+					<Label Content="Name" />
+					<TextBox Text="{Binding Name.Value, UpdateSourceTrigger=PropertyChanged}"
+							 Grid.Column="1" />
+				</Grid>
+				
+				<Grid>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="Auto"
+										  SharedSizeGroup="LabelFieldGroup" />
+						<ColumnDefinition Width="*" />
+					</Grid.ColumnDefinitions>
+					<Label Content="Resources" />
+					<ListView ItemsSource="{Binding ResourceList}"
+							  SelectedItem="{Binding SelectedResource}"
+							  IsSynchronizedWithCurrentItem="True"
+							  HorizontalContentAlignment="Stretch"
+							  DisplayMemberPath="Name.Value"
+							  Grid.Column="1" />
+				</Grid>
 
-			<Grid>
-				<Grid.ColumnDefinitions>
-					<ColumnDefinition Width="Auto"
-									  SharedSizeGroup="LabelFieldGroup" />
-					<ColumnDefinition Width="*" />
-					<ColumnDefinition Width="Auto" />
-				</Grid.ColumnDefinitions>
-				<Label Content="Resource" />
-				<ComboBox SelectedItem="{Binding SelectedResource}"
-						  ItemsSource="{Binding AvailableResources}"
-						  IsSynchronizedWithCurrentItem="True"
-						  DisplayMemberPath="Name.Value"
-						  Grid.Column="1" />
-				<Button Content="Add"
-						Command="{Binding AddResourceCommand}"
-						Grid.Column="2" />
-			</Grid>
-		</StackPanel>
+				<Grid>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="Auto"
+										  SharedSizeGroup="LabelFieldGroup" />
+						<ColumnDefinition Width="Auto" />
+						<ColumnDefinition Width="*" />
+						<ColumnDefinition Width="Auto" />
+					</Grid.ColumnDefinitions>
+					<Label Content="Resource" Grid.Column="1" />
+					<ComboBox SelectedItem="{Binding SelectedResource}"
+							  ItemsSource="{Binding AvailableResources}"
+							  IsSynchronizedWithCurrentItem="True"
+							  DisplayMemberPath="Name.Value"
+							  Grid.Column="2" />
+					<Button Content="Add"
+							Command="{Binding AddResourceCommand}"
+							Grid.Column="3" />
+				</Grid>
+			</StackPanel>
+		</ScrollViewer>
+		
 		<Button Content="Back"
 				Command="{Binding CloseCommand}"
-				HorizontalAlignment="Right"
-				Grid.Row="1" />
+				HorizontalAlignment="Left"
+				Grid.Row="2" />
 	</Grid>
 </UserControl>

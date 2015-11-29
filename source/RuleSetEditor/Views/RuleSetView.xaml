@@ -22,6 +22,7 @@
 
         <ContentPresenter Grid.Column="1"
                           Content="{Binding View}" />
+		
         <Border Background="White"
                 Margin="0,5"
                 Padding="5"

@@ -1,13 +1,14 @@
 ﻿using Reactive.Bindings;
 using ReactiveUI;
 using RuleSet;
+using RuleSetEditor.ViewModels.EffectViewModels;
 
 namespace RuleSetEditor.ViewModels.RuleSetViewModels.ElementViewModels.BuildingViewModels
 {
     public class BuildingEditViewModel : RuleSetViewModelBase
     {
         private BuildingViewModel building;
-        private RelayCommand<UpgradeViewModel> editUpgradeCommand;
+        private IReactiveDerivedList<EffectViewModel> effectList;
         private ReactiveProperty<string> nameProperty;
         private IReactiveDerivedList<UpgradeViewModel> upgradeList;
         private ReactiveProperty<int> variantsProperty;
@@ -34,6 +35,8 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels.ElementViewModels.BuildingV
                 Variants = Building.Variants;
                 UpgradeList = Building.UpgradeList.CreateDerivedCollection(u => u, null, (l, r) => l.Level.Value.CompareTo(r.Level.Value));
                 UpgradeList.ChangeTrackingEnabled = true;
+                EffectList = Building.EffectList.CreateDerivedCollection(e => e, null);
+                EffectList.ChangeTrackingEnabled = true;
             }
         }
 
@@ -41,6 +44,12 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels.ElementViewModels.BuildingV
          {
              ViewStack.Push<UpgradeEditViewModel>()._(_ => _.Upgrade = u);
          });
+
+        public IReactiveDerivedList<EffectViewModel> EffectList
+        {
+            get { return effectList; }
+            private set { RaiseSetIfChanged(ref effectList, value); }
+        }
 
         public ReactiveProperty<string> Name
         {

@@ -1,97 +1,176 @@
 ﻿<UserControl x:Class="RuleSetEditor.Views.RuleSetViews.BuildingViews.BuildingEditView"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:tk="http://schemas.xceed.com/wpf/xaml/toolkit"
-             xmlns:vm="clr-namespace:RuleSetEditor.ViewModels.RuleSetViewModels.ElementViewModels.BuildingViewModels"
-             xmlns:local="clr-namespace:RuleSetEditor.Views.RuleSetViews.BuildingViews"
-             mc:Ignorable="d"
-             d:DataContext="{d:DesignInstance Type=vm:BuildingEditViewModel}"
-             d:DesignHeight="300"
-             d:DesignWidth="300">
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*" />
-            <RowDefinition Height="Auto" />
-        </Grid.RowDefinitions>
-        <StackPanel Grid.IsSharedSizeScope="True">
-            <Label Content="{Binding Name.Value, FallbackValue=None}"
-                   ContentStringFormat="Building: {0}"
-                   HorizontalContentAlignment="Center"
-                   FontWeight="Light"
-                   FontSize="18" />
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"
-                                      SharedSizeGroup="LabelFieldGroup" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-                <Label Content="Name" />
-                <TextBox Text="{Binding Name.Value, UpdateSourceTrigger=PropertyChanged}"
-                         Grid.Column="1" />
-            </Grid>
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"
-                                      SharedSizeGroup="LabelFieldGroup" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-                <Label Content="Variants" />
-                <tk:IntegerUpDown Value="{Binding Variants.Value, UpdateSourceTrigger=PropertyChanged}"
-                                  Grid.Column="1" />
-            </Grid>
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"
-                                      SharedSizeGroup="LabelFieldGroup" />
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="Auto" />
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                </Grid.RowDefinitions>
-                <Label Content="Upgrades" />
-                <ListView ItemsSource="{Binding UpgradeList}"
-                          SelectedItem="{Binding SelectedToolbarItem}"
-                          IsSynchronizedWithCurrentItem="True"
-                          HorizontalContentAlignment="Stretch"
-                          Grid.Column="1"
-                          Grid.ColumnSpan="3">
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*" />
-                                    <ColumnDefinition Width="Auto"
-                                                      SharedSizeGroup="EditButtonField" />
-                                </Grid.ColumnDefinitions>
-                                <Label Content="{Binding Level.Value}"
-                                       ContentStringFormat="Upgrade Level {0}"
-                                       Grid.Column="0" />
-                                <Button Content="Edit"
-                                        Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=ListView}, Path=DataContext.EditUpgradeCommand}"
-                                        CommandParameter="{Binding}"
-                                        Grid.Column="1" />
-                            </Grid>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
-                <Button Content="Add Upgrade"
-                        Command="{Binding AddUpgradeCommand}"
-                        Grid.Row="1"
-                        Grid.Column="2" />
-                <Button Content="Remove Upgrade"
-                        Command="{Binding RemoveUpgradeCommand}"
-                        Grid.Row="1"
-                        Grid.Column="3" />
-            </Grid>
-        </StackPanel>
-        <Button Content="Back"
-                Command="{Binding CloseCommand}"
-                HorizontalAlignment="Right"
-                Grid.Row="1" />
-    </Grid>
+			 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+			 xmlns:tk="http://schemas.xceed.com/wpf/xaml/toolkit"
+			 xmlns:vm="clr-namespace:RuleSetEditor.ViewModels.RuleSetViewModels.ElementViewModels.BuildingViewModels"
+			 xmlns:local="clr-namespace:RuleSetEditor.Views.RuleSetViews.BuildingViews"
+			 mc:Ignorable="d"
+			 d:DataContext="{d:DesignInstance Type=vm:BuildingEditViewModel}"
+			 d:DesignHeight="300"
+			 d:DesignWidth="300">
+	<Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="*" />
+			<RowDefinition Height="Auto" />
+		</Grid.RowDefinitions>
+		
+		<Label Content="{Binding Name.Value, FallbackValue=None}"
+			   ContentStringFormat="Building: {0}"
+			   HorizontalContentAlignment="Center"
+			   FontWeight="Light"
+			   FontSize="18" />
+		
+		<ScrollViewer VerticalScrollBarVisibility="Auto"
+					  Grid.Row="1">
+			<StackPanel Grid.IsSharedSizeScope="True">
+				<Grid>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="Auto"
+										  SharedSizeGroup="LabelFieldGroup" />
+						<ColumnDefinition Width="*" />
+					</Grid.ColumnDefinitions>
+					<Label Content="Name" />
+					<TextBox Text="{Binding Name.Value, UpdateSourceTrigger=PropertyChanged}"
+							 Grid.Column="1" />
+				</Grid>
+				
+				<Grid>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="Auto"
+										  SharedSizeGroup="LabelFieldGroup" />
+						<ColumnDefinition Width="*" />
+					</Grid.ColumnDefinitions>
+					<Label Content="Variants" />
+					<tk:IntegerUpDown Value="{Binding Variants.Value, UpdateSourceTrigger=PropertyChanged}"
+									  Grid.Column="1" />
+				</Grid>
+				
+				<Grid>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="Auto"
+										  SharedSizeGroup="LabelFieldGroup" />
+						<ColumnDefinition Width="*" />
+						<ColumnDefinition Width="Auto" />
+						<ColumnDefinition Width="Auto" />
+					</Grid.ColumnDefinitions>
+					<Grid.RowDefinitions>
+						<RowDefinition Height="Auto" />
+						<RowDefinition Height="Auto" />
+					</Grid.RowDefinitions>
+					<Label Content="Effects" />
+					<ListView ItemsSource="{Binding EffectList}"
+							  SelectedItem="{Binding SelectedToolbarItem}"
+							  IsSynchronizedWithCurrentItem="True"
+							  HorizontalContentAlignment="Stretch"
+							  Grid.Column="1"
+							  Grid.ColumnSpan="3">
+						<ListView.ItemTemplate>
+							<DataTemplate>
+								<Grid>
+									<Grid.ColumnDefinitions>
+										<ColumnDefinition Width="*" />
+										<ColumnDefinition Width="Auto"
+														  SharedSizeGroup="EditButtonField" />
+									</Grid.ColumnDefinitions>
+									<Label Content="{Binding Level.Value}"
+										   ContentStringFormat="Upgrade Level {0}"
+										   Grid.Column="0" />
+									<Button Content="Edit"
+											Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=ListView}, Path=DataContext.EditUpgradeCommand}"
+											CommandParameter="{Binding}"
+											Grid.Column="1" />
+								</Grid>
+							</DataTemplate>
+						</ListView.ItemTemplate>
+					</ListView>
+					
+					<Button Content="Add"
+							Click="Button_Click"
+							Grid.Row="1"
+							Grid.Column="2">
+						<Button.ContextMenu>
+							<ContextMenu Placement="Bottom"
+										 DataContext="{Binding RelativeSource={RelativeSource Self}, Path=PlacementTarget.DataContext}">
+								<MenuItem Header="Helper">
+									<MenuItem Header="Habit" />
+									<MenuItem Header="Storage" />
+									<MenuItem Header="Workplace" />
+								</MenuItem>
+								<MenuItem Header="Resources">
+									<MenuItem Header="Use Resource" />
+									<MenuItem Header="Add Recipe" />
+									<MenuItem Header="Gather Resource" />
+								</MenuItem>
+								<MenuItem Header="Extending">
+									<MenuItem Header="Extend Habit" />
+									<MenuItem Header="Extend Settler" />
+									<MenuItem Header="Extend Storage" />
+								</MenuItem>
+							</ContextMenu>
+						</Button.ContextMenu>
+					</Button>
+					<Button Content="Remove"
+							Command="{Binding RemoveUpgradeCommand}"
+							Grid.Row="1"
+							Grid.Column="3" />
+				</Grid>
+				
+				<Grid>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="Auto"
+										  SharedSizeGroup="LabelFieldGroup" />
+						<ColumnDefinition Width="*" />
+						<ColumnDefinition Width="Auto" />
+						<ColumnDefinition Width="Auto" />
+					</Grid.ColumnDefinitions>
+					<Grid.RowDefinitions>
+						<RowDefinition Height="Auto" />
+						<RowDefinition Height="Auto" />
+					</Grid.RowDefinitions>
+					<Label Content="Upgrades" />
+					<ListView ItemsSource="{Binding UpgradeList}"
+							  SelectedItem="{Binding SelectedToolbarItem}"
+							  IsSynchronizedWithCurrentItem="True"
+							  HorizontalContentAlignment="Stretch"
+							  Grid.Column="1"
+							  Grid.ColumnSpan="3">
+						<ListView.ItemTemplate>
+							<DataTemplate>
+								<Grid>
+									<Grid.ColumnDefinitions>
+										<ColumnDefinition Width="*" />
+										<ColumnDefinition Width="Auto"
+														  SharedSizeGroup="EditButtonField" />
+									</Grid.ColumnDefinitions>
+									<Label Content="{Binding Level.Value}"
+										   ContentStringFormat="Upgrade Level {0}"
+										   Grid.Column="0" />
+									<Button Content="Edit"
+											Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=ListView}, Path=DataContext.EditUpgradeCommand}"
+											CommandParameter="{Binding}"
+											Grid.Column="1" />
+								</Grid>
+							</DataTemplate>
+						</ListView.ItemTemplate>
+					</ListView>
+					<Button Content="Add"
+							Command="{Binding AddUpgradeCommand}"
+							Grid.Row="1"
+							Grid.Column="2" />
+					<Button Content="Remove"
+							Command="{Binding RemoveUpgradeCommand}"
+							Grid.Row="1"
+							Grid.Column="3" />
+				</Grid>
+			</StackPanel>
+		</ScrollViewer>
+		
+		<Button Content="Back"
+				Command="{Binding CloseCommand}"
+				HorizontalAlignment="Left"
+				Grid.Row="2" />
+	</Grid>
 </UserControl>

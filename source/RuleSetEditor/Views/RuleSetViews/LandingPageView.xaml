@@ -15,6 +15,7 @@
                HorizontalContentAlignment="Center"
                FontWeight="Light"
                FontSize="18" />
+		
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"
@@ -26,6 +27,7 @@
             <TextBox Text="{Binding Name.Value, UpdateSourceTrigger=PropertyChanged}"
                      Grid.Column="1" />
         </Grid>
+		
         <Button Content="Save"
                 Command="{Binding SaveCommand}" />
     </StackPanel>

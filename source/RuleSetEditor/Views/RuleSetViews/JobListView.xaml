@@ -20,12 +20,14 @@
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="Auto" />
         </Grid.ColumnDefinitions>
+		
         <Label Content="Jobs"
                HorizontalContentAlignment="Center"
                FontWeight="Light"
                FontSize="18"
                Grid.Row="0"
                Grid.ColumnSpan="3" />
+		
         <ListView ItemsSource="{Binding Jobs}"
                   SelectedItem="{Binding SelectedJob}"
                   IsSynchronizedWithCurrentItem="True"
@@ -51,6 +53,7 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
+		
         <Button Content="Add"
                 Command="{Binding AddJobCommand}"
                 Grid.Row="2"

@@ -20,12 +20,14 @@
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="Auto" />
         </Grid.ColumnDefinitions>
+		
         <Label Content="World Resources"
                HorizontalContentAlignment="Center"
                FontWeight="Light"
                FontSize="18"
                Grid.Row="0"
                Grid.ColumnSpan="3" />
+		
         <ListView ItemsSource="{Binding WorldResources}"
 				  SelectedItem="{Binding SelectedWorldResource}"
 				  IsSynchronizedWithCurrentItem="True"
@@ -51,6 +53,7 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
+		
         <Button Content="Add"
                 Command="{Binding AddWorldResourceCommand}"
                 Grid.Row="2"

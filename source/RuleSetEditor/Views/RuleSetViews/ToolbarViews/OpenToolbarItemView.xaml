@@ -14,7 +14,9 @@
 			<RowDefinition Height="*" />
 			<RowDefinition Height="Auto" />
 		</Grid.RowDefinitions>
+
 		<ContentPresenter Content="{Binding Toolbar.Value}" />
+
 		<Button Content="Back"
 				Command="{Binding CloseCommand}"
 				HorizontalAlignment="Left"
