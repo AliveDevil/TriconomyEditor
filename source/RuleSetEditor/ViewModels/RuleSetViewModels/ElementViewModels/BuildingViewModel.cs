@@ -84,6 +84,13 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels.ElementViewModels
                 EffectViewModel model = null;
 
                 if (e is AddRecipeEffect) model = new AddRecipeEffectViewModel();
+                else if (e is ExtendSettlerAmountEffect) model = new ExtendSettlerAmountEffectViewModel();
+                else if (e is ExtendStorageEffect) model = new ExtendStorageEffectViewModel();
+                else if (e is GatherResourceEffect) model = new GatherResourceEffectViewModel();
+                else if (e is HabitEffect) model = new HabitEffectViewModel();
+                else if (e is StorageEffect) model = new StorageEffectViewModel();
+                else if (e is UseResourceEffect) model = new UseResourceEffectViewModel();
+                else if (e is WorkplaceEffect) model = new WorkplaceEffectViewModel();
 
                 if (model != null)
                 {

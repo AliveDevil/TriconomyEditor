@@ -22,10 +22,10 @@ namespace RuleSetEditor.ViewModels.EffectViewModels
             }
         }
 
+        public abstract override string ToString();
+
         protected virtual void OnEffectChanged()
         {
         }
-
-        public abstract override string ToString();
     }
 }
