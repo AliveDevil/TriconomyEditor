@@ -12,14 +12,14 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels.ElementViewModels
     {
         private IDisposable beforeEffectAdded;
         private IDisposable beforeEffectRemoved;
-        private ReactiveList<EffectViewModel> effectList;
+        private ReactiveList<EffectViewModel> effects;
         private ReactiveProperty<int> levelProperty;
         private Upgrade upgrade;
 
-        public ReactiveList<EffectViewModel> EffectList
+        public ReactiveList<EffectViewModel> Effects
         {
-            get { return effectList; }
-            private set { RaiseSetIfChanged(ref effectList, value); }
+            get { return effects; }
+            private set { RaiseSetIfChanged(ref effects, value); }
         }
 
         public ReactiveProperty<int> Level
@@ -40,7 +40,7 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels.ElementViewModels
                 Level = ReactiveProperty.FromObject(Upgrade, u => u.Level);
                 Level.PropertyChanged += OnPropertyChanged;
 
-                EffectList = new ReactiveList<EffectViewModel>(Upgrade.Effects.Select(e =>
+                Effects = new ReactiveList<EffectViewModel>(Upgrade.Effects.Select(e =>
                 {
                     EffectViewModel model = null;
 
@@ -64,8 +64,8 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels.ElementViewModels
                 {
                     ChangeTrackingEnabled = true
                 };
-                beforeEffectAdded = EffectList.BeforeItemsAdded.Subscribe(e => Upgrade.Effects.Add(e.Effect));
-                beforeEffectRemoved = EffectList.BeforeItemsRemoved.Subscribe(e => Upgrade.Effects.Remove(e.Effect));
+                beforeEffectAdded = Effects.BeforeItemsAdded.Subscribe(e => Upgrade.Effects.Add(e?.Effect));
+                beforeEffectRemoved = Effects.BeforeItemsRemoved.Subscribe(e => Upgrade.Effects.Remove(e?.Effect));
             }
         }
 
@@ -77,10 +77,10 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels.ElementViewModels
                 Dispose(ref beforeEffectRemoved);
                 Dispose(ref levelProperty);
 
-                foreach (var item in EffectList)
+                foreach (var item in Effects)
                     item.Dispose();
-                EffectList.Clear();
-                effectList = null;
+                Effects.Clear();
+                effects = null;
             }
             base.Dispose(disposing);
         }

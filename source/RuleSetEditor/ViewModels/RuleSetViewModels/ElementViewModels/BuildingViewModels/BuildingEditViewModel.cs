@@ -1,6 +1,8 @@
-﻿using Reactive.Bindings;
+﻿using System;
+using Reactive.Bindings;
 using ReactiveUI;
 using RuleSet;
+using RuleSet.Effects;
 using RuleSetEditor.ViewModels.EffectViewModels;
 
 namespace RuleSetEditor.ViewModels.RuleSetViewModels.ElementViewModels.BuildingViewModels
@@ -10,8 +12,15 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels.ElementViewModels.BuildingV
         private BuildingViewModel building;
         private IReactiveDerivedList<EffectViewModel> effectList;
         private ReactiveProperty<string> nameProperty;
+        private EffectViewModel selectedEffect;
+        private UpgradeViewModel selectedUpgrade;
         private IReactiveDerivedList<UpgradeViewModel> upgradeList;
         private ReactiveProperty<int> variantsProperty;
+
+        public RelayCommand<Type> AddEffectCommand => new RelayCommand<Type>(t =>
+        {
+            AddEffect((Effect)Activator.CreateInstance(t));
+        });
 
         public RelayCommand AddUpgradeCommand => new RelayCommand(() =>
         {
@@ -57,6 +66,28 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels.ElementViewModels.BuildingV
             private set { RaiseSetIfChanged(ref nameProperty, value); }
         }
 
+        public RelayCommand RemoveEffectCommand => new RelayCommand(() =>
+        {
+            Building.EffectList.Remove(SelectedEffect);
+        });
+
+        public RelayCommand RemoveUpgradeCommand => new RelayCommand(() =>
+        {
+            Building.UpgradeList.Remove(SelectedUpgrade);
+        });
+
+        public EffectViewModel SelectedEffect
+        {
+            get { return selectedEffect; }
+            set { RaiseSetIfChanged(ref selectedEffect, value); }
+        }
+
+        public UpgradeViewModel SelectedUpgrade
+        {
+            get { return selectedUpgrade; }
+            set { RaiseSetIfChanged(ref selectedUpgrade, value); }
+        }
+
         public IReactiveDerivedList<UpgradeViewModel> UpgradeList
         {
             get { return upgradeList; }
@@ -67,6 +98,29 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels.ElementViewModels.BuildingV
         {
             get { return variantsProperty; }
             private set { RaiseSetIfChanged(ref variantsProperty, value); }
+        }
+
+        private void AddEffect(Effect e)
+        {
+            EffectViewModel model = null;
+
+            if (e is AddRecipeEffect) model = new AddRecipeEffectViewModel();
+            else if (e is ExtendSettlerAmountEffect) model = new ExtendSettlerAmountEffectViewModel();
+            else if (e is ExtendStorageEffect) model = new ExtendStorageEffectViewModel();
+            else if (e is GatherResourceEffect) model = new GatherResourceEffectViewModel();
+            else if (e is HabitEffect) model = new HabitEffectViewModel();
+            else if (e is StorageEffect) model = new StorageEffectViewModel();
+            else if (e is UseResourceEffect) model = new UseResourceEffectViewModel();
+            else if (e is WorkplaceEffect) model = new WorkplaceEffectViewModel();
+
+            if (model != null)
+            {
+                model.RuleSetViewModel = RuleSetViewModel;
+                model.Effect = e;
+            }
+
+            if (model != null)
+                Building.EffectList.Add(model);
         }
     }
 }

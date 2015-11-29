@@ -5,6 +5,7 @@
 			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 			 xmlns:tk="http://schemas.xceed.com/wpf/xaml/toolkit"
 			 xmlns:vm="clr-namespace:RuleSetEditor.ViewModels.RuleSetViewModels.ElementViewModels.BuildingViewModels"
+			 xmlns:effects="clr-namespace:RuleSet.Effects;assembly=RuleSet"
 			 xmlns:local="clr-namespace:RuleSetEditor.Views.RuleSetViews.BuildingViews"
 			 mc:Ignorable="d"
 			 d:DataContext="{d:DesignInstance Type=vm:UpgradeEditViewModel}"
@@ -16,17 +17,16 @@
 			<RowDefinition Height="*" />
 			<RowDefinition Height="Auto" />
 		</Grid.RowDefinitions>
-		
+
 		<Label Content="{Binding Level.Value, FallbackValue=None}"
 			   ContentStringFormat="Upgrade Level: {0}"
 			   HorizontalContentAlignment="Center"
 			   FontWeight="Light"
 			   FontSize="18" />
-		
+
 		<ScrollViewer VerticalScrollBarVisibility="Auto"
 					  Grid.Row="1">
 			<StackPanel Grid.IsSharedSizeScope="True">
-
 				<Grid>
 					<Grid.ColumnDefinitions>
 						<ColumnDefinition Width="Auto"
@@ -52,7 +52,7 @@
 					</Grid.RowDefinitions>
 					<Label Content="Effects" />
 					<ListView ItemsSource="{Binding EffectList}"
-							  SelectedItem="{Binding SelectedToolbarItem}"
+							  SelectedItem="{Binding SelectedEffect}"
 							  IsSynchronizedWithCurrentItem="True"
 							  HorizontalContentAlignment="Stretch"
 							  Grid.Column="1"
@@ -65,8 +65,7 @@
 										<ColumnDefinition Width="Auto"
 														  SharedSizeGroup="EditButtonField" />
 									</Grid.ColumnDefinitions>
-									<Label Content="{Binding Level.Value}"
-										   ContentStringFormat="Upgrade Level {0}"
+									<Label Content="{Binding}"
 										   Grid.Column="0" />
 									<Button Content="Edit"
 											Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=ListView}, Path=DataContext.EditUpgradeCommand}"
@@ -85,25 +84,40 @@
 							<ContextMenu Placement="Bottom"
 										 DataContext="{Binding RelativeSource={RelativeSource Self}, Path=PlacementTarget.DataContext}">
 								<MenuItem Header="Helper">
-									<MenuItem Header="Habit" />
-									<MenuItem Header="Storage" />
-									<MenuItem Header="Workplace" />
+									<MenuItem Header="Habit"
+											  Command="{Binding AddEffectCommand}"
+											  CommandParameter="{x:Type effects:HabitEffect}" />
+									<MenuItem Header="Storage"
+											  Command="{Binding AddEffectCommand}"
+											  CommandParameter="{x:Type effects:StorageEffect}" />
+									<MenuItem Header="Workplace"
+											  Command="{Binding AddEffectCommand}"
+											  CommandParameter="{x:Type effects:WorkplaceEffect}" />
 								</MenuItem>
 								<MenuItem Header="Resources">
-									<MenuItem Header="Use Resource" />
-									<MenuItem Header="Add Recipe" />
-									<MenuItem Header="Gather Resource" />
+									<MenuItem Header="Use Resource"
+											  Command="{Binding AddEffectCommand}"
+											  CommandParameter="{x:Type effects:UseResourceEffect}" />
+									<MenuItem Header="Add Recipe"
+											  Command="{Binding AddEffectCommand}"
+											  CommandParameter="{x:Type effects:AddRecipeEffect}" />
+									<MenuItem Header="Gather Resource"
+											  Command="{Binding AddEffectCommand}"
+											  CommandParameter="{x:Type effects:GatherResourceEffect}" />
 								</MenuItem>
 								<MenuItem Header="Extending">
-									<MenuItem Header="Extend Habit" />
-									<MenuItem Header="Extend Settler" />
-									<MenuItem Header="Extend Storage" />
+									<MenuItem Header="Extend Settler"
+											  Command="{Binding AddEffectCommand}"
+											  CommandParameter="{x:Type effects:ExtendSettlerAmountEffect}" />
+									<MenuItem Header="Extend Storage"
+											  Command="{Binding AddEffectCommand}"
+											  CommandParameter="{x:Type effects:ExtendStorageEffect}" />
 								</MenuItem>
 							</ContextMenu>
 						</Button.ContextMenu>
 					</Button>
 					<Button Content="Remove"
-							Command="{Binding RemoveUpgradeCommand}"
+							Command="{Binding RemoveEffectCommand}"
 							Grid.Row="1"
 							Grid.Column="3" />
 				</Grid>
