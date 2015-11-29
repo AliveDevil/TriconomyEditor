@@ -8,23 +8,23 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels
 {
     public class JobListViewModel : RuleSetViewModelBase
     {
-        private IReactiveDerivedList<JobInfoViewModel> jobs;
-        private JobInfoViewModel selectedJob;
+        private IReactiveDerivedList<JobViewModel> jobs;
+        private JobViewModel selectedJob;
 
         public RelayCommand AddJobCommand => new RelayCommand(() =>
         {
             JobViewModel model = new JobViewModel() { RuleSetViewModel = RuleSetViewModel, Element = new Job() { Name = "New Job" } };
             RuleSetViewModel.ElementList.Add(model);
-            SelectedJob = Jobs.SingleOrDefault(r => r.Job == model);
+            SelectedJob = model;
         });
 
-        public RelayCommand<JobInfoViewModel> EditJobCommand => new RelayCommand<JobInfoViewModel>(job =>
+        public RelayCommand<JobViewModel> EditJobCommand => new RelayCommand<JobViewModel>(job =>
         {
             SelectedJob = job;
-            ViewStack.Push<JobEditViewModel>()._(_ => _.Job = job.Job);
+            ViewStack.Push<JobEditViewModel>()._(_ => _.Job = job);
         });
 
-        public IReactiveDerivedList<JobInfoViewModel> Jobs
+        public IReactiveDerivedList<JobViewModel> Jobs
         {
             get { return jobs; }
             private set { RaiseSetIfChanged(ref jobs, value); }
@@ -32,10 +32,10 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels
 
         public RelayCommand RemoveJobCommand => new RelayCommand(() =>
         {
-            RuleSetViewModel.ElementList.Remove(SelectedJob?.Job);
+            RuleSetViewModel.ElementList.Remove(SelectedJob);
         });
 
-        public JobInfoViewModel SelectedJob
+        public JobViewModel SelectedJob
         {
             get { return selectedJob; }
             set { RaiseSetIfChanged(ref selectedJob, value); }
@@ -56,7 +56,7 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels
         protected override void OnRuleSetChanged()
         {
             base.OnRuleSetChanged();
-            Jobs = RuleSetViewModel.ElementList.CreateDerivedCollection(e => new JobInfoViewModel() { Job = (JobViewModel)e }, e => e is JobViewModel, (l, r) => l.Name.Value.CompareTo(r.Name.Value));
+            Jobs = RuleSetViewModel.ElementList.CreateDerivedCollection(e => (JobViewModel)e, e => e is JobViewModel, (l, r) => l.Name.Value.CompareTo(r.Name.Value));
         }
     }
 }

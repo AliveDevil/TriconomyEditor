@@ -133,13 +133,10 @@
     <Compile Include="ViewModels\RuleSetViewModels\BuildingListViewModel.cs" />
     <Compile Include="ViewModels\RuleSetViewModels\ElementViewModels\BuildingViewModel.cs" />
     <Compile Include="ViewModels\RuleSetViewModels\ElementViewModels\BuildingViewModels\BuildingEditViewModel.cs" />
-    <Compile Include="ViewModels\RuleSetViewModels\ElementViewModels\BuildingViewModels\BuildingInfoViewModel.cs" />
     <Compile Include="ViewModels\RuleSetViewModels\ElementViewModels\BuildingViewModels\UpgradeEditViewModel.cs" />
-    <Compile Include="ViewModels\RuleSetViewModels\ElementViewModels\BuildingViewModels\UpgradeInfoViewModel.cs" />
     <Compile Include="ViewModels\RuleSetViewModels\ElementViewModels\ElementViewModel.cs" />
     <Compile Include="ViewModels\RuleSetViewModels\ElementViewModels\JobViewModel.cs" />
     <Compile Include="ViewModels\RuleSetViewModels\ElementViewModels\JobViewModels\JobEditViewModel.cs" />
-    <Compile Include="ViewModels\RuleSetViewModels\ElementViewModels\JobViewModels\JobInfoViewModel.cs" />
     <Compile Include="ViewModels\RuleSetViewModels\ElementViewModels\ResourceGroupViewModel.cs" />
     <Compile Include="ViewModels\RuleSetViewModels\ElementViewModels\ResourceViewModel.cs" />
     <Compile Include="ViewModels\RuleSetViewModels\ElementViewModels\ResourceViewModels\ResourceEditViewModel.cs" />

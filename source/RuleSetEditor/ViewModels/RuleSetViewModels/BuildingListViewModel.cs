@@ -9,34 +9,34 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels
 {
     public class BuildingListViewModel : RuleSetViewModelBase
     {
-        private IReactiveDerivedList<BuildingInfoViewModel> buildings;
-        private BuildingInfoViewModel selectedBuilding;
+        private IReactiveDerivedList<BuildingViewModel> buildings;
+        private BuildingViewModel selectedBuilding;
 
         public RelayCommand AddBuildingCommand => new RelayCommand(() =>
         {
             BuildingViewModel model = new BuildingViewModel() { RuleSetViewModel = RuleSetViewModel, Element = new Building() { Name = "New Building" } };
             RuleSetViewModel.ElementList.Add(model);
-            SelectedBuilding = Buildings.SingleOrDefault(r => r.Building == model);
+            SelectedBuilding = model;
         });
 
-        public IReactiveDerivedList<BuildingInfoViewModel> Buildings
+        public IReactiveDerivedList<BuildingViewModel> Buildings
         {
             get { return buildings; }
             private set { RaiseSetIfChanged(ref buildings, value); }
         }
 
-        public RelayCommand<BuildingInfoViewModel> EditBuildingCommand => new RelayCommand<BuildingInfoViewModel>(building =>
+        public RelayCommand<BuildingViewModel> EditBuildingCommand => new RelayCommand<BuildingViewModel>(building =>
         {
             SelectedBuilding = building;
-            ViewStack.Push<BuildingEditViewModel>()._(_ => _.Building = building.Building);
+            ViewStack.Push<BuildingEditViewModel>()._(_ => _.Building = building);
         });
 
         public RelayCommand RemoveBuildingCommand => new RelayCommand(() =>
         {
-            RuleSetViewModel.ElementList.Remove(SelectedBuilding?.Building);
+            RuleSetViewModel.ElementList.Remove(SelectedBuilding);
         });
 
-        public BuildingInfoViewModel SelectedBuilding
+        public BuildingViewModel SelectedBuilding
         {
             get { return selectedBuilding; }
             set { RaiseSetIfChanged(ref selectedBuilding, value); }
@@ -57,7 +57,7 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels
         protected override void OnRuleSetChanged()
         {
             base.OnRuleSetChanged();
-            Buildings = RuleSetViewModel.ElementList.CreateDerivedCollection(e => new BuildingInfoViewModel() { Building = (BuildingViewModel)e }, e => e is BuildingViewModel, (l, r) => l.Name.Value.CompareTo(r.Name.Value));
+            Buildings = RuleSetViewModel.ElementList.CreateDerivedCollection(e => (BuildingViewModel)e, e => e is BuildingViewModel, (l, r) => l.Name.Value.CompareTo(r.Name.Value));
         }
     }
 }

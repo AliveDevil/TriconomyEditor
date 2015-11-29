@@ -41,7 +41,7 @@
                             <ColumnDefinition Width="Auto"
                                               SharedSizeGroup="EditButtonField" />
                         </Grid.ColumnDefinitions>
-                        <Label Content="{Binding}"
+                        <Label Content="{Binding Name.Value}"
                                Grid.Column="0" />
                         <Button Content="Edit"
                                 Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=ListView}, Path=DataContext.EditJobCommand}"

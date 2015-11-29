@@ -7,9 +7,9 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels.ElementViewModels.BuildingV
     public class BuildingEditViewModel : RuleSetViewModelBase
     {
         private BuildingViewModel building;
-        private RelayCommand<UpgradeInfoViewModel> editUpgradeCommand;
+        private RelayCommand<UpgradeViewModel> editUpgradeCommand;
         private ReactiveProperty<string> nameProperty;
-        private IReactiveDerivedList<UpgradeInfoViewModel> upgradeList;
+        private IReactiveDerivedList<UpgradeViewModel> upgradeList;
         private ReactiveProperty<int> variantsProperty;
 
         public RelayCommand AddUpgradeCommand => new RelayCommand(() =>
@@ -32,14 +32,14 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels.ElementViewModels.BuildingV
                 RaiseSetIfChanged(ref building, value);
                 Name = Building.Name;
                 Variants = Building.Variants;
-                UpgradeList = Building.UpgradeList.CreateDerivedCollection(u => new UpgradeInfoViewModel() { RuleSetViewModel = RuleSetViewModel, Upgrade = u }, null, (l, r) => l.Upgrade.Level.Value.CompareTo(r.Upgrade.Level.Value));
+                UpgradeList = Building.UpgradeList.CreateDerivedCollection(u => u, null, (l, r) => l.Level.Value.CompareTo(r.Level.Value));
                 UpgradeList.ChangeTrackingEnabled = true;
             }
         }
 
-        public RelayCommand<UpgradeInfoViewModel> EditUpgradeCommand => new RelayCommand<UpgradeInfoViewModel>(u =>
+        public RelayCommand<UpgradeViewModel> EditUpgradeCommand => new RelayCommand<UpgradeViewModel>(u =>
          {
-             ViewStack.Push<UpgradeEditViewModel>()._(_ => _.Upgrade = u.Upgrade);
+             ViewStack.Push<UpgradeEditViewModel>()._(_ => _.Upgrade = u);
          });
 
         public ReactiveProperty<string> Name
@@ -48,7 +48,7 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels.ElementViewModels.BuildingV
             private set { RaiseSetIfChanged(ref nameProperty, value); }
         }
 
-        public IReactiveDerivedList<UpgradeInfoViewModel> UpgradeList
+        public IReactiveDerivedList<UpgradeViewModel> UpgradeList
         {
             get { return upgradeList; }
             private set { RaiseSetIfChanged(ref upgradeList, value); }
