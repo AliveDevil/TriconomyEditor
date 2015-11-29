@@ -19,5 +19,14 @@ namespace RuleSetEditor.ViewModels.EffectViewModels
         {
             return "Storage";
         }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                Dispose(ref publicAccessibleProperty);
+            }
+            base.Dispose(disposing);
+        }
     }
 }
