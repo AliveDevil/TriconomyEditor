@@ -177,6 +177,24 @@
     <Compile Include="Views\EffectViews\ExtendSettlerAmountEffectView.xaml.cs">
       <DependentUpon>ExtendSettlerAmountEffectView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\EffectViews\ExtendStoragEffectView.xaml.cs">
+      <DependentUpon>ExtendStoragEffectView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\EffectViews\GatherResourceEffectView.xaml.cs">
+      <DependentUpon>GatherResourceEffectView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\EffectViews\HabitEffectView.xaml.cs">
+      <DependentUpon>HabitEffectView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\EffectViews\StorageEffectView.xaml.cs">
+      <DependentUpon>StorageEffectView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\EffectViews\UseResourceEffectView.xaml.cs">
+      <DependentUpon>UseResourceEffectView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\EffectViews\WorkplaceEffectView.xaml.cs">
+      <DependentUpon>WorkplaceEffectView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\RuleSetViews\BuildingListView.xaml.cs">
       <DependentUpon>BuildingListView.xaml</DependentUpon>
     </Compile>
@@ -250,6 +268,30 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\EffectViews\ExtendSettlerAmountEffectView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\EffectViews\ExtendStoragEffectView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\EffectViews\GatherResourceEffectView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\EffectViews\HabitEffectView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\EffectViews\StorageEffectView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\EffectViews\UseResourceEffectView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\EffectViews\WorkplaceEffectView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

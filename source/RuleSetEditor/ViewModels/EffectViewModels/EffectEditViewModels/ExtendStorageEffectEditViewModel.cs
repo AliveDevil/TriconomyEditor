@@ -1,17 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Reactive.Bindings;
+﻿using Reactive.Bindings;
 
 namespace RuleSetEditor.ViewModels.EffectViewModels.EffectEditViewModels
 {
     public class ExtendStorageEffectEditViewModel : RuleSetViewModelBase
     {
-        private ExtendStorageEffectViewModel extendStorageEffect;
-
         private ReactiveProperty<int> amountProperty;
+        private ExtendStorageEffectViewModel extendStorageEffect;
 
         public ReactiveProperty<int> Amount
         {
@@ -19,10 +13,12 @@ namespace RuleSetEditor.ViewModels.EffectViewModels.EffectEditViewModels
             private set { RaiseSetIfChanged(ref amountProperty, value); }
         }
 
-
         public ExtendStorageEffectViewModel ExtendStorageEffect
         {
-            get { return extendStorageEffect; }
+            get
+            {
+                return extendStorageEffect;
+            }
             set
             {
                 if (!RaiseSetIfChanged(ref extendStorageEffect, value)) return;

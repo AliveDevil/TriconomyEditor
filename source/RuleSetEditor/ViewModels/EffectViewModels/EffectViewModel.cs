@@ -24,10 +24,60 @@ namespace RuleSetEditor.ViewModels.EffectViewModels
             }
         }
 
-        public abstract override string ToString();
-
-        protected virtual void OnEffectChanged()
+        public static RuleSetViewModelBase FindEditViewModel(EffectViewModel effectViewModel, RuleSetViewModel ruleSetViewModel)
         {
+            RuleSetViewModelBase viewModelBase = null;
+
+            if (effectViewModel is AddRecipeEffectViewModel)
+                viewModelBase = new AddRecipeEffectEditViewModel()
+                {
+                    RuleSetViewModel = ruleSetViewModel,
+                    AddRecipeEffect = (AddRecipeEffectViewModel)effectViewModel
+                };
+            else if (effectViewModel is ExtendSettlerAmountEffectViewModel)
+                viewModelBase = new ExtendSettlerAmountEffectEditViewModel()
+                {
+                    RuleSetViewModel = ruleSetViewModel,
+                    ExtendSettlerAmountEffect = (ExtendSettlerAmountEffectViewModel)effectViewModel
+                };
+            else if (effectViewModel is ExtendStorageEffectViewModel)
+                viewModelBase = new ExtendStorageEffectEditViewModel()
+                {
+                    RuleSetViewModel = ruleSetViewModel,
+                    ExtendStorageEffect = (ExtendStorageEffectViewModel)effectViewModel
+                };
+            else if (effectViewModel is GatherResourceEffectViewModel)
+                viewModelBase = new GatherResourceEffectEditViewModel()
+                {
+                    RuleSetViewModel = ruleSetViewModel,
+                    GatherResourceEffect = (GatherResourceEffectViewModel)effectViewModel
+                };
+            else if (effectViewModel is HabitEffectViewModel)
+                viewModelBase = new HabitEffectEditViewModel()
+                {
+                    RuleSetViewModel = ruleSetViewModel,
+                    HabitEffect = (HabitEffectViewModel)effectViewModel
+                };
+            else if (effectViewModel is StorageEffectViewModel)
+                viewModelBase = new StorageEffectEditViewModel()
+                {
+                    RuleSetViewModel = ruleSetViewModel,
+                    StorageEffect = (StorageEffectViewModel)effectViewModel
+                };
+            else if (effectViewModel is UseResourceEffectViewModel)
+                viewModelBase = new UseResourceEffectEditViewModel()
+                {
+                    RuleSetViewModel = ruleSetViewModel,
+                    UseResourceEffect = (UseResourceEffectViewModel)effectViewModel
+                };
+            else if (effectViewModel is WorkplaceEffectViewModel)
+                viewModelBase = new WorkplaceEffectEditViewModel()
+                {
+                    RuleSetViewModel = ruleSetViewModel,
+                    WorkplaceEffect = (WorkplaceEffectViewModel)effectViewModel
+                };
+
+            return viewModelBase;
         }
 
         public static EffectViewModel FindViewModel(Effect effect, RuleSetViewModel ruleSetViewModel)
@@ -52,17 +102,10 @@ namespace RuleSetEditor.ViewModels.EffectViewModels
             return model;
         }
 
-        public static RuleSetViewModelBase FindEditViewModel(EffectViewModel effectViewModel, RuleSetViewModel ruleSetViewModel)
+        public abstract override string ToString();
+
+        protected virtual void OnEffectChanged()
         {
-            RuleSetViewModelBase viewModelBase = null;
-
-            if (effectViewModel is AddRecipeEffectViewModel) viewModelBase = new AddRecipeEffectEditViewModel() { RuleSetViewModel = ruleSetViewModel, AddRecipeEffect = (AddRecipeEffectViewModel)effectViewModel };
-            else if (effectViewModel is ExtendSettlerAmountEffectViewModel) viewModelBase = new ExtendSettlerAmountEffectEditViewModel() { RuleSetViewModel = ruleSetViewModel, ExtendSettlerAmountEffect = (ExtendSettlerAmountEffectViewModel)effectViewModel };
-
-            if (viewModelBase != null)
-                viewModelBase.RuleSetViewModel = ruleSetViewModel;
-
-            return viewModelBase;
         }
     }
 }

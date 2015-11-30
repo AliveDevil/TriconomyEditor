@@ -28,5 +28,11 @@ namespace RuleSetEditor.ViewModels.EffectViewModels
             }
             base.Dispose(disposing);
         }
+
+        protected override void OnEffectChanged()
+        {
+            base.OnEffectChanged();
+            PublicAccessible = ReactiveProperty.FromObject(StorageEffect, e => e.PublicAccessible);
+        }
     }
 }

@@ -2,7 +2,28 @@
 					xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 					xmlns:local="clr-namespace:RuleSetEditor.Views.EffectViews"
 					xmlns:vm="clr-namespace:RuleSetEditor.ViewModels.EffectViewModels.EffectEditViewModels">
+	<DataTemplate DataType="{x:Type vm:AddRecipeEffectEditViewModel}">
+		<local:AddRecipeEffectView />
+	</DataTemplate>
 	<DataTemplate DataType="{x:Type vm:ExtendSettlerAmountEffectEditViewModel}">
 		<local:ExtendSettlerAmountEffectView />
+	</DataTemplate>
+	<DataTemplate DataType="{x:Type vm:ExtendStorageEffectEditViewModel}">
+		<local:ExtendStoragEffectView />
+	</DataTemplate>
+	<DataTemplate DataType="{x:Type vm:GatherResourceEffectEditViewModel}">
+		<local:GatherResourceEffectView />
+	</DataTemplate>
+	<DataTemplate DataType="{x:Type vm:HabitEffectEditViewModel}">
+		<local:HabitEffectView />
+	</DataTemplate>
+	<DataTemplate DataType="{x:Type vm:StorageEffectEditViewModel}">
+		<local:StorageEffectView />
+	</DataTemplate>
+	<DataTemplate DataType="{x:Type vm:UseResourceEffectEditViewModel}">
+		<local:UseResourceEffectView />
+	</DataTemplate>
+	<DataTemplate DataType="{x:Type vm:WorkplaceEffectEditViewModel}">
+		<local:WorkplaceEffectView />
 	</DataTemplate>
 </ResourceDictionary>

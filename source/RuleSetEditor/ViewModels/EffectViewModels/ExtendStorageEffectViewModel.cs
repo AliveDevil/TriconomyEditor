@@ -20,12 +20,6 @@ namespace RuleSetEditor.ViewModels.EffectViewModels
             return "Extend Storage";
         }
 
-        protected override void OnEffectChanged()
-        {
-            base.OnEffectChanged();
-            Amount = ReactiveProperty.FromObject(ExtendStorageEffect, e => e.Amount);
-        }
-
         protected override void Dispose(bool disposing)
         {
             if (disposing)
@@ -33,6 +27,12 @@ namespace RuleSetEditor.ViewModels.EffectViewModels
                 Dispose(ref amountProperty);
             }
             base.Dispose(disposing);
+        }
+
+        protected override void OnEffectChanged()
+        {
+            base.OnEffectChanged();
+            Amount = ReactiveProperty.FromObject(ExtendStorageEffect, e => e.Amount);
         }
     }
 }

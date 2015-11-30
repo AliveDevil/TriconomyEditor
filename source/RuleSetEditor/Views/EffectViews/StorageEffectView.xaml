@@ -1,12 +1,12 @@
-﻿<UserControl x:Class="RuleSetEditor.Views.EffectViews.AddRecipeEffectView"
+﻿<UserControl x:Class="RuleSetEditor.Views.EffectViews.StorageEffectView"
 			 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 			 xmlns:local="clr-namespace:RuleSetEditor.Views.EffectViews"
-			 xmlns:vm="clr-namespace:RuleSetEditor.ViewModels.EffectViewModels"
+			 xmlns:vm="clr-namespace:RuleSetEditor.ViewModels.EffectViewModels.EffectEditViewModels"
 			 mc:Ignorable="d"
-			 d:DataContext="{d:DesignInstance Type=vm:AddRecipeEffectViewModel}"
+			 d:DataContext="{d:DesignInstance Type=vm:StorageEffectEditViewModel}"
 			 d:DesignHeight="300"
 			 d:DesignWidth="300">
 	<Grid>
@@ -15,8 +15,8 @@
 			<RowDefinition Height="*" />
 			<RowDefinition Height="Auto" />
 		</Grid.RowDefinitions>
-
-		<Label Content="Add Recipe"
+		
+		<Label Content="Add Storage"
 			   HorizontalContentAlignment="Center"
 			   FontWeight="Light"
 			   FontSize="18" />
@@ -30,6 +30,9 @@
 										  SharedSizeGroup="LabelField" />
 						<ColumnDefinition Width="*" />
 					</Grid.ColumnDefinitions>
+					<CheckBox Content="Public Accessible"
+							  IsChecked="{Binding PublicAccessible.Value}"
+							  Grid.ColumnSpan="2" />
 				</Grid>
 			</StackPanel>
 		</ScrollViewer>
