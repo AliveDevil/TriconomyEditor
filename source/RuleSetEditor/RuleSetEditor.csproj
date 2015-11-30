@@ -125,6 +125,8 @@
     </ApplicationDefinition>
     <Compile Include="Extensions.cs" />
     <Compile Include="ViewModels\EffectViewModels\AddRecipeEffectViewModel.cs" />
+    <Compile Include="ViewModels\EffectViewModels\EffectEditViewModels\AddRecipeEffectEditViewModel.cs" />
+    <Compile Include="ViewModels\EffectViewModels\EffectEditViewModels\ExtendSettlerAmountEditViewModel.cs" />
     <Compile Include="ViewModels\EffectViewModels\EffectViewModel.cs" />
     <Compile Include="ViewModels\EffectViewModels\ExtendSettlerAmountEffectViewModel.cs" />
     <Compile Include="ViewModels\EffectViewModels\ExtendStorageEffectViewModel.cs" />
@@ -165,6 +167,9 @@
     <Compile Include="ViewModels\ViewModelBase.cs" />
     <Compile Include="Views\EffectViews\AddRecipeEffectView.xaml.cs">
       <DependentUpon>AddRecipeEffectView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\EffectViews\ExtendSettlerAmountEffectView.xaml.cs">
+      <DependentUpon>ExtendSettlerAmountEffectView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\RuleSetViews\BuildingListView.xaml.cs">
       <DependentUpon>BuildingListView.xaml</DependentUpon>
@@ -235,6 +240,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\EffectViews\EffectViewTemplates.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\EffectViews\ExtendSettlerAmountEffectView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

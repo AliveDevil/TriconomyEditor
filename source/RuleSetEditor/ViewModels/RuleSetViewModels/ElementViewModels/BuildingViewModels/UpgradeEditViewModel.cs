@@ -2,7 +2,6 @@
 using Reactive.Bindings;
 using ReactiveUI;
 using RuleSet;
-using RuleSet.Effects;
 using RuleSetEditor.ViewModels.EffectViewModels;
 
 namespace RuleSetEditor.ViewModels.RuleSetViewModels.ElementViewModels.BuildingViewModels
@@ -17,6 +16,11 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels.ElementViewModels.BuildingV
         public RelayCommand<Type> AddEffectCommand => new RelayCommand<Type>(t =>
         {
             AddEffect((Effect)Activator.CreateInstance(t));
+        });
+
+        public RelayCommand<EffectViewModel> EditEffectCommand => new RelayCommand<EffectViewModel>(e =>
+        {
+            ViewStack.Push(EffectViewModel.FindEditViewModel(e, RuleSetViewModel));
         });
 
         public ReactiveList<EffectViewModel> EffectList
@@ -56,24 +60,9 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels.ElementViewModels.BuildingV
             }
         }
 
-        private void AddEffect(Effect e)
+        private void AddEffect(Effect effect)
         {
-            EffectViewModel model = null;
-
-            if (e is AddRecipeEffect) model = new AddRecipeEffectViewModel();
-            else if (e is ExtendSettlerAmountEffect) model = new ExtendSettlerAmountEffectViewModel();
-            else if (e is ExtendStorageEffect) model = new ExtendStorageEffectViewModel();
-            else if (e is GatherResourceEffect) model = new GatherResourceEffectViewModel();
-            else if (e is HabitEffect) model = new HabitEffectViewModel();
-            else if (e is StorageEffect) model = new StorageEffectViewModel();
-            else if (e is UseResourceEffect) model = new UseResourceEffectViewModel();
-            else if (e is WorkplaceEffect) model = new WorkplaceEffectViewModel();
-
-            if (model != null)
-            {
-                model.RuleSetViewModel = RuleSetViewModel;
-                model.Effect = e;
-            }
+            EffectViewModel model = EffectViewModel.FindViewModel(effect, RuleSetViewModel);
 
             if (model != null)
                 Upgrade.Effects.Add(model);

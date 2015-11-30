@@ -79,7 +79,7 @@
 									<Label Content="{Binding}"
 										   Grid.Column="0" />
 									<Button Content="Edit"
-											Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=ListView}, Path=DataContext.EditUpgradeCommand}"
+											Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=ListView}, Path=DataContext.EditEffectCommand}"
 											CommandParameter="{Binding}"
 											Grid.Column="1" />
 								</Grid>
