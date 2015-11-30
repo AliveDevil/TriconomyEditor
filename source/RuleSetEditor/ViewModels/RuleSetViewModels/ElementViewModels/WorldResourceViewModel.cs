@@ -38,6 +38,24 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels.ElementViewModels
 
         public WorldResource WorldResource => (WorldResource)Element;
 
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                Amount?.Dispose();
+                Resource?.Value?.Dispose();
+                Resource?.Dispose();
+                Variants?.Dispose();
+                Resources.Dispose();
+
+                resources = null;
+                resource = null;
+                amountProperty = null;
+                variantsProperty = null;
+            }
+            base.Dispose(disposing);
+        }
+
         protected override void OnElementChanged()
         {
             base.OnElementChanged();
@@ -57,24 +75,6 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels.ElementViewModels
             base.OnRuleSetChanged();
             Resources = RuleSetViewModel.ElementList.CreateDerivedCollection(e => (ResourceViewModel)e, e => e is ResourceViewModel, (l, r) => l.Name.Value.CompareTo(r.Name.Value));
             Resources.ChangeTrackingEnabled = true;
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                Amount?.Dispose();
-                Resource?.Value?.Dispose();
-                Resource?.Dispose();
-                Variants?.Dispose();
-                Resources.Dispose();
-
-                resources = null;
-                resource = null;
-                amountProperty = null;
-                variantsProperty = null;
-            }
-            base.Dispose(disposing);
         }
     }
 }
