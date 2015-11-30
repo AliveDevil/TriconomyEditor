@@ -2,7 +2,7 @@
 
 namespace RuleSetEditor.ViewModels.EffectViewModels.EffectEditViewModels
 {
-    public class ExtendSettlerAmountEditViewModel : RuleSetViewModelBase
+    public class ExtendSettlerAmountEffectEditViewModel : RuleSetViewModelBase
     {
         private ReactiveProperty<int> amountProperty;
         private ExtendSettlerAmountEffectViewModel extendSettlerAmountEffect;

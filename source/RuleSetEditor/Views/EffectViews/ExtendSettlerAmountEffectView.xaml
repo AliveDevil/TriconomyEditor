@@ -6,7 +6,7 @@
 			 xmlns:local="clr-namespace:RuleSetEditor.Views.EffectViews"
 			 xmlns:vm="clr-namespace:RuleSetEditor.ViewModels.EffectViewModels.EffectEditViewModels"
 			 mc:Ignorable="d"
-			 d:DataContext="{d:DesignInstance Type=vm:ExtendSettlerAmountEditViewModel}"
+			 d:DataContext="{d:DesignInstance Type=vm:ExtendSettlerAmountEffectEditViewModel}"
 			 d:DesignHeight="300"
 			 d:DesignWidth="300">
 	<Grid>

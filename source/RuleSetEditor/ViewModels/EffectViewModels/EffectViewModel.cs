@@ -57,7 +57,7 @@ namespace RuleSetEditor.ViewModels.EffectViewModels
             RuleSetViewModelBase viewModelBase = null;
 
             if (effectViewModel is AddRecipeEffectViewModel) viewModelBase = new AddRecipeEffectEditViewModel() { RuleSetViewModel = ruleSetViewModel, AddRecipeEffect = (AddRecipeEffectViewModel)effectViewModel };
-            else if (effectViewModel is ExtendSettlerAmountEffectViewModel) viewModelBase = new ExtendSettlerAmountEditViewModel() { RuleSetViewModel = ruleSetViewModel, ExtendSettlerAmountEffect = (ExtendSettlerAmountEffectViewModel)effectViewModel };
+            else if (effectViewModel is ExtendSettlerAmountEffectViewModel) viewModelBase = new ExtendSettlerAmountEffectEditViewModel() { RuleSetViewModel = ruleSetViewModel, ExtendSettlerAmountEffect = (ExtendSettlerAmountEffectViewModel)effectViewModel };
 
             if (viewModelBase != null)
                 viewModelBase.RuleSetViewModel = ruleSetViewModel;

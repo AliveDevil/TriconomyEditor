@@ -126,7 +126,11 @@
     <Compile Include="Extensions.cs" />
     <Compile Include="ViewModels\EffectViewModels\AddRecipeEffectViewModel.cs" />
     <Compile Include="ViewModels\EffectViewModels\EffectEditViewModels\AddRecipeEffectEditViewModel.cs" />
-    <Compile Include="ViewModels\EffectViewModels\EffectEditViewModels\ExtendSettlerAmountEditViewModel.cs" />
+    <Compile Include="ViewModels\EffectViewModels\EffectEditViewModels\ExtendSettlerAmountEffectEditViewModel.cs" />
+    <Compile Include="ViewModels\EffectViewModels\EffectEditViewModels\ExtendStorageEffectEditViewModel.cs" />
+    <Compile Include="ViewModels\EffectViewModels\EffectEditViewModels\GatherResourceEffectEditViewModel.cs" />
+    <Compile Include="ViewModels\EffectViewModels\EffectEditViewModels\HabitEffectEditViewModel.cs" />
+    <Compile Include="ViewModels\EffectViewModels\EffectEditViewModels\StorageEffectEditViewModel.cs" />
     <Compile Include="ViewModels\EffectViewModels\EffectViewModel.cs" />
     <Compile Include="ViewModels\EffectViewModels\ExtendSettlerAmountEffectViewModel.cs" />
     <Compile Include="ViewModels\EffectViewModels\ExtendStorageEffectViewModel.cs" />
