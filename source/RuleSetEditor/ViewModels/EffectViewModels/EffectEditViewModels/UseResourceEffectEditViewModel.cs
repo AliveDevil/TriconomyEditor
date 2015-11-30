@@ -1,4 +1,5 @@
-﻿using Reactive.Bindings;
+﻿using System.Linq;
+using Reactive.Bindings;
 using ReactiveUI;
 using RuleSetEditor.ViewModels.RuleSetViewModels.ElementViewModels;
 
@@ -38,10 +39,33 @@ namespace RuleSetEditor.ViewModels.EffectViewModels.EffectEditViewModels
             set
             {
                 if (!RaiseSetIfChanged(ref useResourceEffect, value)) return;
-                Amount = UseResourceEffect.Amount;
-                Resource = UseResourceEffect.Resource;
-                Resources = UseResourceEffect.Resources;
+                Amount = ReactiveProperty.FromObject(UseResourceEffect.UseResourceEffect, e => e.Amount);
+                Resource = ReactiveProperty.FromObject(UseResourceEffect.UseResourceEffect,
+                    r => r.Resource,
+                    r => Resources.SingleOrDefault(e => e.Resource == r),
+                    r => r?.Resource);
+
+                Amount.PropertyChanged += OnPropertyChanged;
+                Resource.PropertyChanged += OnPropertyChanged;
             }
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                Dispose(ref amountProperty);
+                Dispose(ref resource);
+                Dispose(ref resources);
+            }
+            base.Dispose(disposing);
+        }
+
+        protected override void OnRuleSetChanged()
+        {
+            base.OnRuleSetChanged();
+            Resources = RuleSetViewModel.ElementList.CreateDerivedCollection(e => (ResourceViewModel)e, e => e is ResourceViewModel, (l, r) => l.Name.Value.CompareTo(r.Name.Value));
+            Resources.ChangeTrackingEnabled = true;
         }
     }
 }

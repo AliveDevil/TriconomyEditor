@@ -22,8 +22,17 @@ namespace RuleSetEditor.ViewModels.EffectViewModels.EffectEditViewModels
             set
             {
                 if (!RaiseSetIfChanged(ref extendStorageEffect, value)) return;
-                Amount = ExtendStorageEffect.Amount;
+                Amount = ReactiveProperty.FromObject(ExtendStorageEffect.ExtendStorageEffect, e => e.Amount);
             }
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                Dispose(ref amountProperty);
+            }
+            base.Dispose(disposing);
         }
     }
 }

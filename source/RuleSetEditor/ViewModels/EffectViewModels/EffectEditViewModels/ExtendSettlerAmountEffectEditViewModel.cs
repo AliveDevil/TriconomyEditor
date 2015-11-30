@@ -22,8 +22,17 @@ namespace RuleSetEditor.ViewModels.EffectViewModels.EffectEditViewModels
             set
             {
                 if (!RaiseSetIfChanged(ref extendSettlerAmountEffect, value)) return;
-                Amount = ExtendSettlerAmountEffect.Amount;
+                Amount = ReactiveProperty.FromObject(ExtendSettlerAmountEffect.ExtendSettlerAmountEffect, e => e.SettlerAmount);
             }
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                Dispose(ref extendSettlerAmountEffect);
+            }
+            base.Dispose(disposing);
         }
 
         protected override void OnRuleSetChanged()
