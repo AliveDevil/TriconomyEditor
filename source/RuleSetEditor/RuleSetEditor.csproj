@@ -131,6 +131,8 @@
     <Compile Include="ViewModels\EffectViewModels\EffectEditViewModels\GatherResourceEffectEditViewModel.cs" />
     <Compile Include="ViewModels\EffectViewModels\EffectEditViewModels\HabitEffectEditViewModel.cs" />
     <Compile Include="ViewModels\EffectViewModels\EffectEditViewModels\StorageEffectEditViewModel.cs" />
+    <Compile Include="ViewModels\EffectViewModels\EffectEditViewModels\UseResourceEffectEditViewModel.cs" />
+    <Compile Include="ViewModels\EffectViewModels\EffectEditViewModels\WorkplaceEffectEditViewModel.cs" />
     <Compile Include="ViewModels\EffectViewModels\EffectViewModel.cs" />
     <Compile Include="ViewModels\EffectViewModels\ExtendSettlerAmountEffectViewModel.cs" />
     <Compile Include="ViewModels\EffectViewModels\ExtendStorageEffectViewModel.cs" />
