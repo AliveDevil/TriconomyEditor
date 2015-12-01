@@ -58,6 +58,12 @@ namespace RuleSetEditor.ViewModels.EffectViewModels
                     RuleSetViewModel = ruleSetViewModel,
                     HabitEffect = (HabitEffectViewModel)effectViewModel
                 };
+            else if (effectViewModel is ProduceResourceEffectViewModel)
+                viewModelBase = new ProduceResourceEffectEditViewModel()
+                {
+                    RuleSetViewModel = ruleSetViewModel,
+                    ProduceResourceEffect = (ProduceResourceEffectViewModel)effectViewModel
+                };
             else if (effectViewModel is StorageEffectViewModel)
                 viewModelBase = new StorageEffectEditViewModel()
                 {
@@ -89,6 +95,7 @@ namespace RuleSetEditor.ViewModels.EffectViewModels
             else if (effect is ExtendStorageEffect) model = new ExtendStorageEffectViewModel();
             else if (effect is GatherResourceEffect) model = new GatherResourceEffectViewModel();
             else if (effect is HabitEffect) model = new HabitEffectViewModel();
+            else if (effect is ProduceResourceEffect) model = new ProduceResourceEffectViewModel();
             else if (effect is StorageEffect) model = new StorageEffectViewModel();
             else if (effect is UseResourceEffect) model = new UseResourceEffectViewModel();
             else if (effect is WorkplaceEffect) model = new WorkplaceEffectViewModel();

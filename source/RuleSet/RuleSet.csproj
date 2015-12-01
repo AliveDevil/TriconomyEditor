@@ -48,6 +48,7 @@
     <Compile Include="Effects\ExtendStorageEffect.cs" />
     <Compile Include="Effects\GatherResourceEffect.cs" />
     <Compile Include="Effects\HabitEffect.cs" />
+    <Compile Include="Effects\ProduceResourceEffect.cs" />
     <Compile Include="Effects\StorageEffect.cs" />
     <Compile Include="Effects\UseResourceEffect.cs" />
     <Compile Include="Effects\WorkplaceEffect.cs" />

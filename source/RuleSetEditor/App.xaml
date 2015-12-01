@@ -3,24 +3,37 @@
 			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 			 xmlns:sys="clr-namespace:System;assembly=mscorlib"
 			 xmlns:local="clr-namespace:RuleSetEditor"
+			 xmlns:tk="http://schemas.xceed.com/wpf/xaml/toolkit"
 			 StartupUri="MainWindow.xaml">
 	<Application.Resources>
 		<ResourceDictionary>
 			<Style TargetType="TextBox">
 				<Setter Property="VerticalContentAlignment"
 						Value="Center" />
+				<Setter Property="Margin"
+						Value="5" />
 			</Style>
 			<Style TargetType="Label">
 				<Setter Property="VerticalContentAlignment"
 						Value="Center" />
+				<Setter Property="Margin"
+						Value="5" />
+			</Style>
+			<Style TargetType="ListView">
+				<Setter Property="Margin"
+						Value="5" />
 			</Style>
 			<Style TargetType="Button">
 				<Setter Property="Margin"
 						Value="5" />
-				<Setter Property="Padding"
-						Value="3" />
 			</Style>
 			<Style TargetType="ComboBox">
+				<Setter Property="VerticalContentAlignment"
+						Value="Center" />
+				<Setter Property="Margin"
+						Value="5" />
+			</Style>
+			<Style TargetType="tk:IntegerUpDown">
 				<Setter Property="VerticalContentAlignment"
 						Value="Center" />
 				<Setter Property="Margin"
