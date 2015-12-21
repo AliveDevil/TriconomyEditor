@@ -42,13 +42,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Conditions\ElementNearByCondition.cs" />
+    <Compile Include="Conditions\ExistingBuildingCondition.cs" />
+    <Compile Include="Conditions\ResearchCondition.cs" />
     <Compile Include="DeferredJsonSerializer.cs" />
     <Compile Include="Effects\AddRecipeEffect.cs" />
+    <Compile Include="Effects\DeliverEffect.cs" />
     <Compile Include="Effects\ExtendSettlerAmountEffect.cs" />
     <Compile Include="Effects\ExtendStorageEffect.cs" />
     <Compile Include="Effects\GatherResourceEffect.cs" />
     <Compile Include="Effects\HabitEffect.cs" />
+    <Compile Include="Effects\IncreaseProductivityEffect.cs" />
     <Compile Include="Effects\ProduceResourceEffect.cs" />
+    <Compile Include="Effects\SpawnWorldResourceEffect.cs" />
     <Compile Include="Effects\StorageEffect.cs" />
     <Compile Include="Effects\UseResourceEffect.cs" />
     <Compile Include="Effects\WorkplaceEffect.cs" />

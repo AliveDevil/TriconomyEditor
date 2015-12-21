@@ -60,7 +60,10 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels
         protected override void OnRuleSetChanged()
         {
             base.OnRuleSetChanged();
-            Resources = RuleSetViewModel.ElementList.CreateDerivedCollection(e => (ResourceViewModel)e, e => e is ResourceViewModel, (l, r) => l.Name.Value.CompareTo(r.Name.Value));
+            Resources = RuleSetViewModel.ElementList.CreateDerivedCollection(
+                e => (ResourceViewModel)e,
+                e => e is ResourceViewModel,
+                (l, r) => l.Name.Value.CompareTo(r.Name.Value));
         }
 
         private void AddAndSelectNewResource<TViewModel, TItem>(string name)

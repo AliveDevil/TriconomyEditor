@@ -8,20 +8,35 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels.ElementViewModels.BuildingV
 {
     public class UpgradeEditViewModel : RuleSetViewModelBase
     {
+        private RelayCommand<Type> addEffectCommand;
+        private RelayCommand<EffectViewModel> editEffectCommand;
         private ReactiveList<EffectViewModel> effectList;
         private ReactiveProperty<int> levelProperty;
+        private RelayCommand removeEffectCommand;
         private EffectViewModel selectedEffect;
         private UpgradeViewModel upgrade;
 
-        public RelayCommand<Type> AddEffectCommand => new RelayCommand<Type>(t =>
+        public RelayCommand<Type> AddEffectCommand
         {
-            AddEffect((Effect)Activator.CreateInstance(t));
-        });
+            get
+            {
+                return addEffectCommand ?? (addEffectCommand = new RelayCommand<Type>(t =>
+                {
+                    AddEffect((Effect)Activator.CreateInstance(t));
+                }));
+            }
+        }
 
-        public RelayCommand<EffectViewModel> EditEffectCommand => new RelayCommand<EffectViewModel>(e =>
+        public RelayCommand<EffectViewModel> EditEffectCommand
         {
-            ViewStack.Push(EffectViewModel.FindEditViewModel(e, RuleSetViewModel));
-        });
+            get
+            {
+                return editEffectCommand ?? (editEffectCommand = new RelayCommand<EffectViewModel>(e =>
+                {
+                    ViewStack.Push(EffectViewModel.FindEditViewModel(e, RuleSetViewModel));
+                }));
+            }
+        }
 
         public ReactiveList<EffectViewModel> EffectList
         {
@@ -35,10 +50,16 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels.ElementViewModels.BuildingV
             private set { RaiseSetIfChanged(ref levelProperty, value); }
         }
 
-        public RelayCommand RemoveEffectCommand => new RelayCommand(() =>
+        public RelayCommand RemoveEffectCommand
         {
-            Upgrade.Effects.Remove(SelectedEffect);
-        });
+            get
+            {
+                return removeEffectCommand ?? (removeEffectCommand = new RelayCommand(() =>
+                {
+                    Upgrade.Effects.Remove(SelectedEffect);
+                }));
+            }
+        }
 
         public EffectViewModel SelectedEffect
         {
@@ -65,7 +86,21 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels.ElementViewModels.BuildingV
             EffectViewModel model = EffectViewModel.FindViewModel(effect, RuleSetViewModel);
 
             if (model != null)
+            {
                 Upgrade.Effects.Add(model);
+                ViewStack.Push(EffectViewModel.FindEditViewModel(model, RuleSetViewModel));
+            }
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                Dispose(ref addEffectCommand);
+                Dispose(ref editEffectCommand);
+
+            }
+            base.Dispose(disposing);
         }
     }
 }

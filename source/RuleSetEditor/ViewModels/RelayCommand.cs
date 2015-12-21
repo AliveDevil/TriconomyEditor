@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Input;
 
 namespace RuleSetEditor.ViewModels
@@ -11,17 +11,18 @@ namespace RuleSetEditor.ViewModels
             add
             {
                 CommandManager.RequerySuggested += value;
-                delegates.Add(value);
+                CanExecuteChangedInternal += value;
             }
             remove
             {
                 CommandManager.RequerySuggested -= value;
-                delegates.Remove(value);
+                CanExecuteChangedInternal -= value;
             }
         }
 
+        private event EventHandler CanExecuteChangedInternal;
+
         private Func<bool> canExecuteFunc;
-        private List<EventHandler> delegates = new List<EventHandler>();
         private Action executeAction;
 
         public RelayCommand(Action executeAction) : this(executeAction, () => true)
@@ -49,13 +50,18 @@ namespace RuleSetEditor.ViewModels
             executeAction();
         }
 
+        public void RaiseCanExecuteChanged()
+        {
+            CanExecuteChangedInternal?.Invoke(this, EventArgs.Empty);
+        }
+
         public void RemoveAllEvents()
         {
-            foreach (EventHandler eh in delegates)
+            foreach (var item in CanExecuteChangedInternal?.GetInvocationList() ?? Enumerable.Empty<Delegate>())
             {
-                CommandManager.RequerySuggested -= eh;
+                CanExecuteChanged -= (EventHandler)item;
             }
-            delegates.Clear();
+            CanExecuteChangedInternal = null;
         }
     }
 }

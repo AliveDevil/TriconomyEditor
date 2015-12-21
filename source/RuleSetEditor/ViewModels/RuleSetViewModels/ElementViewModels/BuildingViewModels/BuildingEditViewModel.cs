@@ -8,27 +8,48 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels.ElementViewModels.BuildingV
 {
     public class BuildingEditViewModel : RuleSetViewModelBase
     {
+        private RelayCommand<Type> addEffectCommand;
+        private RelayCommand addUpgradeCommand;
         private BuildingViewModel building;
+        private RelayCommand<EffectViewModel> editEffectCommand;
+        private RelayCommand<UpgradeViewModel> editUpgradeCommand;
         private IReactiveDerivedList<EffectViewModel> effectList;
         private ReactiveProperty<string> nameProperty;
+        private RelayCommand removeEffectCommand;
+        private RelayCommand removeUpgradeCommand;
         private EffectViewModel selectedEffect;
         private UpgradeViewModel selectedUpgrade;
         private IReactiveDerivedList<UpgradeViewModel> upgradeList;
         private ReactiveProperty<int> variantsProperty;
 
-        public RelayCommand<Type> AddEffectCommand => new RelayCommand<Type>(t =>
+        public RelayCommand<Type> AddEffectCommand
         {
-            AddEffect((Effect)Activator.CreateInstance(t));
-        });
-
-        public RelayCommand AddUpgradeCommand => new RelayCommand(() =>
-        {
-            Building.UpgradeList.Add(new UpgradeViewModel()
+            get
             {
-                RuleSetViewModel = RuleSetViewModel,
-                Upgrade = new Upgrade() { Level = 0 }
-            });
-        });
+                return addEffectCommand ?? (addEffectCommand = new RelayCommand<Type>(t =>
+                {
+                    AddEffect((Effect)Activator.CreateInstance(t));
+                }));
+            }
+        }
+
+        public RelayCommand AddUpgradeCommand
+        {
+            get
+            {
+                return addUpgradeCommand ?? (addUpgradeCommand = new RelayCommand(() =>
+                {
+                    Upgrade upgrade = new Upgrade() { Level = 0 };
+                    UpgradeViewModel viewModel = new UpgradeViewModel()
+                    {
+                        RuleSetViewModel = RuleSetViewModel,
+                        Upgrade = upgrade
+                    };
+                    Building.UpgradeList.Add(viewModel);
+                    ViewStack.Push<UpgradeEditViewModel>()._(_ => _.Upgrade = viewModel);
+                }));
+            }
+        }
 
         public BuildingViewModel Building
         {
@@ -48,15 +69,27 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels.ElementViewModels.BuildingV
             }
         }
 
-        public RelayCommand<EffectViewModel> EditEffectCommand => new RelayCommand<EffectViewModel>(e =>
+        public RelayCommand<EffectViewModel> EditEffectCommand
         {
-            ViewStack.Push(EffectViewModel.FindEditViewModel(e, RuleSetViewModel));
-        });
+            get
+            {
+                return editEffectCommand ?? (editEffectCommand = new RelayCommand<EffectViewModel>(e =>
+                {
+                    ViewStack.Push(EffectViewModel.FindEditViewModel(e, RuleSetViewModel));
+                }));
+            }
+        }
 
-        public RelayCommand<UpgradeViewModel> EditUpgradeCommand => new RelayCommand<UpgradeViewModel>(u =>
-                 {
-                     ViewStack.Push<UpgradeEditViewModel>()._(_ => _.Upgrade = u);
-                 });
+        public RelayCommand<UpgradeViewModel> EditUpgradeCommand
+        {
+            get
+            {
+                return editUpgradeCommand ?? (editUpgradeCommand = new RelayCommand<UpgradeViewModel>(u =>
+                {
+                    ViewStack.Push<UpgradeEditViewModel>()._(_ => _.Upgrade = u);
+                }));
+            }
+        }
 
         public IReactiveDerivedList<EffectViewModel> EffectList
         {
@@ -70,15 +103,27 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels.ElementViewModels.BuildingV
             private set { RaiseSetIfChanged(ref nameProperty, value); }
         }
 
-        public RelayCommand RemoveEffectCommand => new RelayCommand(() =>
+        public RelayCommand RemoveEffectCommand
         {
-            Building.EffectList.Remove(SelectedEffect);
-        });
+            get
+            {
+                return removeEffectCommand ?? (removeEffectCommand = new RelayCommand(() =>
+                {
+                    Building.EffectList.Remove(SelectedEffect);
+                }));
+            }
+        }
 
-        public RelayCommand RemoveUpgradeCommand => new RelayCommand(() =>
+        public RelayCommand RemoveUpgradeCommand
         {
-            Building.UpgradeList.Remove(SelectedUpgrade);
-        });
+            get
+            {
+                return removeUpgradeCommand ?? (removeUpgradeCommand = new RelayCommand(() =>
+                {
+                    Building.UpgradeList.Remove(SelectedUpgrade);
+                }));
+            }
+        }
 
         public EffectViewModel SelectedEffect
         {
@@ -104,12 +149,33 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels.ElementViewModels.BuildingV
             private set { RaiseSetIfChanged(ref variantsProperty, value); }
         }
 
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                Dispose(ref effectList);
+                Dispose(ref upgradeList);
+                Dispose(ref nameProperty);
+                Dispose(ref variantsProperty);
+                Dispose(ref addEffectCommand);
+                Dispose(ref addUpgradeCommand);
+                Dispose(ref editEffectCommand);
+                Dispose(ref editUpgradeCommand);
+                Dispose(ref removeEffectCommand);
+                Dispose(ref removeUpgradeCommand);
+            }
+            base.Dispose(disposing);
+        }
+
         private void AddEffect(Effect effect)
         {
             EffectViewModel model = EffectViewModel.FindViewModel(effect, RuleSetViewModel);
 
             if (model != null)
+            {
                 Building.EffectList.Add(model);
+                ViewStack.Push(EffectViewModel.FindEditViewModel(model, RuleSetViewModel));
+            }
         }
     }
 }

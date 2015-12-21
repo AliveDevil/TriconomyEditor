@@ -6,6 +6,8 @@
 
         public Resource Resource { get; set; }
 
+        public int SpawnChance { get; set; }
+
         public int Variants { get; set; } = 0;
     }
 }

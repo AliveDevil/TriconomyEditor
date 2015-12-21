@@ -27,8 +27,21 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels.ElementViewModels
 
         public ReactiveProperty<string> Name
         {
-            get { return nameProperty; }
-            private set { RaiseSetIfChanged(ref nameProperty, value); }
+            get
+            {
+                return nameProperty;
+            }
+            private set
+            {
+                Dispose(ref nameProperty);
+                if (!RaiseSetIfChanged(ref nameProperty, value)) return;
+                Name.PropertyChanged += OnPropertyChanged;
+            }
+        }
+
+        public override string ToString()
+        {
+            return Element.Name;
         }
 
         protected override void Dispose(bool disposing)
@@ -43,11 +56,6 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels.ElementViewModels
 
         protected virtual void OnElementChanged()
         {
-        }
-
-        public override string ToString()
-        {
-            return Element.Name;
         }
     }
 }

@@ -125,12 +125,15 @@
     </ApplicationDefinition>
     <Compile Include="Extensions.cs" />
     <Compile Include="ViewModels\EffectViewModels\AddRecipeEffectViewModel.cs" />
+    <Compile Include="ViewModels\EffectViewModels\DeliverEffectViewModel.cs" />
     <Compile Include="ViewModels\EffectViewModels\EffectEditViewModels\AddRecipeEffectEditViewModel.cs" />
+    <Compile Include="ViewModels\EffectViewModels\EffectEditViewModels\DeliverEffectEditViewModel.cs" />
     <Compile Include="ViewModels\EffectViewModels\EffectEditViewModels\ExtendSettlerAmountEffectEditViewModel.cs" />
     <Compile Include="ViewModels\EffectViewModels\EffectEditViewModels\ExtendStorageEffectEditViewModel.cs" />
     <Compile Include="ViewModels\EffectViewModels\EffectEditViewModels\GatherResourceEffectEditViewModel.cs" />
     <Compile Include="ViewModels\EffectViewModels\EffectEditViewModels\HabitEffectEditViewModel.cs" />
     <Compile Include="ViewModels\EffectViewModels\EffectEditViewModels\ProduceResourceEffectEditViewModel.cs" />
+    <Compile Include="ViewModels\EffectViewModels\EffectEditViewModels\SpawnWorldResourceEffectEditViewModel.cs" />
     <Compile Include="ViewModels\EffectViewModels\EffectEditViewModels\StorageEffectEditViewModel.cs" />
     <Compile Include="ViewModels\EffectViewModels\EffectEditViewModels\UseResourceEffectEditViewModel.cs" />
     <Compile Include="ViewModels\EffectViewModels\EffectEditViewModels\WorkplaceEffectEditViewModel.cs" />
@@ -141,6 +144,7 @@
     <Compile Include="ViewModels\EffectViewModels\HabitEffectViewModel.cs" />
     <Compile Include="ViewModels\EffectViewModels\ProduceResourceEffectViewModel.cs" />
     <Compile Include="ViewModels\EffectViewModels\RecipePartViewModel.cs" />
+    <Compile Include="ViewModels\EffectViewModels\SpawnWorldResourceEffectViewModel.cs" />
     <Compile Include="ViewModels\EffectViewModels\StorageEffectViewModel.cs" />
     <Compile Include="ViewModels\EffectViewModels\UseResourceEffectViewModel.cs" />
     <Compile Include="ViewModels\EffectViewModels\WorkplaceEffectViewModel.cs" />
@@ -176,6 +180,9 @@
     <Compile Include="Views\EffectViews\AddRecipeEffectView.xaml.cs">
       <DependentUpon>AddRecipeEffectView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\EffectViews\DeliverEffectView.xaml.cs">
+      <DependentUpon>DeliverEffectView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\EffectViews\ExtendSettlerAmountEffectView.xaml.cs">
       <DependentUpon>ExtendSettlerAmountEffectView.xaml</DependentUpon>
     </Compile>
@@ -190,6 +197,9 @@
     </Compile>
     <Compile Include="Views\EffectViews\ProduceResourceEffectView.xaml.cs">
       <DependentUpon>ProduceResourceEffectView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\EffectViews\SpawnWorldResourceEffectView.xaml.cs">
+      <DependentUpon>SpawnWorldResourceEffectView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\EffectViews\StorageEffectView.xaml.cs">
       <DependentUpon>StorageEffectView.xaml</DependentUpon>
@@ -268,6 +278,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\EffectViews\DeliverEffectView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\EffectViews\EffectViewTemplates.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -289,6 +303,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\EffectViews\ProduceResourceEffectView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\EffectViews\SpawnWorldResourceEffectView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

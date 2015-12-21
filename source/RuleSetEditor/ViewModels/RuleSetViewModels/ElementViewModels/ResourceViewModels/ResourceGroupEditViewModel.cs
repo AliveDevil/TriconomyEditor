@@ -5,15 +5,22 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels.ElementViewModels.ResourceV
 {
     public class ResourceGroupEditViewModel : RuleSetViewModelBase
     {
+        private RelayCommand addResourceCommand;
         private IReactiveDerivedList<ResourceViewModel> availableResources;
         private ResourceGroupViewModel resourceGroup;
         private ResourceViewModel selectedResource;
 
-        public RelayCommand AddResourceCommand => new RelayCommand(() =>
+        public RelayCommand AddResourceCommand
         {
-            if (ResourceGroup.ResourceList.Contains(SelectedResource)) return;
-            ResourceGroup.ResourceList.Add(SelectedResource);
-        });
+            get
+            {
+                return addResourceCommand ?? (addResourceCommand = new RelayCommand(() =>
+                {
+                    if (ResourceGroup.ResourceList.Contains(SelectedResource)) return;
+                    ResourceGroup.ResourceList.Add(SelectedResource);
+                }));
+            }
+        }
 
         public IReactiveDerivedList<ResourceViewModel> AvailableResources
         {
@@ -43,6 +50,14 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels.ElementViewModels.ResourceV
         {
             get { return selectedResource; }
             set { RaiseSetIfChanged(ref selectedResource, value); }
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+            }
+            base.Dispose(disposing);
         }
 
         protected override void OnRuleSetChanged()

@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Input;
 
 namespace RuleSetEditor.ViewModels
@@ -11,17 +11,18 @@ namespace RuleSetEditor.ViewModels
             add
             {
                 CommandManager.RequerySuggested += value;
-                delegates.Add(value);
+                CanExecuteChangedInternal += value;
             }
             remove
             {
                 CommandManager.RequerySuggested -= value;
-                delegates.Remove(value);
+                CanExecuteChangedInternal -= value;
             }
         }
 
+        private event EventHandler CanExecuteChangedInternal;
+
         private Func<T, bool> canExecuteFunc;
-        private List<EventHandler> delegates = new List<EventHandler>();
         private Action<T> executeAction;
 
         public RelayCommand(Action<T> executeAction) : this(executeAction, (ignore) => true)
@@ -41,6 +42,11 @@ namespace RuleSetEditor.ViewModels
             return canExecuteFunc((T)parameter);
         }
 
+        public void Dispose()
+        {
+            RemoveAllEvents();
+        }
+
         public void Execute(object parameter)
         {
             if (!(parameter is T)) return;
@@ -48,20 +54,18 @@ namespace RuleSetEditor.ViewModels
             executeAction((T)parameter);
         }
 
-
+        public void RaiseCanExecuteChanged()
+        {
+            CanExecuteChangedInternal?.Invoke(this, EventArgs.Empty);
+        }
 
         public void RemoveAllEvents()
         {
-            foreach (EventHandler eh in delegates)
+            foreach (var item in CanExecuteChangedInternal?.GetInvocationList() ?? Enumerable.Empty<Delegate>())
             {
-                CanExecuteChanged -= eh;
+                CanExecuteChanged -= (EventHandler)item;
             }
-            delegates.Clear();
-        }
-
-        public void Dispose()
-        {
-            RemoveAllEvents();
+            CanExecuteChangedInternal = null;
         }
     }
 }

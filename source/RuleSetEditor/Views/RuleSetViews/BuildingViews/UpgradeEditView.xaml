@@ -93,6 +93,9 @@
 									<MenuItem Header="Workplace"
 											  Command="{Binding AddEffectCommand}"
 											  CommandParameter="{x:Type effects:WorkplaceEffect}" />
+									<MenuItem Header="Delivery"
+											  Command="{Binding AddEffectCommand}"
+											  CommandParameter="{x:Type effects:DeliverEffect}" />
 								</MenuItem>
 								<MenuItem Header="Resources">
 									<MenuItem Header="Produce Resource"
