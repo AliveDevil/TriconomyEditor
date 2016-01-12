@@ -16,7 +16,7 @@
 			<RowDefinition Height="Auto" />
 		</Grid.RowDefinitions>
 
-		<Label Content="Add Workplae"
+		<Label Content="Add Workplace"
 			   HorizontalContentAlignment="Center"
 			   FontWeight="Light"
 			   FontSize="18" />
@@ -30,6 +30,13 @@
 										  SharedSizeGroup="LabelField" />
 						<ColumnDefinition Width="*" />
 					</Grid.ColumnDefinitions>
+
+					<Label Content="Job" />
+
+					<ComboBox SelectedItem="{Binding Job.Value}"
+							  ItemsSource="{Binding Jobs}"
+							  IsSynchronizedWithCurrentItem="True"
+							  Grid.Column="1" />
 				</Grid>
 			</StackPanel>
 		</ScrollViewer>
