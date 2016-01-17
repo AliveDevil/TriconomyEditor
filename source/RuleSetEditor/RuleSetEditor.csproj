@@ -127,8 +127,10 @@
     <Compile Include="Extensions.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="ViewModels\EffectViewModels\AddRecipeEffectViewModel.cs" />
+    <Compile Include="ViewModels\EffectViewModels\AssemblyPointEffectViewModel.cs" />
     <Compile Include="ViewModels\EffectViewModels\DeliverEffectViewModel.cs" />
     <Compile Include="ViewModels\EffectViewModels\EffectEditViewModels\AddRecipeEffectEditViewModel.cs" />
+    <Compile Include="ViewModels\EffectViewModels\EffectEditViewModels\AssemblyPointEffectEditViewModel.cs" />
     <Compile Include="ViewModels\EffectViewModels\EffectEditViewModels\DeliverEffectEditViewModel.cs" />
     <Compile Include="ViewModels\EffectViewModels\EffectEditViewModels\ExtendSettlerAmountEffectEditViewModel.cs" />
     <Compile Include="ViewModels\EffectViewModels\EffectEditViewModels\ExtendStorageEffectEditViewModel.cs" />
@@ -181,6 +183,9 @@
     <Compile Include="ViewModels\ViewModelBase.cs" />
     <Compile Include="Views\EffectViews\AddRecipeEffectView.xaml.cs">
       <DependentUpon>AddRecipeEffectView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\EffectViews\AssemblyPointEffectView.xaml.cs">
+      <DependentUpon>AssemblyPointEffectView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\EffectViews\DeliverEffectView.xaml.cs">
       <DependentUpon>DeliverEffectView.xaml</DependentUpon>
@@ -277,6 +282,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Views\EffectViews\AddRecipeEffectView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\EffectViews\AssemblyPointEffectView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

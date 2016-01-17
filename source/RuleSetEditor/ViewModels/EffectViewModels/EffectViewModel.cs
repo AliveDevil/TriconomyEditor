@@ -34,6 +34,12 @@ namespace RuleSetEditor.ViewModels.EffectViewModels
                     RuleSetViewModel = ruleSetViewModel,
                     AddRecipeEffect = (AddRecipeEffectViewModel)effectViewModel
                 };
+            else if (effectViewModel is AssemblyPointEffectViewModel)
+                viewModelBase = new AssemblyPointEffectEditViewModel()
+                {
+                    RuleSetViewModel = ruleSetViewModel,
+                    AssemblyPointEffect = (AssemblyPointEffectViewModel)effectViewModel
+                };
             else if (effectViewModel is DeliverEffectViewModel)
                 viewModelBase = new DeliverEffectEditViewModel()
                 {
@@ -103,6 +109,7 @@ namespace RuleSetEditor.ViewModels.EffectViewModels
             EffectViewModel model = null;
 
             if (effect is AddRecipeEffect) model = new AddRecipeEffectViewModel();
+            else if (effect is AssemblyPointEffect) model = new AssemblyPointEffectViewModel();
             else if (effect is DeliverEffect) model = new DeliverEffectViewModel();
             else if (effect is ExtendSettlerAmountEffect) model = new ExtendSettlerAmountEffectViewModel();
             else if (effect is ExtendStorageEffect) model = new ExtendStorageEffectViewModel();

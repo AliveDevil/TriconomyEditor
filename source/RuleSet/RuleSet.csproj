@@ -47,6 +47,7 @@
     <Compile Include="Conditions\ResearchCondition.cs" />
     <Compile Include="DeferredJsonSerializer.cs" />
     <Compile Include="Effects\AddRecipeEffect.cs" />
+    <Compile Include="Effects\AssemblyPointEffect.cs" />
     <Compile Include="Effects\DeliverEffect.cs" />
     <Compile Include="Effects\ExtendSettlerAmountEffect.cs" />
     <Compile Include="Effects\ExtendStorageEffect.cs" />

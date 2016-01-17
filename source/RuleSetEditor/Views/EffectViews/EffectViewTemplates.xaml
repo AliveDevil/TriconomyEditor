@@ -5,6 +5,9 @@
 	<DataTemplate DataType="{x:Type vm:AddRecipeEffectEditViewModel}">
 		<local:AddRecipeEffectView />
 	</DataTemplate>
+	<DataTemplate DataType="{x:Type vm:AssemblyPointEffectEditViewModel}">
+		<local:AssemblyPointEffectView />
+	</DataTemplate>
 	<DataTemplate DataType="{x:Type vm:DeliverEffectEditViewModel}">
 		<local:DeliverEffectView />
 	</DataTemplate>
