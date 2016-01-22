@@ -12,12 +12,21 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels
         private IReactiveDerivedList<BuildingViewModel> buildings;
         private BuildingViewModel selectedBuilding;
 
-        public RelayCommand AddBuildingCommand => new RelayCommand(() =>
+
+        private RelayCommand addBuildingCommand;
+
+        public RelayCommand AddBuildingCommand
         {
-            BuildingViewModel model = new BuildingViewModel() { RuleSetViewModel = RuleSetViewModel, Element = new Building() { Name = "New Building" } };
-            RuleSetViewModel.ElementList.Add(model);
-            SelectedBuilding = model;
-        });
+            get
+            {
+                return addBuildingCommand ?? (addBuildingCommand = new RelayCommand(() =>
+                {
+                    BuildingViewModel model = new BuildingViewModel() { RuleSetViewModel = RuleSetViewModel, Element = new Building() { Name = "New Building" } };
+                    RuleSetViewModel.ElementList.Add(model);
+                    SelectedBuilding = model;
+                }));
+            }
+        }
 
         public IReactiveDerivedList<BuildingViewModel> Buildings
         {
@@ -25,16 +34,34 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels
             private set { RaiseSetIfChanged(ref buildings, value); }
         }
 
-        public RelayCommand<BuildingViewModel> EditBuildingCommand => new RelayCommand<BuildingViewModel>(building =>
-        {
-            SelectedBuilding = building;
-            ViewStack.Push<BuildingEditViewModel>()._(_ => _.Building = building);
-        });
 
-        public RelayCommand RemoveBuildingCommand => new RelayCommand(() =>
+        private RelayCommand<BuildingViewModel> editBuildingCommand;
+
+        public RelayCommand<BuildingViewModel> EditBuildingCommand
         {
-            RuleSetViewModel.ElementList.Remove(SelectedBuilding);
-        });
+            get
+            {
+                return editBuildingCommand ?? (editBuildingCommand = new RelayCommand<BuildingViewModel>(building =>
+                {
+                    SelectedBuilding = building;
+                    ViewStack.Push<BuildingEditViewModel>()._(_ => _.Building = building);
+                }));
+            }
+        }
+
+
+        private RelayCommand removeBuildingCommand;
+
+        public RelayCommand RemoveBuildingCommand
+        {
+            get
+            {
+                return removeBuildingCommand ?? (removeBuildingCommand = new RelayCommand(() =>
+                {
+                    RuleSetViewModel.ElementList.Remove(SelectedBuilding);
+                }));
+            }
+        }
 
         public BuildingViewModel SelectedBuilding
         {

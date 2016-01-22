@@ -42,12 +42,6 @@
 			</Style>
 			<ResourceDictionary.MergedDictionaries>
 				<ResourceDictionary Source="Views/ViewTemplates.xaml" />
-				<ResourceDictionary Source="Views/RuleSetViews/RuleSetViewTemplates.xaml" />
-				<ResourceDictionary Source="Views/RuleSetViews/BuildingViews/BuildingViewTemplates.xaml" />
-				<ResourceDictionary Source="Views/RuleSetViews/JobViews/JobViewTemplates.xaml" />
-				<ResourceDictionary Source="Views/RuleSetViews/ResourceViews/ResourceViewTemplates.xaml" />
-				<ResourceDictionary Source="Views/RuleSetViews/ToolbarViews/ToolbarViewTemplates.xaml" />
-				<ResourceDictionary Source="Views/RuleSetViews/WorldResourceViews/WorldResourceViewTemplates.xaml" />
 			</ResourceDictionary.MergedDictionaries>
 		</ResourceDictionary>
 	</Application.Resources>

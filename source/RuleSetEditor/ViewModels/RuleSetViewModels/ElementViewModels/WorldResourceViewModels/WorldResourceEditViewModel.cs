@@ -52,7 +52,8 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels.ElementViewModels.WorldReso
             }
             set
             {
-                RaiseSetIfChanged(ref worldResource, value);
+                if (!RaiseSetIfChanged(ref worldResource, value))
+                    return;
                 Name = WorldResource.Name;
                 Amount = WorldResource.Amount;
                 Resource = WorldResource.Resource.ToReactivePropertyAsSynchronized(w => w.Value, w => Resources.SingleOrDefault(r => r == worldResource.Resource.Value), w => w);
@@ -69,6 +70,7 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels.ElementViewModels.WorldReso
         {
             base.OnRuleSetChanged();
             Resources = RuleSetViewModel.ElementList.CreateDerivedCollection(e => (ResourceViewModel)e, e => e is ResourceViewModel, (l, r) => l.Name.Value.CompareTo(r.Name.Value));
+            Resources.ChangeTrackingEnabled = true;
         }
     }
 }

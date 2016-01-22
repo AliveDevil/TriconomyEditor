@@ -1,20 +1,32 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:vm="clr-namespace:RuleSetEditor.ViewModels.RuleSetViewModels"
-                    xmlns:local="clr-namespace:RuleSetEditor.Views.RuleSetViews">
-    <DataTemplate DataType="{x:Type vm:LandingPageViewModel}">
-        <local:LandingPageView />
-    </DataTemplate>
-    <DataTemplate DataType="{x:Type vm:ResourceListViewModel}">
-        <local:ResourceListView />
-    </DataTemplate>
-    <DataTemplate DataType="{x:Type vm:WorldResourceListViewModel}">
-        <local:WorldResourceListView />
-    </DataTemplate>
-    <DataTemplate DataType="{x:Type vm:JobListViewModel}">
-        <local:JobListView />
-    </DataTemplate>
-    <DataTemplate DataType="{x:Type vm:BuildingListViewModel}">
-        <local:BuildingListView />
-    </DataTemplate>
+					xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+					xmlns:vm="clr-namespace:RuleSetEditor.ViewModels.RuleSetViewModels"
+					xmlns:local="clr-namespace:RuleSetEditor.Views.RuleSetViews">
+	<DataTemplate DataType="{x:Type vm:BuildingListViewModel}">
+		<local:BuildingListView />
+	</DataTemplate>
+	<DataTemplate DataType="{x:Type vm:JobListViewModel}">
+		<local:JobListView />
+	</DataTemplate>
+	<DataTemplate DataType="{x:Type vm:LandingPageViewModel}">
+		<local:LandingPageView />
+	</DataTemplate>
+	<DataTemplate DataType="{x:Type vm:NeedsListViewModel}">
+		<local:NeedListView />
+	</DataTemplate>
+	<DataTemplate DataType="{x:Type vm:ResourceListViewModel}">
+		<local:ResourceListView />
+	</DataTemplate>
+	<DataTemplate DataType="{x:Type vm:WorldResourceListViewModel}">
+		<local:WorldResourceListView />
+	</DataTemplate>
+
+	<ResourceDictionary.MergedDictionaries>
+		<ResourceDictionary Source="BuildingViews/BuildingViewTemplates.xaml" />
+		<ResourceDictionary Source="JobViews/JobViewTemplates.xaml" />
+		<ResourceDictionary Source="NeedViews/NeedViewTemplates.xaml" />
+		<ResourceDictionary Source="ResourceViews/ResourceViewTemplates.xaml" />
+		<ResourceDictionary Source="ToolbarViews/ToolbarViewTemplates.xaml" />
+		<ResourceDictionary Source="WorldResourceViews/WorldResourceViewTemplates.xaml" />
+	</ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>

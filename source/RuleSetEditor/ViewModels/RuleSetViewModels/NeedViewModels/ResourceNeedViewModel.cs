@@ -1,16 +1,16 @@
 ﻿using System.Linq;
 using Reactive.Bindings;
 using ReactiveUI;
-using RuleSet.Elements;
+using RuleSet.Needs;
+using RuleSetEditor.ViewModels.RuleSetViewModels.ElementViewModels;
 
-namespace RuleSetEditor.ViewModels.RuleSetViewModels.ElementViewModels
+namespace RuleSetEditor.ViewModels.RuleSetViewModels.NeedViewModels
 {
-    public class WorldResourceViewModel : ElementViewModel
+    public class ResourceNeedViewModel : NeedViewModel<ResourceNeed>
     {
         private ReactiveProperty<int> amountProperty;
         private ReactiveProperty<ResourceViewModel> resource;
         private IReactiveDerivedList<ResourceViewModel> resources;
-        private ReactiveProperty<int> variantsProperty;
 
         public ReactiveProperty<int> Amount
         {
@@ -30,28 +30,21 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels.ElementViewModels
             private set { RaiseSetIfChanged(ref resources, value); }
         }
 
-        public ReactiveProperty<int> Variants
+        public override string ToString()
         {
-            get { return variantsProperty; }
-            private set { RaiseSetIfChanged(ref variantsProperty, value); }
+            return $"Need Resource {{{Resource?.Value?.Name?.Value ?? "None"}}}";
         }
-
-        public WorldResource WorldResource => (WorldResource)Element;
 
         protected override void Dispose(bool disposing)
         {
             if (disposing)
             {
-                Amount?.Dispose();
                 Resource?.Value?.Dispose();
                 Resource?.Dispose();
-                Variants?.Dispose();
                 Resources.Dispose();
 
                 resources = null;
                 resource = null;
-                amountProperty = null;
-                variantsProperty = null;
             }
             base.Dispose(disposing);
         }
@@ -59,21 +52,19 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels.ElementViewModels
         protected override void OnElementChanged()
         {
             base.OnElementChanged();
-            Amount = ReactiveProperty.FromObject(WorldResource, w => w.Amount);
-            Amount.PropertyChanged += OnPropertyChanged;
-            Resource = ReactiveProperty.FromObject(WorldResource,
+            Amount = ReactiveProperty.FromObject(Need,
+                r => r.Amount);
+            Resource = ReactiveProperty.FromObject(Need,
                 r => r.Resource,
                 r => Resources.SingleOrDefault(e => e.Resource == r),
                 r => r?.Resource);
             Resource.PropertyChanged += OnPropertyChanged;
-            Variants = ReactiveProperty.FromObject(WorldResource, r => r.Variants);
-            Variants.PropertyChanged += OnPropertyChanged;
         }
 
         protected override void OnRuleSetChanged()
         {
             base.OnRuleSetChanged();
-            Resources = RuleSetViewModel.ElementList.CreateDerivedCollection(e => (ResourceViewModel)e, e => e is ResourceViewModel, (l, r) => l.Name.Value.CompareTo(r.Name.Value));
+            Resources = RuleSetViewModel.ElementList.CreateDerivedCollection(e => (ResourceViewModel)e, e => e is ResourceViewModel);
         }
     }
 }

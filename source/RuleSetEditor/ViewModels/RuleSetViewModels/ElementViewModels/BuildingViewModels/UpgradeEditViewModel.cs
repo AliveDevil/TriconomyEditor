@@ -98,7 +98,6 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels.ElementViewModels.BuildingV
             {
                 Dispose(ref addEffectCommand);
                 Dispose(ref editEffectCommand);
-
             }
             base.Dispose(disposing);
         }

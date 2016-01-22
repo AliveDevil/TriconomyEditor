@@ -1,4 +1,5 @@
-﻿using RuleSet.Elements;
+﻿using de.alivedevil.Attributes;
+using RuleSet.Elements;
 
 namespace RuleSet.Effects
 {
@@ -6,6 +7,7 @@ namespace RuleSet.Effects
     {
         public int Amount { get; set; }
 
+        [KeepReference]
         public Resource Resource { get; set; }
     }
 }

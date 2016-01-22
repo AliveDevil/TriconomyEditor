@@ -7,7 +7,9 @@ using libUIStack;
 using Reactive.Bindings;
 using ReactiveUI;
 using RuleSet.Elements;
+using RuleSet.Needs;
 using RuleSetEditor.ViewModels.RuleSetViewModels.ElementViewModels;
+using RuleSetEditor.ViewModels.RuleSetViewModels.NeedViewModels;
 
 namespace RuleSetEditor.ViewModels
 {
@@ -17,6 +19,7 @@ namespace RuleSetEditor.ViewModels
         private ReactiveList<ElementViewModel> elementList;
         private Stack<IView> loadedViews = new Stack<IView>();
         private ReactiveProperty<string> nameProperty;
+        private ReactiveList<NeedViewModel> needs;
         private RelayCommand<Type> openViewCommand;
         private RuleSet.RuleSet ruleSet;
         private string sourceFilePath;
@@ -31,6 +34,12 @@ namespace RuleSetEditor.ViewModels
         {
             get { return nameProperty; }
             private set { RaiseSetIfChanged(ref nameProperty, value); }
+        }
+
+        public ReactiveList<NeedViewModel> Needs
+        {
+            get { return needs; }
+            private set { RaiseSetIfChanged(ref needs, value); }
         }
 
         public RelayCommand<Type> OpenView
@@ -80,6 +89,30 @@ namespace RuleSetEditor.ViewModels
 
                 ElementList.BeforeItemsAdded.Subscribe(e => RuleSet.Elements.Add(e.Element));
                 ElementList.BeforeItemsRemoved.Subscribe(e => RuleSet.Elements.Remove(e?.Element));
+
+                Needs = new ReactiveList<NeedViewModel>(RuleSet.Needs.Select(need =>
+                {
+                    NeedViewModel viewModel = null;
+
+                    if (need is ResourceNeed) viewModel = new ResourceNeedViewModel();
+                    else if (need is BuildingNeed) viewModel = new BuildingNeedViewModel();
+
+                    if (viewModel != null)
+                    {
+                        viewModel.DeferChanged = true;
+                        viewModel.RuleSetViewModel = this;
+                        viewModel.Need = need;
+                    }
+
+                    return viewModel;
+                }).Where(e => e != null));
+                Needs.ChangeTrackingEnabled = true;
+
+                foreach (var item in Needs)
+                    item.DeferChanged = false;
+
+                Needs.BeforeItemsAdded.Subscribe(e => RuleSet.Needs.Add(e.Need));
+                Needs.BeforeItemsRemoved.Subscribe(e => RuleSet.Needs.Remove(e?.Need));
 
                 Set<RuleSetViewModels.LandingPageViewModel>();
             }

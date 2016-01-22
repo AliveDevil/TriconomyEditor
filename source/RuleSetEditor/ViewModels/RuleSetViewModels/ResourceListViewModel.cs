@@ -70,7 +70,7 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels
             where TViewModel : ResourceViewModel, new()
             where TItem : Resource, new()
         {
-            TViewModel model = new TViewModel()
+            TViewModel viewModel = new TViewModel()
             {
                 RuleSetViewModel = RuleSetViewModel,
                 Element = new TItem()
@@ -78,8 +78,8 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels
                     Name = name
                 }
             };
-            RuleSetViewModel.ElementList.Add(model);
-            SelectedResource = model;
+            RuleSetViewModel.ElementList.Add(viewModel);
+            SelectedResource = viewModel;
         }
     }
 }

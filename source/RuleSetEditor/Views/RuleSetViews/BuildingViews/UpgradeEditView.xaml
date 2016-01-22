@@ -84,6 +84,9 @@
 							<ContextMenu Placement="Bottom"
 										 DataContext="{Binding RelativeSource={RelativeSource Self}, Path=PlacementTarget.DataContext}">
 								<MenuItem Header="Helper">
+									<MenuItem Header="Assembly Point"
+											  Command="{Binding AddEffectCommand}"
+											  CommandParameter="{x:Type effects:AssemblyPointEffect}" />
 									<MenuItem Header="Habit"
 											  Command="{Binding AddEffectCommand}"
 											  CommandParameter="{x:Type effects:HabitEffect}" />
@@ -93,7 +96,7 @@
 									<MenuItem Header="Workplace"
 											  Command="{Binding AddEffectCommand}"
 											  CommandParameter="{x:Type effects:WorkplaceEffect}" />
-									<MenuItem Header="Delivery"
+									<MenuItem Header="Deliver"
 											  Command="{Binding AddEffectCommand}"
 											  CommandParameter="{x:Type effects:DeliverEffect}" />
 								</MenuItem>
@@ -101,6 +104,9 @@
 									<MenuItem Header="Produce Resource"
 											  Command="{Binding AddEffectCommand}"
 											  CommandParameter="{x:Type effects:ProduceResourceEffect}" />
+									<MenuItem Header="Spawn Resource"
+											  Command="{Binding AddEffectCommand}"
+											  CommandParameter="{x:Type effects:SpawnWorldResourceEffect}" />
 									<MenuItem Header="Use Resource"
 											  Command="{Binding AddEffectCommand}"
 											  CommandParameter="{x:Type effects:UseResourceEffect}" />

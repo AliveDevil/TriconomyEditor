@@ -172,6 +172,12 @@
     <Compile Include="ViewModels\RuleSetViewModels\ElementViewModels\WorldResourceViewModel.cs" />
     <Compile Include="ViewModels\RuleSetViewModels\JobListViewModel.cs" />
     <Compile Include="ViewModels\RuleSetViewModels\LandingPageViewModel.cs" />
+    <Compile Include="ViewModels\RuleSetViewModels\NeedsListViewModel.cs" />
+    <Compile Include="ViewModels\RuleSetViewModels\NeedViewModels\BuildingNeedViewModel.cs" />
+    <Compile Include="ViewModels\RuleSetViewModels\NeedViewModels\EditViewModels\BuildingNeedEditViewModel.cs" />
+    <Compile Include="ViewModels\RuleSetViewModels\NeedViewModels\EditViewModels\ResourceNeedEditViewModel.cs" />
+    <Compile Include="ViewModels\RuleSetViewModels\NeedViewModels\NeedViewModel.cs" />
+    <Compile Include="ViewModels\RuleSetViewModels\NeedViewModels\ResourceNeedViewModel.cs" />
     <Compile Include="ViewModels\RuleSetViewModels\ResourceListViewModel.cs" />
     <Compile Include="ViewModels\RuleSetViewModelBase.cs" />
     <Compile Include="ViewModels\RuleSetViewModels\ToolbarViewModels\OpenToolbarItemViewModel.cs" />
@@ -234,6 +240,15 @@
     </Compile>
     <Compile Include="Views\RuleSetViews\LandingPageView.xaml.cs">
       <DependentUpon>LandingPageView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\RuleSetViews\NeedListView.xaml.cs">
+      <DependentUpon>NeedListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\RuleSetViews\NeedViews\BuildingNeedEditView.xaml.cs">
+      <DependentUpon>BuildingNeedEditView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\RuleSetViews\NeedViews\ResourceNeedEditView.xaml.cs">
+      <DependentUpon>ResourceNeedEditView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\RuleSetViews\ResourceListView.xaml.cs">
       <DependentUpon>ResourceListView.xaml</DependentUpon>
@@ -370,6 +385,22 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\RuleSetViews\LandingPageView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\RuleSetViews\NeedListView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\RuleSetViews\NeedViews\BuildingNeedEditView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\RuleSetViews\NeedViews\NeedViewTemplates.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\RuleSetViews\NeedViews\ResourceNeedEditView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

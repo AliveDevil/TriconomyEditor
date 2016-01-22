@@ -32,6 +32,8 @@ namespace RuleSet
             TypeNameHandling = TypeNameHandling.Auto
         };
 
+        public List<Need> Needs { get; } = new List<Need>();
+
         public List<Element> Elements { get; } = new List<Element>();
 
         public string Name { get; set; }
@@ -40,18 +42,16 @@ namespace RuleSet
 
         public Toolbar Toolbar { get; set; }
 
-        public static RuleSet Load(TextReader textReader)
+        public static RuleSet Load(Stream stream)
         {
-            DeferredJsonSerializer serializer = new DeferredJsonSerializer();
-            using (var jsonReader = new JsonTextReader(textReader))
-                return (RuleSet)serializer.Deserialize(JToken.Load(jsonReader));
+            de.alivedevil.DeferredJsonSerializer ser = new de.alivedevil.DeferredJsonSerializer();
+            return ser.Deserialize<RuleSet>(stream);
         }
 
-        public static void Save(RuleSet ruleSet, TextWriter textWriter)
+        public static void Save(RuleSet ruleSet, Stream stream)
         {
-            DeferredJsonSerializer serializer = new DeferredJsonSerializer();
-            using (var jsonWriter = new JsonTextWriter(textWriter) { Formatting = Formatting.Indented })
-                serializer.Serialize(ruleSet, null).WriteTo(jsonWriter);
+            de.alivedevil.DeferredJsonSerializer ser = new de.alivedevil.DeferredJsonSerializer();
+            ser.Serialize(ruleSet, stream);
         }
     }
 }

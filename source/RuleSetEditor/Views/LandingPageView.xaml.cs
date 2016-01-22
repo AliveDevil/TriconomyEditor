@@ -50,8 +50,8 @@ namespace RuleSetEditor.Views
                 {
                     RuleSet.RuleSet ruleSet;
                     FileInfo file = new FileInfo(files[0]);
-                    using (var reader = file.OpenText())
-                        ruleSet = RuleSet.RuleSet.Load(reader);
+                    using (var stream = file.OpenRead())
+                        ruleSet = RuleSet.RuleSet.Load(stream);
                     Settings.Default.LastFile = file.FullName;
                     ((ViewModelBase)DataContext).ViewStack.Set<RuleSetViewModel>()._(_ =>
                     {

@@ -65,8 +65,8 @@ namespace RuleSet
                 if (deserializedItem != null)
                 {
                     foundValid = true;
-                    arrayList.Add(deserializedItem);
                 }
+                arrayList.Add(deserializedItem);
             }
             return foundValid ? arrayList : null;
         }

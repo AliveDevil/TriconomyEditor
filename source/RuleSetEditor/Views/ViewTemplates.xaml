@@ -8,7 +8,9 @@
 	<DataTemplate DataType="{x:Type vm:RuleSetViewModel}">
 		<local:RuleSetView />
 	</DataTemplate>
+	
 	<ResourceDictionary.MergedDictionaries>
 		<ResourceDictionary Source="EffectViews/EffectViewTemplates.xaml" />
+		<ResourceDictionary Source="RuleSetViews/RuleSetViewTemplates.xaml" />
 	</ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>

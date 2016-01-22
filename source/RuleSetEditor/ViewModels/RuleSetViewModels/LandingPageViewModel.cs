@@ -32,8 +32,7 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels
                         sourceFile.MoveTo(Path.Combine(sourceFile.Directory.FullName, $"{RuleSetViewModel.RuleSet.Name}.ruleset"));
 
                     using (var stream = sourceFile.Open(FileMode.Create, FileAccess.ReadWrite, FileShare.Read))
-                    using (var writer = new StreamWriter(stream, Encoding.UTF8))
-                        RuleSet.RuleSet.Save(RuleSetViewModel.RuleSet, writer);
+                        RuleSet.RuleSet.Save(RuleSetViewModel.RuleSet, stream);
                 }));
             }
         }

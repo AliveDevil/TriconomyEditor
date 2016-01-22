@@ -1,5 +1,4 @@
 ﻿using System.IO;
-using RuleSetEditor.Properties;
 
 namespace RuleSetEditor.ViewModels
 {
@@ -30,8 +29,8 @@ namespace RuleSetEditor.ViewModels
                 {
                     RuleSet.RuleSet ruleSet;
                     FileInfo file = new FileInfo(Settings.Default.LastFile);
-                    using (var reader = file.OpenText())
-                        ruleSet = RuleSet.RuleSet.Load(reader);
+                    using (var stream = file.OpenRead())
+                        ruleSet = RuleSet.RuleSet.Load(stream);
                     Settings.Default.LastFile = file.FullName;
                     ViewStack.Set<RuleSetViewModel>()._(_ =>
                     {

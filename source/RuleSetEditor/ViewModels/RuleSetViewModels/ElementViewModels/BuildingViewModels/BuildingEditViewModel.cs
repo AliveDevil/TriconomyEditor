@@ -8,30 +8,14 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels.ElementViewModels.BuildingV
 {
     public class BuildingEditViewModel : RuleSetViewModelBase
     {
-        private RelayCommand<Type> addEffectCommand;
         private RelayCommand addUpgradeCommand;
         private BuildingViewModel building;
-        private RelayCommand<EffectViewModel> editEffectCommand;
         private RelayCommand<UpgradeViewModel> editUpgradeCommand;
-        private IReactiveDerivedList<EffectViewModel> effectList;
         private ReactiveProperty<string> nameProperty;
-        private RelayCommand removeEffectCommand;
         private RelayCommand removeUpgradeCommand;
-        private EffectViewModel selectedEffect;
         private UpgradeViewModel selectedUpgrade;
         private IReactiveDerivedList<UpgradeViewModel> upgradeList;
         private ReactiveProperty<int> variantsProperty;
-
-        public RelayCommand<Type> AddEffectCommand
-        {
-            get
-            {
-                return addEffectCommand ?? (addEffectCommand = new RelayCommand<Type>(t =>
-                {
-                    AddEffect((Effect)Activator.CreateInstance(t));
-                }));
-            }
-        }
 
         public RelayCommand AddUpgradeCommand
         {
@@ -64,19 +48,6 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels.ElementViewModels.BuildingV
                 Variants = Building.Variants;
                 UpgradeList = Building.UpgradeList.CreateDerivedCollection(u => u, null, (l, r) => l.Level.Value.CompareTo(r.Level.Value));
                 UpgradeList.ChangeTrackingEnabled = true;
-                EffectList = Building.EffectList.CreateDerivedCollection(e => e, null);
-                EffectList.ChangeTrackingEnabled = true;
-            }
-        }
-
-        public RelayCommand<EffectViewModel> EditEffectCommand
-        {
-            get
-            {
-                return editEffectCommand ?? (editEffectCommand = new RelayCommand<EffectViewModel>(e =>
-                {
-                    ViewStack.Push(EffectViewModel.FindEditViewModel(e, RuleSetViewModel));
-                }));
             }
         }
 
@@ -91,27 +62,10 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels.ElementViewModels.BuildingV
             }
         }
 
-        public IReactiveDerivedList<EffectViewModel> EffectList
-        {
-            get { return effectList; }
-            private set { RaiseSetIfChanged(ref effectList, value); }
-        }
-
         public ReactiveProperty<string> Name
         {
             get { return nameProperty; }
             private set { RaiseSetIfChanged(ref nameProperty, value); }
-        }
-
-        public RelayCommand RemoveEffectCommand
-        {
-            get
-            {
-                return removeEffectCommand ?? (removeEffectCommand = new RelayCommand(() =>
-                {
-                    Building.EffectList.Remove(SelectedEffect);
-                }));
-            }
         }
 
         public RelayCommand RemoveUpgradeCommand
@@ -123,12 +77,6 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels.ElementViewModels.BuildingV
                     Building.UpgradeList.Remove(SelectedUpgrade);
                 }));
             }
-        }
-
-        public EffectViewModel SelectedEffect
-        {
-            get { return selectedEffect; }
-            set { RaiseSetIfChanged(ref selectedEffect, value); }
         }
 
         public UpgradeViewModel SelectedUpgrade
@@ -153,29 +101,14 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels.ElementViewModels.BuildingV
         {
             if (disposing)
             {
-                Dispose(ref effectList);
                 Dispose(ref upgradeList);
                 Dispose(ref nameProperty);
                 Dispose(ref variantsProperty);
-                Dispose(ref addEffectCommand);
                 Dispose(ref addUpgradeCommand);
-                Dispose(ref editEffectCommand);
                 Dispose(ref editUpgradeCommand);
-                Dispose(ref removeEffectCommand);
                 Dispose(ref removeUpgradeCommand);
             }
             base.Dispose(disposing);
-        }
-
-        private void AddEffect(Effect effect)
-        {
-            EffectViewModel model = EffectViewModel.FindViewModel(effect, RuleSetViewModel);
-
-            if (model != null)
-            {
-                Building.EffectList.Add(model);
-                ViewStack.Push(EffectViewModel.FindEditViewModel(model, RuleSetViewModel));
-            }
         }
     }
 }
