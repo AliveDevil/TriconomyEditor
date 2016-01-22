@@ -8,6 +8,7 @@ using Reactive.Bindings;
 using ReactiveUI;
 using RuleSet.Elements;
 using RuleSet.Needs;
+using RuleSetEditor.ViewModels.RuleSetViewModels;
 using RuleSetEditor.ViewModels.RuleSetViewModels.ElementViewModels;
 using RuleSetEditor.ViewModels.RuleSetViewModels.NeedViewModels;
 
@@ -23,6 +24,7 @@ namespace RuleSetEditor.ViewModels
         private RelayCommand<Type> openViewCommand;
         private RuleSet.RuleSet ruleSet;
         private string sourceFilePath;
+        private ReactiveList<ResourcePartViewModel> startInventory;
 
         public ReactiveList<ElementViewModel> ElementList
         {
@@ -114,6 +116,23 @@ namespace RuleSetEditor.ViewModels
                 Needs.BeforeItemsAdded.Subscribe(e => RuleSet.Needs.Add(e.Need));
                 Needs.BeforeItemsRemoved.Subscribe(e => RuleSet.Needs.Remove(e?.Need));
 
+                StartResources = new ReactiveList<ResourcePartViewModel>(RuleSet.StartResources.Select(resourcePart =>
+                {
+                    return new ResourcePartViewModel()
+                    {
+                        DeferChanged = true,
+                        RuleSetViewModel = this,
+                        ResourcePart = resourcePart
+                    };
+                }).Where(e => e != null));
+                StartResources.ChangeTrackingEnabled = true;
+
+                foreach (var item in StartResources)
+                    item.DeferChanged = false;
+
+                StartResources.BeforeItemsAdded.Subscribe(e => RuleSet.StartResources.Add(e.ResourcePart));
+                StartResources.BeforeItemsRemoved.Subscribe(e => RuleSet.StartResources.Remove(e?.ResourcePart));
+
                 Set<RuleSetViewModels.LandingPageViewModel>();
             }
         }
@@ -122,6 +141,12 @@ namespace RuleSetEditor.ViewModels
         {
             get { return sourceFilePath; }
             set { RaiseSetIfChanged(ref sourceFilePath, value); }
+        }
+
+        public ReactiveList<ResourcePartViewModel> StartResources
+        {
+            get { return startInventory; }
+            private set { RaiseSetIfChanged(ref startInventory, value); }
         }
 
         public IView View

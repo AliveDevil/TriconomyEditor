@@ -9,7 +9,7 @@ namespace RuleSetEditor.ViewModels.EffectViewModels
     public class RecipePartViewModel : RuleSetViewModelBase
     {
         private ReactiveProperty<int> amountProperty;
-        private RecipePart recipePart;
+        private ResourcePart recipePart;
         private ReactiveProperty<ResourceViewModel> resource;
         private IReactiveDerivedList<ResourceViewModel> resources;
 
@@ -19,7 +19,7 @@ namespace RuleSetEditor.ViewModels.EffectViewModels
             private set { RaiseSetIfChanged(ref amountProperty, value); }
         }
 
-        public RecipePart RecipePart
+        public ResourcePart RecipePart
         {
             get
             {

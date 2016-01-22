@@ -67,7 +67,7 @@
     <Compile Include="Effect.cs" />
     <Compile Include="Element.cs" />
     <Compile Include="Elements\Job.cs" />
-    <Compile Include="Elements\RecipePart.cs" />
+    <Compile Include="Elements\ResourcePart.cs" />
     <Compile Include="Elements\ResourceGroup.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="Menus\OpenToolbarItem.cs" />

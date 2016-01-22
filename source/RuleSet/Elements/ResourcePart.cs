@@ -2,7 +2,7 @@
 
 namespace RuleSet.Elements
 {
-    public class RecipePart : SerializedObject
+    public class ResourcePart : SerializedObject
     {
         public int Amount { get; set; }
 

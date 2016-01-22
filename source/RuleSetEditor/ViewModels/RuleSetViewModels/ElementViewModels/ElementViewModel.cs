@@ -35,7 +35,8 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels.ElementViewModels
             private set
             {
                 Dispose(ref nameProperty);
-                if (!RaiseSetIfChanged(ref nameProperty, value)) return;
+                if (!RaiseSetIfChanged(ref nameProperty, value))
+                    return;
                 Name.PropertyChanged += OnPropertyChanged;
             }
         }
@@ -49,8 +50,7 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels.ElementViewModels
         {
             if (disposing)
             {
-                Name.Dispose();
-                Name = null;
+                Dispose(ref nameProperty);
             }
             base.Dispose(disposing);
         }

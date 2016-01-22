@@ -75,6 +75,10 @@
 								  Command="{Binding OpenView}"
 								  CommandParameter="{x:Type toolbarviewmodels:ToolbarViewModel}"
 								  IsChecked="{Binding View, Converter={StaticResource ViewCheckedConverter}, ConverterParameter={x:Type toolbarviewmodels:ToolbarViewModel}, Mode=OneWay}" />
+					<ToggleButton Content="Start Resources"
+								  Command="{Binding OpenView}"
+								  CommandParameter="{x:Type rulesetviewmodels:StartInventoryListViewModel}"
+								  IsChecked="{Binding View, Converter={StaticResource ViewCheckedConverter}, ConverterParameter={x:Type rulesetviewmodels:StartInventoryListViewModel}, Mode=OneWay}" />
 				</StackPanel>
 				<Button Content="Close"
 						Grid.Row="1" />

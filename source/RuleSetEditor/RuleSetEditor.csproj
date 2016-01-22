@@ -180,6 +180,9 @@
     <Compile Include="ViewModels\RuleSetViewModels\NeedViewModels\ResourceNeedViewModel.cs" />
     <Compile Include="ViewModels\RuleSetViewModels\ResourceListViewModel.cs" />
     <Compile Include="ViewModels\RuleSetViewModelBase.cs" />
+    <Compile Include="ViewModels\RuleSetViewModels\ResourcePartViewModel.cs" />
+    <Compile Include="ViewModels\RuleSetViewModels\ResourcePartViewModels\ResourcePartEditViewModel.cs" />
+    <Compile Include="ViewModels\RuleSetViewModels\StartInventoryListViewModel.cs" />
     <Compile Include="ViewModels\RuleSetViewModels\ToolbarViewModels\OpenToolbarItemViewModel.cs" />
     <Compile Include="ViewModels\RuleSetViewModels\ToolbarViewModels\PlaceBuildingItemViewModel.cs" />
     <Compile Include="ViewModels\RuleSetViewModels\ToolbarViewModels\ResourceBarViewModel.cs" />
@@ -258,6 +261,12 @@
     </Compile>
     <Compile Include="Views\RuleSetViews\ResourceViews\ResourceGroupEditView.xaml.cs">
       <DependentUpon>ResourceGroupEditView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\RuleSetViews\ResourceViews\ResourcePartEditView.xaml.cs">
+      <DependentUpon>ResourcePartEditView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\RuleSetViews\StartInventoryListView.xaml.cs">
+      <DependentUpon>StartInventoryListView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\RuleSetViews\ToolbarViews\OpenToolbarItemView.xaml.cs">
       <DependentUpon>OpenToolbarItemView.xaml</DependentUpon>
@@ -416,11 +425,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\RuleSetViews\ResourceViews\ResourcePartEditView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\RuleSetViews\ResourceViews\ResourceViewTemplates.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\RuleSetViews\RuleSetViewTemplates.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\RuleSetViews\StartInventoryListView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

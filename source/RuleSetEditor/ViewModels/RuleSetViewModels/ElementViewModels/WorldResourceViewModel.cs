@@ -48,8 +48,8 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels.ElementViewModels
                 Variants?.Dispose();
                 Resources.Dispose();
 
-                resources = null;
                 resource = null;
+                resources = null;
                 amountProperty = null;
                 variantsProperty = null;
             }

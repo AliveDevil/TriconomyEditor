@@ -17,6 +17,9 @@
 	<DataTemplate DataType="{x:Type vm:ResourceListViewModel}">
 		<local:ResourceListView />
 	</DataTemplate>
+	<DataTemplate DataType="{x:Type vm:StartInventoryListViewModel}">
+		<local:StartInventoryListView />
+	</DataTemplate>
 	<DataTemplate DataType="{x:Type vm:WorldResourceListViewModel}">
 		<local:WorldResourceListView />
 	</DataTemplate>
