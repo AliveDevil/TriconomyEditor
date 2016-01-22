@@ -3,18 +3,26 @@ using System.Linq;
 using Reactive.Bindings;
 using ReactiveUI;
 using RuleSet;
-using RuleSet.Effects;
 using RuleSetEditor.ViewModels.EffectViewModels;
 
 namespace RuleSetEditor.ViewModels.RuleSetViewModels.ElementViewModels
 {
     public class UpgradeViewModel : RuleSetViewModelBase
     {
+        private IDisposable beforeCostAdded;
+        private IDisposable beforeCostRemoved;
         private IDisposable beforeEffectAdded;
         private IDisposable beforeEffectRemoved;
+        private ReactiveList<ResourcePartViewModel> costs;
         private ReactiveList<EffectViewModel> effects;
         private ReactiveProperty<int> levelProperty;
         private Upgrade upgrade;
+
+        public ReactiveList<ResourcePartViewModel> Costs
+        {
+            get { return costs; }
+            private set { RaiseSetIfChanged(ref costs, value); }
+        }
 
         public ReactiveList<EffectViewModel> Effects
         {
@@ -46,6 +54,13 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels.ElementViewModels
                 };
                 beforeEffectAdded = Effects.BeforeItemsAdded.Subscribe(e => Upgrade.Effects.Add(e?.Effect));
                 beforeEffectRemoved = Effects.BeforeItemsRemoved.Subscribe(e => Upgrade.Effects.Remove(e?.Effect));
+
+                Costs = new ReactiveList<ResourcePartViewModel>(Upgrade.Costs.Select(e => new ResourcePartViewModel() { RuleSetViewModel = RuleSetViewModel, ResourcePart = e }))
+                {
+                    ChangeTrackingEnabled = true
+                };
+                beforeCostAdded = Costs.BeforeItemsAdded.Subscribe(e => Upgrade.Costs.Add(e?.ResourcePart));
+                beforeCostRemoved = Costs.BeforeItemsRemoved.Subscribe(e => Upgrade.Costs.Remove(e?.ResourcePart));
             }
         }
 
@@ -55,6 +70,8 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels.ElementViewModels
             {
                 Dispose(ref beforeEffectAdded);
                 Dispose(ref beforeEffectRemoved);
+                Dispose(ref beforeCostAdded);
+                Dispose(ref beforeCostRemoved);
                 Dispose(ref levelProperty);
 
                 foreach (var item in Effects)

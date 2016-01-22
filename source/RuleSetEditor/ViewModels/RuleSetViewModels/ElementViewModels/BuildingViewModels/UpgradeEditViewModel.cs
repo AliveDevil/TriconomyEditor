@@ -2,19 +2,43 @@
 using Reactive.Bindings;
 using ReactiveUI;
 using RuleSet;
+using RuleSet.Elements;
 using RuleSetEditor.ViewModels.EffectViewModels;
+using RuleSetEditor.ViewModels.RuleSetViewModels.ResourcePartViewModels;
 
 namespace RuleSetEditor.ViewModels.RuleSetViewModels.ElementViewModels.BuildingViewModels
 {
     public class UpgradeEditViewModel : RuleSetViewModelBase
     {
+        private RelayCommand addCostCommand;
         private RelayCommand<Type> addEffectCommand;
+        private ReactiveList<ResourcePartViewModel> costs;
+        private RelayCommand<ResourcePartViewModel> editCostCommand;
         private RelayCommand<EffectViewModel> editEffectCommand;
         private ReactiveList<EffectViewModel> effectList;
         private ReactiveProperty<int> levelProperty;
+        private RelayCommand removeCostCommand;
         private RelayCommand removeEffectCommand;
+        private ResourcePartViewModel selectedCost;
         private EffectViewModel selectedEffect;
         private UpgradeViewModel upgrade;
+
+        public RelayCommand AddCostCommand
+        {
+            get
+            {
+                return addCostCommand ?? (addCostCommand = new RelayCommand(() =>
+                {
+                    ResourcePartViewModel model = new ResourcePartViewModel()
+                    {
+                        RuleSetViewModel = RuleSetViewModel,
+                        ResourcePart = new ResourcePart()
+                    };
+                    Upgrade.Costs.Add(model);
+                    SelectedCost = model;
+                }));
+            }
+        }
 
         public RelayCommand<Type> AddEffectCommand
         {
@@ -23,6 +47,24 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels.ElementViewModels.BuildingV
                 return addEffectCommand ?? (addEffectCommand = new RelayCommand<Type>(t =>
                 {
                     AddEffect((Effect)Activator.CreateInstance(t));
+                }));
+            }
+        }
+
+        public ReactiveList<ResourcePartViewModel> Costs
+        {
+            get { return costs; }
+            private set { RaiseSetIfChanged(ref costs, value); }
+        }
+
+        public RelayCommand<ResourcePartViewModel> EditCostCommand
+        {
+            get
+            {
+                return editCostCommand ?? (editCostCommand = new RelayCommand<ResourcePartViewModel>(resourcePart =>
+                {
+                    SelectedCost = resourcePart;
+                    ViewStack.Push<ResourcePartEditViewModel>()._(_ => { _.ResourcePart = resourcePart; });
                 }));
             }
         }
@@ -50,6 +92,17 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels.ElementViewModels.BuildingV
             private set { RaiseSetIfChanged(ref levelProperty, value); }
         }
 
+        public RelayCommand RemoveCostCommand
+        {
+            get
+            {
+                return removeCostCommand ?? (removeCostCommand = new RelayCommand(() =>
+                {
+                    Upgrade.Costs.Remove(SelectedCost);
+                }));
+            }
+        }
+
         public RelayCommand RemoveEffectCommand
         {
             get
@@ -59,6 +112,12 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels.ElementViewModels.BuildingV
                     Upgrade.Effects.Remove(SelectedEffect);
                 }));
             }
+        }
+
+        public ResourcePartViewModel SelectedCost
+        {
+            get { return selectedCost; }
+            set { RaiseSetIfChanged(ref selectedCost, value); }
         }
 
         public EffectViewModel SelectedEffect
@@ -76,19 +135,9 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels.ElementViewModels.BuildingV
             set
             {
                 if (!RaiseSetIfChanged(ref upgrade, value)) return;
+                Costs = Upgrade.Costs;
                 Level = Upgrade.Level;
                 EffectList = Upgrade.Effects;
-            }
-        }
-
-        private void AddEffect(Effect effect)
-        {
-            EffectViewModel model = EffectViewModel.FindViewModel(effect, RuleSetViewModel);
-
-            if (model != null)
-            {
-                Upgrade.Effects.Add(model);
-                ViewStack.Push(EffectViewModel.FindEditViewModel(model, RuleSetViewModel));
             }
         }
 
@@ -100,6 +149,17 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels.ElementViewModels.BuildingV
                 Dispose(ref editEffectCommand);
             }
             base.Dispose(disposing);
+        }
+
+        private void AddEffect(Effect effect)
+        {
+            EffectViewModel model = EffectViewModel.FindViewModel(effect, RuleSetViewModel);
+
+            if (model != null)
+            {
+                Upgrade.Effects.Add(model);
+                ViewStack.Push(EffectViewModel.FindEditViewModel(model, RuleSetViewModel));
+            }
         }
     }
 }

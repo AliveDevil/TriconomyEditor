@@ -50,6 +50,63 @@
 						<RowDefinition Height="Auto" />
 						<RowDefinition Height="Auto" />
 					</Grid.RowDefinitions>
+					<Label Content="Cost" />
+					<ListView ItemsSource="{Binding Costs}"
+							  SelectedItem="{Binding SelectedCost}"
+							  IsSynchronizedWithCurrentItem="True"
+							  HorizontalContentAlignment="Stretch"
+							  Grid.Column="1"
+							  Grid.ColumnSpan="3">
+						<ListView.ItemTemplate>
+							<DataTemplate>
+								<Grid>
+									<Grid.ColumnDefinitions>
+										<ColumnDefinition Width="*" />
+										<ColumnDefinition Width="Auto"
+														  SharedSizeGroup="EditButtonField" />
+									</Grid.ColumnDefinitions>
+									<Label Grid.Column="0">
+										<TextBlock>
+											<TextBlock.Text>
+												<MultiBinding StringFormat="{}{0}x {1}">
+													<Binding Path="Amount.Value" />
+													<Binding Path="Resource.Value.Name.Value"
+															 FallbackValue="None" />
+												</MultiBinding>
+											</TextBlock.Text>
+										</TextBlock>
+									</Label>
+									<Button Content="Edit"
+											Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=ListView}, Path=DataContext.EditCostCommand}"
+											CommandParameter="{Binding}"
+											Grid.Column="1" />
+								</Grid>
+							</DataTemplate>
+						</ListView.ItemTemplate>
+					</ListView>
+
+					<Button Content="Add"
+							Command="{Binding AddCostCommand}"
+							Grid.Row="1"
+							Grid.Column="2" />
+					<Button Content="Remove"
+							Command="{Binding RemoveCostCommand}"
+							Grid.Row="1"
+							Grid.Column="3" />
+				</Grid>
+
+				<Grid>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="Auto"
+										  SharedSizeGroup="LabelFieldGroup" />
+						<ColumnDefinition Width="*" />
+						<ColumnDefinition Width="Auto" />
+						<ColumnDefinition Width="Auto" />
+					</Grid.ColumnDefinitions>
+					<Grid.RowDefinitions>
+						<RowDefinition Height="Auto" />
+						<RowDefinition Height="Auto" />
+					</Grid.RowDefinitions>
 					<Label Content="Effects" />
 					<ListView ItemsSource="{Binding EffectList}"
 							  SelectedItem="{Binding SelectedEffect}"
