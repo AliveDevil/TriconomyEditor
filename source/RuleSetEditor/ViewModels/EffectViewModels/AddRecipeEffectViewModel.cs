@@ -2,35 +2,29 @@
 using System.Linq;
 using ReactiveUI;
 using RuleSet.Effects;
+using RuleSetEditor.ViewModels.RuleSetViewModels;
 
 namespace RuleSetEditor.ViewModels.EffectViewModels
 {
-    public class AddRecipeEffectViewModel : EffectViewModel
+    public class AddRecipeEffectViewModel : EffectViewModel<AddRecipeEffect>
     {
         private IDisposable beforeInPartAdded;
         private IDisposable beforeInPartRemoved;
         private IDisposable beforeOutPartAdded;
         private IDisposable beforeOutPartRemoved;
-        private ReactiveList<RecipePartViewModel> inParts;
-        private ReactiveList<RecipePartViewModel> outParts;
+        private ReactiveList<ResourcePartViewModel> inParts;
+        private ReactiveList<ResourcePartViewModel> outParts;
 
-        public AddRecipeEffect AddRecipeEffect => (AddRecipeEffect)Effect;
-
-        public ReactiveList<RecipePartViewModel> InParts
+        public ReactiveList<ResourcePartViewModel> InParts
         {
             get { return inParts; }
             private set { RaiseSetIfChanged(ref inParts, value); }
         }
 
-        public ReactiveList<RecipePartViewModel> OutParts
+        public ReactiveList<ResourcePartViewModel> OutParts
         {
             get { return outParts; }
             private set { RaiseSetIfChanged(ref outParts, value); }
-        }
-
-        public override string ToString()
-        {
-            return "Add Recipe";
         }
 
         protected override void Dispose(bool disposing)
@@ -59,27 +53,27 @@ namespace RuleSetEditor.ViewModels.EffectViewModels
         {
             base.OnEffectChanged();
 
-            InParts = new ReactiveList<RecipePartViewModel>(AddRecipeEffect.InResources.Select(p => new RecipePartViewModel()
+            InParts = new ReactiveList<ResourcePartViewModel>(Effect.InResources.Select(p => new ResourcePartViewModel()
             {
                 RuleSetViewModel = RuleSetViewModel,
-                RecipePart = p
+                ResourcePart = p
             }))
             {
                 ChangeTrackingEnabled = true
             };
-            OutParts = new ReactiveList<RecipePartViewModel>(AddRecipeEffect.OutResources.Select(p => new RecipePartViewModel()
+            OutParts = new ReactiveList<ResourcePartViewModel>(Effect.OutResources.Select(p => new ResourcePartViewModel()
             {
                 RuleSetViewModel = RuleSetViewModel,
-                RecipePart = p
+                ResourcePart = p
             }))
             {
                 ChangeTrackingEnabled = true
             };
 
-            beforeInPartAdded = InParts.BeforeItemsAdded.Subscribe(p => AddRecipeEffect.InResources.Add(p.RecipePart));
-            beforeInPartRemoved = InParts.BeforeItemsRemoved.Subscribe(p => AddRecipeEffect.InResources.Remove(p.RecipePart));
-            beforeOutPartAdded = OutParts.BeforeItemsAdded.Subscribe(p => AddRecipeEffect.OutResources.Add(p.RecipePart));
-            beforeOutPartRemoved = OutParts.BeforeItemsRemoved.Subscribe(p => AddRecipeEffect.OutResources.Remove(p.RecipePart));
+            beforeInPartAdded = InParts.BeforeItemsAdded.Subscribe(p => Effect.InResources.Add(p.ResourcePart));
+            beforeInPartRemoved = InParts.BeforeItemsRemoved.Subscribe(p => Effect.InResources.Remove(p.ResourcePart));
+            beforeOutPartAdded = OutParts.BeforeItemsAdded.Subscribe(p => Effect.OutResources.Add(p.ResourcePart));
+            beforeOutPartRemoved = OutParts.BeforeItemsRemoved.Subscribe(p => Effect.OutResources.Remove(p.ResourcePart));
         }
     }
 }

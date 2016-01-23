@@ -39,12 +39,22 @@
 				  Grid.IsSharedSizeScope="True">
 			<ListView.Resources>
 				<DataTemplate DataType="{x:Type nvm:BuildingNeedViewModel}">
-					<Label Content="{Binding Building.Value.Name.Value, FallbackValue=None}"
-						   ContentStringFormat="Need Building {{{0}}}" />
+					<TextBlock>
+						<TextBlock.Text>
+							<Binding Path="Building.Value.Name.Value"
+									 FallbackValue="None"
+									 StringFormat="Need Building {{{0}}}" />
+						</TextBlock.Text>
+					</TextBlock>
 				</DataTemplate>
 				<DataTemplate DataType="{x:Type nvm:ResourceNeedViewModel}">
-					<Label Content="{Binding Resource.Value.Name.Value, FallbackValue=None}"
-						   ContentStringFormat="Need Resource {{{0}}}" />
+					<TextBlock>
+						<TextBlock.Text>
+							<Binding Path="Resource.Value.Name.Value"
+									 FallbackValue="None"
+									 StringFormat="Need Resource {{{0}}}" />
+						</TextBlock.Text>
+					</TextBlock>
 				</DataTemplate>
 			</ListView.Resources>
 			<ListView.ItemTemplate>
@@ -55,8 +65,8 @@
 							<ColumnDefinition Width="Auto"
 											  SharedSizeGroup="EditButtonField" />
 						</Grid.ColumnDefinitions>
-						<ContentControl Content="{Binding}"
-										Grid.Column="0" />
+						<Label Content="{Binding}"
+							   Grid.Column="0" />
 						<Button Content="Edit"
 								Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=ListView}, Path=DataContext.EditNeedCommand}"
 								CommandParameter="{Binding}"

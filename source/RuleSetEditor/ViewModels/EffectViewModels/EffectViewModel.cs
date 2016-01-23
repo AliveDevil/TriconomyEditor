@@ -130,10 +130,20 @@ namespace RuleSetEditor.ViewModels.EffectViewModels
             return model;
         }
 
-        public abstract override string ToString();
+        //public abstract override string ToString();
 
         protected virtual void OnEffectChanged()
         {
+        }
+    }
+
+    public abstract class EffectViewModel<TEffect> : EffectViewModel
+        where TEffect : Effect
+    {
+        public new TEffect Effect
+        {
+            get { return (TEffect)base.Effect; }
+            set { base.Effect = value; }
         }
     }
 }

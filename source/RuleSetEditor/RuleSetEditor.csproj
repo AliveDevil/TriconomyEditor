@@ -147,7 +147,6 @@
     <Compile Include="ViewModels\EffectViewModels\GatherResourceEffectViewModel.cs" />
     <Compile Include="ViewModels\EffectViewModels\HabitEffectViewModel.cs" />
     <Compile Include="ViewModels\EffectViewModels\ProduceResourceEffectViewModel.cs" />
-    <Compile Include="ViewModels\EffectViewModels\RecipePartViewModel.cs" />
     <Compile Include="ViewModels\EffectViewModels\SpawnWorldResourceEffectViewModel.cs" />
     <Compile Include="ViewModels\EffectViewModels\StorageEffectViewModel.cs" />
     <Compile Include="ViewModels\EffectViewModels\UseResourceEffectViewModel.cs" />

@@ -5,6 +5,7 @@
 			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 			 xmlns:tk="http://schemas.xceed.com/wpf/xaml/toolkit"
 			 xmlns:vm="clr-namespace:RuleSetEditor.ViewModels.RuleSetViewModels.ElementViewModels.BuildingViewModels"
+			 xmlns:evm="clr-namespace:RuleSetEditor.ViewModels.EffectViewModels"
 			 xmlns:effects="clr-namespace:RuleSet.Effects;assembly=RuleSet"
 			 xmlns:local="clr-namespace:RuleSetEditor.Views.RuleSetViews.BuildingViews"
 			 mc:Ignorable="d"
