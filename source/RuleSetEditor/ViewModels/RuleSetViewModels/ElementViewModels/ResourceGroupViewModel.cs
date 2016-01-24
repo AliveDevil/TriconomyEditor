@@ -37,8 +37,8 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels.ElementViewModels
             base.OnElementChanged();
             ResourceList = new ReactiveList<ResourceViewModel>(ResourceGroup.Resources.Select(r => (ResourceViewModel)RuleSetViewModel.ElementList.First(e => e is ResourceViewModel && e.Element == r)));
             ResourceList.ChangeTrackingEnabled = true;
-            beforeItemsAdded = ResourceList.BeforeItemsAdded.Subscribe(r => ResourceGroup.Resources.Add(r.Resource));
-            beforeItemsRemoved = ResourceList.BeforeItemsRemoved.Subscribe(r => ResourceGroup.Resources.Remove(r.Resource));
+            beforeItemsAdded = ResourceList.BeforeItemsAdded.Subscribe(r => ResourceGroup.Resources.Add(r.Element));
+            beforeItemsRemoved = ResourceList.BeforeItemsRemoved.Subscribe(r => ResourceGroup.Resources.Remove(r.Element));
         }
     }
 }

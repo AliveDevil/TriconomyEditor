@@ -43,8 +43,8 @@ namespace RuleSetEditor.ViewModels.EffectViewModels.EffectEditViewModels
                 Priority = ReactiveProperty.FromObject(DeliverEffect.DeliverEffect, d => d.Priority);
                 Resource = ReactiveProperty.FromObject(DeliverEffect.DeliverEffect,
                     r => r.Resource,
-                    r => Resources.SingleOrDefault(e => e.Resource == r),
-                    r => r?.Resource);
+                    r => Resources.SingleOrDefault(e => e.Element == r),
+                    r => r?.Element);
             }
         }
 

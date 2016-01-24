@@ -3,6 +3,7 @@
 			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+			 xmlns:tk="http://schemas.xceed.com/wpf/xaml/toolkit"
 			 xmlns:vm="clr-namespace:RuleSetEditor.ViewModels.RuleSetViewModels.ElementViewModels.ResourceViewModels"
 			 xmlns:local="clr-namespace:RuleSetEditor.Views.RuleSetViews.ResourceViews"
 			 mc:Ignorable="d"
@@ -34,6 +35,17 @@
 					<Label Content="Name" />
 					<TextBox Text="{Binding Name.Value, UpdateSourceTrigger=PropertyChanged}"
 							 Grid.Column="1" />
+				</Grid>
+
+				<Grid>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="Auto"
+										  SharedSizeGroup="LabelFieldGroup" />
+						<ColumnDefinition Width="*" />
+					</Grid.ColumnDefinitions>
+					<Label Content="Stack Size" />
+					<tk:IntegerUpDown Value="{Binding StackSize.Value}"
+									  Grid.Column="1" />
 				</Grid>
 			</StackPanel>
 		</ScrollViewer>

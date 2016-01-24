@@ -68,9 +68,9 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels.ToolbarViewModels
         {
             base.OnRuleSetChanged();
             AvailableResources = RuleSetViewModel.ElementList.CreateDerivedCollection(e => (ResourceViewModel)e, e => e is ResourceViewModel, (l, r) => l.Name.Value.CompareTo(r.Name.Value));
-            Resources = new ReactiveList<ResourceViewModel>(ResourceBar.Resources.Select(r => (ResourceViewModel)RuleSetViewModel.ElementList.FirstOrDefault(e => e is ResourceViewModel && e.Element == r)).Where(r => r.Resource != null));
-            beforeItemsAdded = Resources.BeforeItemsAdded.Subscribe(r => ResourceBar.Resources.Add(r.Resource));
-            beforeItemsRemoved = Resources.BeforeItemsRemoved.Subscribe(r => ResourceBar.Resources.Remove(r.Resource));
+            Resources = new ReactiveList<ResourceViewModel>(ResourceBar.Resources.Select(r => (ResourceViewModel)RuleSetViewModel.ElementList.FirstOrDefault(e => e is ResourceViewModel && e.Element == r)).Where(r => r.Element != null));
+            beforeItemsAdded = Resources.BeforeItemsAdded.Subscribe(r => ResourceBar.Resources.Add(r.Element));
+            beforeItemsRemoved = Resources.BeforeItemsRemoved.Subscribe(r => ResourceBar.Resources.Remove(r.Element));
         }
     }
 }

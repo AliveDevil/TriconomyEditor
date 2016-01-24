@@ -38,8 +38,8 @@ namespace RuleSetEditor.ViewModels.EffectViewModels.EffectEditViewModels
                 Delay = ReactiveProperty.FromObject(ProduceResourceEffect.ProduceResourceEffect, e => e.Delay);
                 Resource = ReactiveProperty.FromObject(ProduceResourceEffect.ProduceResourceEffect,
                     r => r.Resource,
-                    r => Resources.SingleOrDefault(e => e.Resource == r),
-                    r => r?.Resource);
+                    r => Resources.SingleOrDefault(e => e.Element == r),
+                    r => r?.Element);
             }
         }
 

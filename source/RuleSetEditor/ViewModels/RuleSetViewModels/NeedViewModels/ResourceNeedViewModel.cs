@@ -56,8 +56,8 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels.NeedViewModels
                 r => r.Amount);
             Resource = ReactiveProperty.FromObject(Need,
                 r => r.Resource,
-                r => Resources.SingleOrDefault(e => e.Resource == r),
-                r => r?.Resource);
+                r => Resources.SingleOrDefault(e => e.Element == r),
+                r => r?.Element);
             Resource.PropertyChanged += OnPropertyChanged;
         }
 

@@ -59,4 +59,14 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels.ElementViewModels
         {
         }
     }
+
+    public class ElementViewModel<TElement> : ElementViewModel
+        where TElement : Element
+    {
+        public new TElement Element
+        {
+            get { return (TElement)base.Element; }
+            set { base.Element = value; }
+        }
+    }
 }

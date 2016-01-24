@@ -2,5 +2,6 @@
 {
     public class Resource : Element
     {
+        public int StackSize { get; set; }
     }
 }

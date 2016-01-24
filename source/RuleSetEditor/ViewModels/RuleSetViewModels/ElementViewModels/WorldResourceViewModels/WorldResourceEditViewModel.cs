@@ -63,7 +63,7 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels.ElementViewModels.WorldReso
 
         public override string ToString()
         {
-            return $"{Name.Value} {{{Resource?.Value?.Resource?.Name}}}";
+            return $"{Name.Value} {{{Resource?.Value?.Element?.Name}}}";
         }
 
         protected override void OnRuleSetChanged()

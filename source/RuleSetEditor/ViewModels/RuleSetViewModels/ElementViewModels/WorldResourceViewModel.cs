@@ -63,8 +63,8 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels.ElementViewModels
             Amount.PropertyChanged += OnPropertyChanged;
             Resource = ReactiveProperty.FromObject(WorldResource,
                 r => r.Resource,
-                r => Resources.SingleOrDefault(e => e.Resource == r),
-                r => r?.Resource);
+                r => Resources.SingleOrDefault(e => e.Element == r),
+                r => r?.Element);
             Resource.PropertyChanged += OnPropertyChanged;
             Variants = ReactiveProperty.FromObject(WorldResource, r => r.Variants);
             Variants.PropertyChanged += OnPropertyChanged;

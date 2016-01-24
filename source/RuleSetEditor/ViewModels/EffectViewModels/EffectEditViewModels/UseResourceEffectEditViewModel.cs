@@ -42,8 +42,8 @@ namespace RuleSetEditor.ViewModels.EffectViewModels.EffectEditViewModels
                 Amount = ReactiveProperty.FromObject(UseResourceEffect.UseResourceEffect, e => e.Amount);
                 Resource = ReactiveProperty.FromObject(UseResourceEffect.UseResourceEffect,
                     r => r.Resource,
-                    r => Resources.SingleOrDefault(e => e.Resource == r),
-                    r => r?.Resource);
+                    r => Resources.SingleOrDefault(e => e.Element == r),
+                    r => r?.Element);
 
                 Amount.PropertyChanged += OnPropertyChanged;
                 Resource.PropertyChanged += OnPropertyChanged;

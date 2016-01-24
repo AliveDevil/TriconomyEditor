@@ -16,9 +16,13 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels.ElementViewModels.ResourceV
             }
             set
             {
-                if (!RaiseSetIfChanged(ref resource, value)) return;
+                if (!RaiseSetIfChanged(ref resource, value))
+                    return;
                 Name = Resource.Name;
+                StackSize = Resource.StackSize;
             }
         }
+
+        public ReactiveProperty<int> StackSize { get; private set; }
     }
 }
