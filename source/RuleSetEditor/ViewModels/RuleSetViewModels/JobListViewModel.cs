@@ -57,6 +57,7 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels
         {
             base.OnRuleSetChanged();
             Jobs = RuleSetViewModel.ElementList.CreateDerivedCollection(e => (JobViewModel)e, e => e is JobViewModel, (l, r) => l.Name.Value.CompareTo(r.Name.Value));
+            Jobs.ChangeTrackingEnabled = true;
         }
     }
 }

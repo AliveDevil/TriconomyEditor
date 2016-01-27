@@ -91,13 +91,14 @@ namespace RuleSetEditor.ViewModels.EffectViewModels.EffectEditViewModels
             get { return outParts; }
             private set { RaiseSetIfChanged(ref outParts, value); }
         }
-
+        
         public RelayCommand RemoveInResourcePartCommand
         {
             get
             {
                 return removeInResourcePartCommand ?? (removeInResourcePartCommand = new RelayCommand(() =>
                 {
+                    AddRecipeEffect.InParts.Remove(SelectedInPart);
                 }));
             }
         }
@@ -108,6 +109,7 @@ namespace RuleSetEditor.ViewModels.EffectViewModels.EffectEditViewModels
             {
                 return removeOutResourcePartCommand ?? (removeOutResourcePartCommand = new RelayCommand(() =>
                 {
+                    AddRecipeEffect.OutParts.Remove(SelectedOutPart);
                 }));
             }
         }

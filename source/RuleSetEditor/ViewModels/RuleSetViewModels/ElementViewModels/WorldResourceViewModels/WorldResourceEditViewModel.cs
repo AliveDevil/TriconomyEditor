@@ -8,6 +8,7 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels.ElementViewModels.WorldReso
     public class WorldResourceEditViewModel : RuleSetViewModelBase
     {
         private ReactiveProperty<int> amountPropety;
+        private ReactiveProperty<bool> autoSpawnProperty;
         private ReactiveProperty<string> nameProperty;
         private ReactiveProperty<ResourceViewModel> resourceProperty;
         private IReactiveDerivedList<ResourceViewModel> resources;
@@ -18,6 +19,12 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels.ElementViewModels.WorldReso
         {
             get { return amountPropety; }
             private set { RaiseSetIfChanged(ref amountPropety, value); }
+        }
+
+        public ReactiveProperty<bool> AutoSpawn
+        {
+            get { return autoSpawnProperty; }
+            private set { RaiseSetIfChanged(ref autoSpawnProperty, value); }
         }
 
         public ReactiveProperty<string> Name
@@ -56,6 +63,7 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels.ElementViewModels.WorldReso
                     return;
                 Name = WorldResource.Name;
                 Amount = WorldResource.Amount;
+                AutoSpawn = WorldResource.AutoSpawn;
                 Resource = WorldResource.Resource.ToReactivePropertyAsSynchronized(w => w.Value, w => Resources.SingleOrDefault(r => r == worldResource.Resource.Value), w => w);
                 Variants = WorldResource.Variants;
             }

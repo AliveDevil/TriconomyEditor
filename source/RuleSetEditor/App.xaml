@@ -15,7 +15,7 @@
 				<Setter Property="Margin"
 						Value="5" />
 			</Style>
-			
+
 			<Style TargetType="TextBox">
 				<Setter Property="VerticalContentAlignment"
 						Value="Center" />
@@ -29,6 +29,12 @@
 						Value="5" />
 			</Style>
 			<Style TargetType="ComboBox">
+				<Setter Property="VerticalContentAlignment"
+						Value="Center" />
+				<Setter Property="Margin"
+						Value="5" />
+			</Style>
+			<Style TargetType="CheckBox">
 				<Setter Property="VerticalContentAlignment"
 						Value="Center" />
 				<Setter Property="Margin"

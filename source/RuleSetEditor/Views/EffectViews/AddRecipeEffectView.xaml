@@ -116,7 +116,7 @@
 										</TextBlock>
 									</Label>
 									<Button Content="Edit"
-											Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=ListView}, Path=DataContext.EditCostCommand}"
+											Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=ListView}, Path=DataContext.EditResourcePartCommand}"
 											CommandParameter="{Binding}"
 											Grid.Column="1" />
 								</Grid>

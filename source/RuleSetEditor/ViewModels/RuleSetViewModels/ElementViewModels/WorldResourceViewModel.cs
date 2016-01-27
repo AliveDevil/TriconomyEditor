@@ -8,6 +8,7 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels.ElementViewModels
     public class WorldResourceViewModel : ElementViewModel
     {
         private ReactiveProperty<int> amountProperty;
+        private ReactiveProperty<bool> autoSpawnProperty;
         private ReactiveProperty<ResourceViewModel> resource;
         private IReactiveDerivedList<ResourceViewModel> resources;
         private ReactiveProperty<int> variantsProperty;
@@ -16,6 +17,12 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels.ElementViewModels
         {
             get { return amountProperty; }
             private set { RaiseSetIfChanged(ref amountProperty, value); }
+        }
+
+        public ReactiveProperty<bool> AutoSpawn
+        {
+            get { return autoSpawnProperty; }
+            set { RaiseSetIfChanged(ref autoSpawnProperty, value); }
         }
 
         public ReactiveProperty<ResourceViewModel> Resource
@@ -43,6 +50,7 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels.ElementViewModels
             if (disposing)
             {
                 Amount?.Dispose();
+                AutoSpawn?.Dispose();
                 Resource?.Value?.Dispose();
                 Resource?.Dispose();
                 Variants?.Dispose();
@@ -61,6 +69,8 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels.ElementViewModels
             base.OnElementChanged();
             Amount = ReactiveProperty.FromObject(WorldResource, w => w.Amount);
             Amount.PropertyChanged += OnPropertyChanged;
+            AutoSpawn = ReactiveProperty.FromObject(WorldResource, w => w.AutoSpawn);
+            AutoSpawn.PropertyChanged += OnPropertyChanged;
             Resource = ReactiveProperty.FromObject(WorldResource,
                 r => r.Resource,
                 r => Resources.SingleOrDefault(e => e.Element == r),

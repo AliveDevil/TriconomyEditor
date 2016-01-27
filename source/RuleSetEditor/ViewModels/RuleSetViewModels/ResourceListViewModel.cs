@@ -64,6 +64,7 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels
                 e => (ResourceViewModel)e,
                 e => e is ResourceViewModel,
                 (l, r) => l.Name.Value.CompareTo(r.Name.Value));
+            Resources.ChangeTrackingEnabled = true;
         }
 
         private void AddAndSelectNewResource<TViewModel, TItem>(string name)

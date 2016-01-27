@@ -71,6 +71,17 @@
 							  DisplayMemberPath="Name.Value"
 							  Grid.Column="1" />
 				</Grid>
+
+				<Grid>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="Auto"
+										  SharedSizeGroup="LabelFieldGroup" />
+						<ColumnDefinition Width="*" />
+					</Grid.ColumnDefinitions>
+					<CheckBox Content="Auto Spawn"
+							  IsChecked="{Binding AutoSpawn.Value}"
+							  Grid.Column="1" />
+				</Grid>
 			</StackPanel>
 		</ScrollViewer>
 

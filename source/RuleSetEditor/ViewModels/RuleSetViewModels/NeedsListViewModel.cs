@@ -84,6 +84,7 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels
         {
             base.OnRuleSetChanged();
             Needs = RuleSetViewModel.Needs.CreateDerivedCollection(e => e);
+            Needs.ChangeTrackingEnabled = true;
         }
 
         private void AddAndSelectNewResource<TViewModel, TNeed>(Need need)

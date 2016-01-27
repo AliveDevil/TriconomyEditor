@@ -1,6 +1,4 @@
-﻿using System;
-using System.Linq;
-using ReactiveUI;
+﻿using ReactiveUI;
 using RuleSet.Elements;
 using RuleSetEditor.ViewModels.RuleSetViewModels.ElementViewModels;
 using RuleSetEditor.ViewModels.RuleSetViewModels.ElementViewModels.BuildingViewModels;
@@ -9,11 +7,11 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels
 {
     public class BuildingListViewModel : RuleSetViewModelBase
     {
-        private IReactiveDerivedList<BuildingViewModel> buildings;
-        private BuildingViewModel selectedBuilding;
-
-
         private RelayCommand addBuildingCommand;
+        private IReactiveDerivedList<BuildingViewModel> buildings;
+        private RelayCommand<BuildingViewModel> editBuildingCommand;
+        private RelayCommand removeBuildingCommand;
+        private BuildingViewModel selectedBuilding;
 
         public RelayCommand AddBuildingCommand
         {
@@ -34,9 +32,6 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels
             private set { RaiseSetIfChanged(ref buildings, value); }
         }
 
-
-        private RelayCommand<BuildingViewModel> editBuildingCommand;
-
         public RelayCommand<BuildingViewModel> EditBuildingCommand
         {
             get
@@ -48,9 +43,6 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels
                 }));
             }
         }
-
-
-        private RelayCommand removeBuildingCommand;
 
         public RelayCommand RemoveBuildingCommand
         {
@@ -85,6 +77,7 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels
         {
             base.OnRuleSetChanged();
             Buildings = RuleSetViewModel.ElementList.CreateDerivedCollection(e => (BuildingViewModel)e, e => e is BuildingViewModel, (l, r) => l.Name.Value.CompareTo(r.Name.Value));
+            Buildings.ChangeTrackingEnabled = true;
         }
     }
 }

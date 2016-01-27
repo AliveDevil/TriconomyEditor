@@ -24,7 +24,7 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels.ToolbarViewModels
         }
 
         public PlaceBuildingItem PlaceBuilding => (PlaceBuildingItem)MenuItem;
-        
+
         protected override void OnMenuItemChanged()
         {
             base.OnMenuItemChanged();
@@ -37,7 +37,7 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels.ToolbarViewModels
         protected override void OnRuleSetChanged()
         {
             base.OnRuleSetChanged();
-            Buildings = RuleSetViewModel.ElementList.CreateDerivedCollection(e => (BuildingViewModel)e, e => e is BuildingViewModel);
+            Buildings = RuleSetViewModel.ElementList.CreateDerivedCollection(e => (BuildingViewModel)e, e => e is BuildingViewModel, (l, r) => l.Building.Name.CompareTo(r.Building.Name));
         }
     }
 }

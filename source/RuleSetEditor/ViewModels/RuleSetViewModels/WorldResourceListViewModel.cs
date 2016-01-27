@@ -56,6 +56,7 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels
         {
             base.OnRuleSetChanged();
             WorldResources = RuleSetViewModel.ElementList.CreateDerivedCollection(e => (WorldResourceViewModel)e, e => e is WorldResourceViewModel, (l, r) => l.Name.Value.CompareTo(r.Name.Value));
+            WorldResources.ChangeTrackingEnabled = true;
         }
     }
 }

@@ -68,6 +68,7 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels
         {
             base.OnRuleSetChanged();
             Resources = RuleSetViewModel.ElementList.CreateDerivedCollection(e => (ResourceViewModel)e, e => e is ResourceViewModel);
+            Resources.ChangeTrackingEnabled = true;
         }
 
         private void OnResourcePartChanged()
