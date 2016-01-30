@@ -145,18 +145,21 @@
 									<MenuItem Header="Assembly Point"
 											  Command="{Binding AddEffectCommand}"
 											  CommandParameter="{x:Type effects:AssemblyPointEffect}" />
+									<MenuItem Header="Deliver"
+											  Command="{Binding AddEffectCommand}"
+											  CommandParameter="{x:Type effects:DeliverEffect}" />
 									<MenuItem Header="Habit"
 											  Command="{Binding AddEffectCommand}"
 											  CommandParameter="{x:Type effects:HabitEffect}" />
+									<MenuItem Header="Research"
+											  Command="{Binding AddEffectCommand}"
+											  CommandParameter="{x:Type effects:ResearchEffect}" />
 									<MenuItem Header="Storage"
 											  Command="{Binding AddEffectCommand}"
 											  CommandParameter="{x:Type effects:StorageEffect}" />
 									<MenuItem Header="Workplace"
 											  Command="{Binding AddEffectCommand}"
 											  CommandParameter="{x:Type effects:WorkplaceEffect}" />
-									<MenuItem Header="Deliver"
-											  Command="{Binding AddEffectCommand}"
-											  CommandParameter="{x:Type effects:DeliverEffect}" />
 								</MenuItem>
 								<MenuItem Header="Resources">
 									<MenuItem Header="Produce Resource"

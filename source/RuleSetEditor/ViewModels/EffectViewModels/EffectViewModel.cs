@@ -76,6 +76,12 @@ namespace RuleSetEditor.ViewModels.EffectViewModels
                     RuleSetViewModel = ruleSetViewModel,
                     ProduceResourceEffect = (ProduceResourceEffectViewModel)effectViewModel
                 };
+            else if (effectViewModel is ResearchEffectViewModel)
+                viewModelBase = new ResearchEffectEditViewModel()
+                {
+                    RuleSetViewModel = ruleSetViewModel,
+                    ResearchEffect = (ResearchEffectViewModel)effectViewModel
+                };
             else if (effectViewModel is SpawnWorldResourceEffectViewModel)
                 viewModelBase = new SpawnWorldResourceEffectEditViewModel()
                 {
@@ -116,6 +122,7 @@ namespace RuleSetEditor.ViewModels.EffectViewModels
             else if (effect is GatherResourceEffect) model = new GatherResourceEffectViewModel();
             else if (effect is HabitEffect) model = new HabitEffectViewModel();
             else if (effect is ProduceResourceEffect) model = new ProduceResourceEffectViewModel();
+            else if (effect is ResearchEffect) model = new ResearchEffectViewModel();
             else if (effect is SpawnWorldResourceEffect) model = new SpawnWorldResourceEffectViewModel();
             else if (effect is StorageEffect) model = new StorageEffectViewModel();
             else if (effect is UseResourceEffect) model = new UseResourceEffectViewModel();
@@ -129,8 +136,6 @@ namespace RuleSetEditor.ViewModels.EffectViewModels
 
             return model;
         }
-
-        //public abstract override string ToString();
 
         protected virtual void OnEffectChanged()
         {

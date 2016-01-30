@@ -26,6 +26,9 @@
 	<DataTemplate DataType="{x:Type vm:ProduceResourceEffectEditViewModel}">
 		<local:ProduceResourceEffectView />
 	</DataTemplate>
+	<DataTemplate DataType="{x:Type vm:ResearchEffectEditViewModel}">
+		<local:ResearchView />
+	</DataTemplate>
 	<DataTemplate DataType="{x:Type vm:SpawnWorldResourceEffectEditViewModel}">
 		<local:SpawnWorldResourceEffectView />
 	</DataTemplate>
