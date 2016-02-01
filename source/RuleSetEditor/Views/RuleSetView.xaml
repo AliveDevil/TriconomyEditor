@@ -51,6 +51,10 @@
 								  Command="{Binding OpenView}"
 								  CommandParameter="{x:Type rulesetviewmodels:ResourceListViewModel}"
 								  IsChecked="{Binding View, Converter={StaticResource ViewCheckedConverter}, ConverterParameter={x:Type rulesetviewmodels:ResourceListViewModel}, Mode=OneWay}" />
+					<ToggleButton Content="Living Resources"
+								  Command="{Binding OpenView}"
+								  CommandParameter="{x:Type rulesetviewmodels:LivingResourceListViewModel}"
+								  IsChecked="{Binding View, Converter={StaticResource ViewCheckedConverter}, ConverterParameter={x:Type rulesetviewmodels:LivingResourceListViewModel}, Mode=OneWay}" />
 					<ToggleButton Content="World Resources"
 								  Command="{Binding OpenView}"
 								  CommandParameter="{x:Type rulesetviewmodels:WorldResourceListViewModel}"

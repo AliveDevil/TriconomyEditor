@@ -5,13 +5,12 @@ using RuleSet.Elements;
 
 namespace RuleSetEditor.ViewModels.RuleSetViewModels.ElementViewModels
 {
-    public class WorldResourceViewModel : ElementViewModel<WorldResource>
+    public class LivingResourceViewModel : ElementViewModel<LivingResource>
     {
         private ReactiveProperty<int> amountProperty;
         private ReactiveProperty<bool> autoSpawnProperty;
         private ReactiveProperty<ResourceViewModel> resource;
         private IReactiveDerivedList<ResourceViewModel> resources;
-        private ReactiveProperty<int> variantsProperty;
 
         public ReactiveProperty<int> Amount
         {
@@ -61,18 +60,6 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels.ElementViewModels
             }
         }
 
-        public ReactiveProperty<int> Variants
-        {
-            get
-            {
-                return variantsProperty;
-            }
-            private set
-            {
-                RaiseSetIfChanged(ref variantsProperty, value);
-            }
-        }
-
         protected override void Dispose(bool disposing)
         {
             if (disposing)
@@ -81,13 +68,11 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels.ElementViewModels
                 AutoSpawn?.Dispose();
                 Resource?.Value?.Dispose();
                 Resource?.Dispose();
-                Variants?.Dispose();
                 Resources.Dispose();
 
                 resource = null;
                 resources = null;
                 amountProperty = null;
-                variantsProperty = null;
             }
             base.Dispose(disposing);
         }
@@ -104,8 +89,6 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels.ElementViewModels
                 r => Resources.SingleOrDefault(e => e.Element == r),
                 r => r?.Element);
             Resource.PropertyChanged += OnPropertyChanged;
-            Variants = ReactiveProperty.FromObject(Element, r => r.Variants);
-            Variants.PropertyChanged += OnPropertyChanged;
         }
 
         protected override void OnRuleSetChanged()

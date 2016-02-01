@@ -11,6 +11,9 @@
 	<DataTemplate DataType="{x:Type vm:LandingPageViewModel}">
 		<local:LandingPageView />
 	</DataTemplate>
+	<DataTemplate DataType="{x:Type vm:LivingResourceListViewModel}">
+		<local:LivingResourceListView />
+	</DataTemplate>
 	<DataTemplate DataType="{x:Type vm:NeedsListViewModel}">
 		<local:NeedListView />
 	</DataTemplate>
@@ -27,6 +30,7 @@
 	<ResourceDictionary.MergedDictionaries>
 		<ResourceDictionary Source="BuildingViews/BuildingViewTemplates.xaml" />
 		<ResourceDictionary Source="JobViews/JobViewTemplates.xaml" />
+		<ResourceDictionary Source="LivingResourceViews/LivingResourceViewTemplates.xaml" />
 		<ResourceDictionary Source="NeedViews/NeedViewTemplates.xaml" />
 		<ResourceDictionary Source="ResourceViews/ResourceViewTemplates.xaml" />
 		<ResourceDictionary Source="ToolbarViews/ToolbarViewTemplates.xaml" />

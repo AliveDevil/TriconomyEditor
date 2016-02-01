@@ -47,8 +47,8 @@ namespace RuleSetEditor.ViewModels.EffectViewModels.EffectEditViewModels
                 Radius = ReactiveProperty.FromObject(SpawnWorldResourceEffect.SpawnWorldResourceEffect, e => e.Radius);
                 WorldResource = ReactiveProperty.FromObject(SpawnWorldResourceEffect.SpawnWorldResourceEffect,
                     e => e.WorldResource,
-                    e => WorldResources.SingleOrDefault(s => s.WorldResource == e),
-                    e => e?.WorldResource);
+                    e => WorldResources.SingleOrDefault(s => s.Element == e),
+                    e => e?.Element);
             }
         }
 

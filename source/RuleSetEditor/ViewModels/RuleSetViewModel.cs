@@ -71,6 +71,7 @@ namespace RuleSetEditor.ViewModels
                     ElementViewModel viewModel = null;
                     if (element is ResourceGroup) viewModel = new ResourceGroupViewModel();
                     else if (element is WorldResource) viewModel = new WorldResourceViewModel();
+                    //else if (element is LivingResource) viewModel = new LivingResourceViewModel();
                     else if (element is Building) viewModel = new BuildingViewModel();
                     else if (element is Job) viewModel = new JobViewModel();
                     else if (element is Resource) viewModel = new ResourceViewModel();

@@ -164,6 +164,8 @@
     <Compile Include="ViewModels\RuleSetViewModels\ElementViewModels\ElementViewModel.cs" />
     <Compile Include="ViewModels\RuleSetViewModels\ElementViewModels\JobViewModel.cs" />
     <Compile Include="ViewModels\RuleSetViewModels\ElementViewModels\JobViewModels\JobEditViewModel.cs" />
+    <Compile Include="ViewModels\RuleSetViewModels\ElementViewModels\LivingResourceViewModel.cs" />
+    <Compile Include="ViewModels\RuleSetViewModels\ElementViewModels\LivingResourceViewModels\LivingResourceEditViewModel.cs" />
     <Compile Include="ViewModels\RuleSetViewModels\ElementViewModels\ResourceGroupViewModel.cs" />
     <Compile Include="ViewModels\RuleSetViewModels\ElementViewModels\ResourceViewModel.cs" />
     <Compile Include="ViewModels\RuleSetViewModels\ElementViewModels\ResourceViewModels\ResourceEditViewModel.cs" />
@@ -173,6 +175,7 @@
     <Compile Include="ViewModels\RuleSetViewModels\ElementViewModels\WorldResourceViewModel.cs" />
     <Compile Include="ViewModels\RuleSetViewModels\JobListViewModel.cs" />
     <Compile Include="ViewModels\RuleSetViewModels\LandingPageViewModel.cs" />
+    <Compile Include="ViewModels\RuleSetViewModels\LivingResourceListViewModel.cs" />
     <Compile Include="ViewModels\RuleSetViewModels\NeedsListViewModel.cs" />
     <Compile Include="ViewModels\RuleSetViewModels\NeedViewModels\BuildingNeedViewModel.cs" />
     <Compile Include="ViewModels\RuleSetViewModels\NeedViewModels\EditViewModels\BuildingNeedEditViewModel.cs" />
@@ -247,6 +250,12 @@
     </Compile>
     <Compile Include="Views\RuleSetViews\LandingPageView.xaml.cs">
       <DependentUpon>LandingPageView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\RuleSetViews\LivingResourceListView.xaml.cs">
+      <DependentUpon>LivingResourceListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\RuleSetViews\LivingResourceViews\LivingResourceEditView.xaml.cs">
+      <DependentUpon>LivingResourceEditView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\RuleSetViews\NeedListView.xaml.cs">
       <DependentUpon>NeedListView.xaml</DependentUpon>
@@ -402,6 +411,18 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\RuleSetViews\LandingPageView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\RuleSetViews\LivingResourceListView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\RuleSetViews\LivingResourceViews\LivingResourceEditView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\RuleSetViews\LivingResourceViews\LivingResourceViewTemplates.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
