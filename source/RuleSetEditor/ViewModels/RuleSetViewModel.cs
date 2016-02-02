@@ -168,9 +168,9 @@ namespace RuleSetEditor.ViewModels
                 foreach (var item in StartResources)
                     item.DeferChanged = false;
 
-                ElementList.BeforeItemsAdded.Subscribe(e => RuleSet.Elements.Add(e.Element));
+                ElementList.BeforeItemsAdded.Subscribe(e => RuleSet.Elements.Add(e?.Element));
                 ElementList.BeforeItemsRemoved.Subscribe(e => RuleSet.Elements.Remove(e?.Element));
-                Needs.BeforeItemsAdded.Subscribe(e => RuleSet.Needs.Add(e.Need));
+                Needs.BeforeItemsAdded.Subscribe(e => RuleSet.Needs.Add(e?.Need));
                 Needs.BeforeItemsRemoved.Subscribe(e => RuleSet.Needs.Remove(e?.Need));
                 Research.BeforeItemsAdded.Subscribe(e => RuleSet.Research.Add(e?.Research));
                 Research.BeforeItemsRemoved.Subscribe(e => RuleSet.Research.Remove(e?.Research));

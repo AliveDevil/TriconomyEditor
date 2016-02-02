@@ -24,5 +24,16 @@ namespace RuleSetEditor.Views.RuleSetViews.ResearchViews
         {
             InitializeComponent();
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            FrameworkElement element = sender as FrameworkElement;
+            if (element == null || element.ContextMenu == null)
+                return;
+
+            element.ContextMenu.PlacementTarget = element;
+            element.ContextMenu.IsOpen = true;
+            e.Handled = true;
+        }
     }
 }

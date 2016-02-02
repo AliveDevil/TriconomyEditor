@@ -5,6 +5,7 @@
 			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 			 xmlns:tk="http://schemas.xceed.com/wpf/xaml/toolkit"
 			 xmlns:vm="clr-namespace:RuleSetEditor.ViewModels.RuleSetViewModels.ResearchViewModels.EditViewModels"
+			 xmlns:cvm="clr-namespace:RuleSet.Conditions;assembly=RuleSet"
 			 xmlns:local="clr-namespace:RuleSetEditor.Views.RuleSetViews.ResearchViews"
 			 mc:Ignorable="d"
 			 d:DataContext="{d:DesignInstance Type=vm:ResearchEditViewModel}"
@@ -100,6 +101,82 @@
 							Grid.Column="2" />
 					<Button Content="Remove"
 							Command="{Binding RemoveCostCommand}"
+							Grid.Row="1"
+							Grid.Column="3" />
+				</Grid>
+				<Grid>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="Auto"
+										  SharedSizeGroup="LabelFieldGroup" />
+						<ColumnDefinition Width="*" />
+						<ColumnDefinition Width="Auto" />
+						<ColumnDefinition Width="Auto" />
+					</Grid.ColumnDefinitions>
+					<Grid.RowDefinitions>
+						<RowDefinition Height="Auto" />
+						<RowDefinition Height="Auto" />
+					</Grid.RowDefinitions>
+					<Label Content="Effects" />
+					<ListView ItemsSource="{Binding Conditions}"
+							  SelectedItem="{Binding SelectedCondition}"
+							  IsSynchronizedWithCurrentItem="True"
+							  HorizontalContentAlignment="Stretch"
+							  Grid.Column="1"
+							  Grid.ColumnSpan="3">
+						<ListView.ItemTemplate>
+							<DataTemplate>
+								<Grid>
+									<Grid.ColumnDefinitions>
+										<ColumnDefinition Width="*" />
+										<ColumnDefinition Width="Auto"
+														  SharedSizeGroup="EditButtonField" />
+									</Grid.ColumnDefinitions>
+									<ContentPresenter Content="{Binding}"
+													  Grid.Column="0" />
+									<Button Content="Edit"
+											Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=ListView}, Path=DataContext.EditConditionCommand}"
+											CommandParameter="{Binding}"
+											Grid.Column="1" />
+								</Grid>
+							</DataTemplate>
+						</ListView.ItemTemplate>
+					</ListView>
+
+					<Button Content="Add"
+							Click="Button_Click"
+							Grid.Row="1"
+							Grid.Column="2">
+						<Button.ContextMenu>
+							<ContextMenu Placement="Bottom"
+										 DataContext="{Binding RelativeSource={RelativeSource Self}, Path=PlacementTarget.DataContext}">
+								<MenuItem Header="Research"
+										  Command="{Binding AddConditionCommand}"
+										  CommandParameter="{x:Type cvm:ResearchCondition}" />
+								<!--<MenuItem Header="Helper">
+									<MenuItem Header="Assembly Point"
+											  Command="{Binding AddConditionCommand}"
+											  CommandParameter="{x:Type effects:AssemblyPointEffect}" />
+									<MenuItem Header="Deliver"
+											  Command="{Binding AddEffectCommand}"
+											  CommandParameter="{x:Type effects:DeliverEffect}" />
+									<MenuItem Header="Habit"
+											  Command="{Binding AddEffectCommand}"
+											  CommandParameter="{x:Type effects:HabitEffect}" />
+									<MenuItem Header="Research"
+											  Command="{Binding AddEffectCommand}"
+											  CommandParameter="{x:Type effects:ResearchEffect}" />
+									<MenuItem Header="Storage"
+											  Command="{Binding AddEffectCommand}"
+											  CommandParameter="{x:Type effects:StorageEffect}" />
+									<MenuItem Header="Workplace"
+											  Command="{Binding AddEffectCommand}"
+											  CommandParameter="{x:Type effects:WorkplaceEffect}" />
+								</MenuItem>-->
+							</ContextMenu>
+						</Button.ContextMenu>
+					</Button>
+					<Button Content="Remove"
+							Command="{Binding RemoveConditionCommand}"
 							Grid.Row="1"
 							Grid.Column="3" />
 				</Grid>

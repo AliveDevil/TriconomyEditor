@@ -1,0 +1,12 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+					xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+					xmlns:vm="clr-namespace:RuleSetEditor.ViewModels.RuleSetViewModels.ConditionViewModels"
+					xmlns:evm="clr-namespace:RuleSetEditor.ViewModels.RuleSetViewModels.ConditionViewModels.EditViewModels"
+					xmlns:local="clr-namespace:RuleSetEditor.Views.RuleSetViews.ConditionViews">
+	<DataTemplate DataType="{x:Type vm:ResearchConditionViewModel}">
+		<local:ResearchConditionView />
+	</DataTemplate>
+	<DataTemplate DataType="{x:Type evm:ResearchConditionEditViewModel}">
+		<local:ResearchConditionEditView />
+	</DataTemplate>
+</ResourceDictionary>

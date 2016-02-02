@@ -32,6 +32,7 @@
 
 	<ResourceDictionary.MergedDictionaries>
 		<ResourceDictionary Source="BuildingViews/BuildingViewTemplates.xaml" />
+		<ResourceDictionary Source="ConditionViews/ConditionViewTemplates.xaml" />
 		<ResourceDictionary Source="JobViews/JobViewTemplates.xaml" />
 		<ResourceDictionary Source="LivingResourceViews/LivingResourceViewTemplates.xaml" />
 		<ResourceDictionary Source="NeedViews/NeedViewTemplates.xaml" />

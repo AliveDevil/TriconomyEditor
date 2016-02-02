@@ -253,6 +253,12 @@
     <Compile Include="Views\RuleSetViews\BuildingViews\UpgradeEditView.xaml.cs">
       <DependentUpon>UpgradeEditView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\RuleSetViews\ConditionViews\ResearchConditionEditView.xaml.cs">
+      <DependentUpon>ResearchConditionEditView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\RuleSetViews\ConditionViews\ResearchConditionView.xaml.cs">
+      <DependentUpon>ResearchConditionView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\RuleSetViews\JobListView.xaml.cs">
       <DependentUpon>JobListView.xaml</DependentUpon>
     </Compile>
@@ -412,6 +418,18 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\RuleSetViews\BuildingViews\UpgradeEditView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\RuleSetViews\ConditionViews\ResearchConditionEditView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\RuleSetViews\ConditionViews\ResearchConditionView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\RuleSetViews\ConditionViews\ConditionViewTemplates.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

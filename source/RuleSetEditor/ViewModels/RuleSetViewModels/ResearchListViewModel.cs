@@ -19,7 +19,14 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels
             {
                 return addResearchCommand ?? (addResearchCommand = new RelayCommand(() =>
                 {
-                    ResearchViewModel model = new ResearchViewModel() { RuleSetViewModel = RuleSetViewModel, Research = new Research() { Name = "New Research" } };
+                    ResearchViewModel model = new ResearchViewModel()
+                    {
+                        RuleSetViewModel = RuleSetViewModel,
+                        Research = new Research()
+                        {
+                            Name = "New Research"
+                        }
+                    };
                     RuleSetViewModel.Research.Add(model);
                     SelectedResearch = model;
                 }));
@@ -80,7 +87,7 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels
         protected override void OnRuleSetChanged()
         {
             base.OnRuleSetChanged();
-            Research = RuleSetViewModel.Research.CreateDerivedCollection(e => e);
+            Research = RuleSetViewModel.Research.CreateDerivedCollection(e => e, null, (l, r) => l.Name.Value.CompareTo(r.Name.Value));
             Research.ChangeTrackingEnabled = true;
         }
     }

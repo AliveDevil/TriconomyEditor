@@ -114,6 +114,8 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels.ResearchViewModels
             Name = ReactiveProperty.FromObject(Research, r => r.Name);
             Name.PropertyChanged += OnPropertyChanged;
 
+            Time = ReactiveProperty.FromObject(Research, r => r.Time);
+
             Conditions = new ReactiveList<ConditionViewModel>(Research.Conditions.Select(e => ConditionViewModel.FindViewModel(e, RuleSetViewModel)))
             {
                 ChangeTrackingEnabled = true
