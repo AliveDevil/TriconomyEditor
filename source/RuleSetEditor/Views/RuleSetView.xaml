@@ -9,7 +9,7 @@
 			 xmlns:local="clr-namespace:RuleSetEditor.Views"
 			 mc:Ignorable="d"
 			 d:DataContext="{d:DesignInstance Type=vm:RuleSetViewModel}"
-			 d:DesignHeight="300"
+			 d:DesignHeight="400"
 			 d:DesignWidth="300">
 	<UserControl.Resources>
 		<local:ViewToCheckedConverter x:Key="ViewCheckedConverter" />
@@ -79,6 +79,10 @@
 								  Command="{Binding OpenView}"
 								  CommandParameter="{x:Type toolbarviewmodels:ToolbarViewModel}"
 								  IsChecked="{Binding View, Converter={StaticResource ViewCheckedConverter}, ConverterParameter={x:Type toolbarviewmodels:ToolbarViewModel}, Mode=OneWay}" />
+					<ToggleButton Content="Research"
+								  Command="{Binding OpenView}"
+								  CommandParameter="{x:Type rulesetviewmodels:ResearchListViewModel}"
+								  IsChecked="{Binding View, Converter={StaticResource ViewCheckedConverter}, ConverterParameter={x:Type rulesetviewmodels:ResearchListViewModel}, Mode=OneWay}" />
 					<ToggleButton Content="Start Resources"
 								  Command="{Binding OpenView}"
 								  CommandParameter="{x:Type rulesetviewmodels:StartInventoryListViewModel}"

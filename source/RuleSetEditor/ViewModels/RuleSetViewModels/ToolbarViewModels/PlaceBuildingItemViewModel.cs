@@ -30,14 +30,14 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels.ToolbarViewModels
             base.OnMenuItemChanged();
             Building = ReactiveProperty.FromObject(PlaceBuilding,
                 v => v.Building,
-                b => Buildings.SingleOrDefault(v => v.Building == b),
-                v => v?.Building);
+                b => Buildings.SingleOrDefault(v => v.Element == b),
+                v => v?.Element);
         }
 
         protected override void OnRuleSetChanged()
         {
             base.OnRuleSetChanged();
-            Buildings = RuleSetViewModel.ElementList.CreateDerivedCollection(e => (BuildingViewModel)e, e => e is BuildingViewModel, (l, r) => l.Building.Name.CompareTo(r.Building.Name));
+            Buildings = RuleSetViewModel.ElementList.CreateDerivedCollection(e => (BuildingViewModel)e, e => e is BuildingViewModel, (l, r) => l.Element.Name.CompareTo(r.Element.Name));
         }
     }
 }

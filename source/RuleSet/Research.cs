@@ -3,15 +3,18 @@ using RuleSet.Elements;
 
 namespace RuleSet
 {
-    public class Upgrade : SerializedObject
+    public class Research : SerializedObject
     {
         public List<Condition> Conditions { get; } = new List<Condition>();
 
         public List<ResourcePart> Costs { get; } = new List<ResourcePart>();
 
-        public List<Effect> Effects { get; } = new List<Effect>();
+        public string Name
+        {
+            get; set;
+        }
 
-        public int Level
+        public int Time
         {
             get; set;
         }

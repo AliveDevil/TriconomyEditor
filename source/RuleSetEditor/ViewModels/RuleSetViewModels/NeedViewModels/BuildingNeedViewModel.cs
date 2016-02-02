@@ -49,8 +49,8 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels.NeedViewModels
             base.OnElementChanged();
             Building = ReactiveProperty.FromObject(Need,
                 b => b.Building,
-                b => Buildings.SingleOrDefault(e => e.Building == b),
-                b => b?.Building);
+                b => Buildings.SingleOrDefault(e => e.Element == b),
+                b => b?.Element);
             Building.PropertyChanged += OnPropertyChanged;
             Radius = ReactiveProperty.FromObject(Need,
                 b => b.Radius);

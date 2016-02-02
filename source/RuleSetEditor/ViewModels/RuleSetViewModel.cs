@@ -11,6 +11,7 @@ using RuleSet.Needs;
 using RuleSetEditor.ViewModels.RuleSetViewModels;
 using RuleSetEditor.ViewModels.RuleSetViewModels.ElementViewModels;
 using RuleSetEditor.ViewModels.RuleSetViewModels.NeedViewModels;
+using RuleSetEditor.ViewModels.RuleSetViewModels.ResearchViewModels;
 
 namespace RuleSetEditor.ViewModels
 {
@@ -22,26 +23,45 @@ namespace RuleSetEditor.ViewModels
         private ReactiveProperty<string> nameProperty;
         private ReactiveList<NeedViewModel> needs;
         private RelayCommand<Type> openViewCommand;
+        private ReactiveList<ResearchViewModel> research;
         private RuleSet.RuleSet ruleSet;
         private string sourceFilePath;
         private ReactiveList<ResourcePartViewModel> startInventory;
 
         public ReactiveList<ElementViewModel> ElementList
         {
-            get { return elementList; }
-            private set { RaiseSetIfChanged(ref elementList, value); }
+            get
+            {
+                return elementList;
+            }
+            private set
+            {
+                RaiseSetIfChanged(ref elementList, value);
+            }
         }
 
         public ReactiveProperty<string> Name
         {
-            get { return nameProperty; }
-            private set { RaiseSetIfChanged(ref nameProperty, value); }
+            get
+            {
+                return nameProperty;
+            }
+            private set
+            {
+                RaiseSetIfChanged(ref nameProperty, value);
+            }
         }
 
         public ReactiveList<NeedViewModel> Needs
         {
-            get { return needs; }
-            private set { RaiseSetIfChanged(ref needs, value); }
+            get
+            {
+                return needs;
+            }
+            private set
+            {
+                RaiseSetIfChanged(ref needs, value);
+            }
         }
 
         public RelayCommand<Type> OpenView
@@ -52,6 +72,18 @@ namespace RuleSetEditor.ViewModels
                 {
                     Set((ViewModelBase)Activator.CreateInstance(t));
                 }));
+            }
+        }
+
+        public ReactiveList<ResearchViewModel> Research
+        {
+            get
+            {
+                return research;
+            }
+            private set
+            {
+                RaiseSetIfChanged(ref research, value);
             }
         }
 
@@ -69,12 +101,18 @@ namespace RuleSetEditor.ViewModels
                 ElementList = new ReactiveList<ElementViewModel>(RuleSet.Elements.Select(element =>
                 {
                     ElementViewModel viewModel = null;
-                    if (element is ResourceGroup) viewModel = new ResourceGroupViewModel();
-                    else if (element is WorldResource) viewModel = new WorldResourceViewModel();
-                    //else if (element is LivingResource) viewModel = new LivingResourceViewModel();
-                    else if (element is Building) viewModel = new BuildingViewModel();
-                    else if (element is Job) viewModel = new JobViewModel();
-                    else if (element is Resource) viewModel = new ResourceViewModel();
+                    if (element is ResourceGroup)
+                        viewModel = new ResourceGroupViewModel();
+                    else if (element is WorldResource)
+                        viewModel = new WorldResourceViewModel();
+                    else if (element is LivingResource)
+                        viewModel = new LivingResourceViewModel();
+                    else if (element is Building)
+                        viewModel = new BuildingViewModel();
+                    else if (element is Job)
+                        viewModel = new JobViewModel();
+                    else if (element is Resource)
+                        viewModel = new ResourceViewModel();
 
                     if (viewModel != null)
                     {
@@ -85,20 +123,14 @@ namespace RuleSetEditor.ViewModels
 
                     return viewModel;
                 }).Where(e => e != null));
-                ElementList.ChangeTrackingEnabled = true;
-
-                foreach (var item in ElementList)
-                    item.DeferChanged = false;
-
-                ElementList.BeforeItemsAdded.Subscribe(e => RuleSet.Elements.Add(e.Element));
-                ElementList.BeforeItemsRemoved.Subscribe(e => RuleSet.Elements.Remove(e?.Element));
-
                 Needs = new ReactiveList<NeedViewModel>(RuleSet.Needs.Select(need =>
                 {
                     NeedViewModel viewModel = null;
 
-                    if (need is ResourceNeed) viewModel = new ResourceNeedViewModel();
-                    else if (need is BuildingNeed) viewModel = new BuildingNeedViewModel();
+                    if (need is ResourceNeed)
+                        viewModel = new ResourceNeedViewModel();
+                    else if (need is BuildingNeed)
+                        viewModel = new BuildingNeedViewModel();
 
                     if (viewModel != null)
                     {
@@ -109,29 +141,40 @@ namespace RuleSetEditor.ViewModels
 
                     return viewModel;
                 }).Where(e => e != null));
-                Needs.ChangeTrackingEnabled = true;
-
-                foreach (var item in Needs)
-                    item.DeferChanged = false;
-
-                Needs.BeforeItemsAdded.Subscribe(e => RuleSet.Needs.Add(e.Need));
-                Needs.BeforeItemsRemoved.Subscribe(e => RuleSet.Needs.Remove(e?.Need));
-
-                StartResources = new ReactiveList<ResourcePartViewModel>(RuleSet.StartResources.Select(resourcePart =>
+                Research = new ReactiveList<ResearchViewModel>(RuleSet.Research.Select(research => new ResearchViewModel()
                 {
-                    return new ResourcePartViewModel()
-                    {
-                        DeferChanged = true,
-                        RuleSetViewModel = this,
-                        ResourcePart = resourcePart
-                    };
-                }).Where(e => e != null));
+                    DeferChanged = true,
+                    RuleSetViewModel = this,
+                    Research = research
+                }));
+                StartResources = new ReactiveList<ResourcePartViewModel>(RuleSet.StartResources.Select(resourcePart => new ResourcePartViewModel()
+                {
+                    DeferChanged = true,
+                    RuleSetViewModel = this,
+                    ResourcePart = resourcePart
+                }));
+
+                ElementList.ChangeTrackingEnabled = true;
+                Needs.ChangeTrackingEnabled = true;
+                Research.ChangeTrackingEnabled = true;
                 StartResources.ChangeTrackingEnabled = true;
 
+                foreach (var item in ElementList)
+                    item.DeferChanged = false;
+                foreach (var item in Needs)
+                    item.DeferChanged = false;
+                foreach (var item in Research)
+                    item.DeferChanged = false;
                 foreach (var item in StartResources)
                     item.DeferChanged = false;
 
-                StartResources.BeforeItemsAdded.Subscribe(e => RuleSet.StartResources.Add(e.ResourcePart));
+                ElementList.BeforeItemsAdded.Subscribe(e => RuleSet.Elements.Add(e.Element));
+                ElementList.BeforeItemsRemoved.Subscribe(e => RuleSet.Elements.Remove(e?.Element));
+                Needs.BeforeItemsAdded.Subscribe(e => RuleSet.Needs.Add(e.Need));
+                Needs.BeforeItemsRemoved.Subscribe(e => RuleSet.Needs.Remove(e?.Need));
+                Research.BeforeItemsAdded.Subscribe(e => RuleSet.Research.Add(e?.Research));
+                Research.BeforeItemsRemoved.Subscribe(e => RuleSet.Research.Remove(e?.Research));
+                StartResources.BeforeItemsAdded.Subscribe(e => RuleSet.StartResources.Add(e?.ResourcePart));
                 StartResources.BeforeItemsRemoved.Subscribe(e => RuleSet.StartResources.Remove(e?.ResourcePart));
 
                 Set<RuleSetViewModels.LandingPageViewModel>();
@@ -140,20 +183,38 @@ namespace RuleSetEditor.ViewModels
 
         public string SourceFilePath
         {
-            get { return sourceFilePath; }
-            set { RaiseSetIfChanged(ref sourceFilePath, value); }
+            get
+            {
+                return sourceFilePath;
+            }
+            set
+            {
+                RaiseSetIfChanged(ref sourceFilePath, value);
+            }
         }
 
         public ReactiveList<ResourcePartViewModel> StartResources
         {
-            get { return startInventory; }
-            private set { RaiseSetIfChanged(ref startInventory, value); }
+            get
+            {
+                return startInventory;
+            }
+            private set
+            {
+                RaiseSetIfChanged(ref startInventory, value);
+            }
         }
 
         public IView View
         {
-            get { return currentView; }
-            private set { RaiseSetIfChanged(ref currentView, value); }
+            get
+            {
+                return currentView;
+            }
+            private set
+            {
+                RaiseSetIfChanged(ref currentView, value);
+            }
         }
 
         public void Clear()

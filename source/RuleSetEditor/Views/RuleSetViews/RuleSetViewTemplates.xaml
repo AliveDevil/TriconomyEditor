@@ -17,6 +17,9 @@
 	<DataTemplate DataType="{x:Type vm:NeedsListViewModel}">
 		<local:NeedListView />
 	</DataTemplate>
+	<DataTemplate DataType="{x:Type vm:ResearchListViewModel}">
+		<local:ResearchListView />
+	</DataTemplate>
 	<DataTemplate DataType="{x:Type vm:ResourceListViewModel}">
 		<local:ResourceListView />
 	</DataTemplate>
@@ -32,6 +35,7 @@
 		<ResourceDictionary Source="JobViews/JobViewTemplates.xaml" />
 		<ResourceDictionary Source="LivingResourceViews/LivingResourceViewTemplates.xaml" />
 		<ResourceDictionary Source="NeedViews/NeedViewTemplates.xaml" />
+		<ResourceDictionary Source="ResearchViews/ResearchViewTemplates.xaml" />
 		<ResourceDictionary Source="ResourceViews/ResourceViewTemplates.xaml" />
 		<ResourceDictionary Source="ToolbarViews/ToolbarViewTemplates.xaml" />
 		<ResourceDictionary Source="WorldResourceViews/WorldResourceViewTemplates.xaml" />

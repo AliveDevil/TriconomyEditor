@@ -34,15 +34,26 @@ namespace RuleSet
 
         public List<Element> Elements { get; } = new List<Element>();
 
-        public string Name { get; set; }
+        public string Name
+        {
+            get; set;
+        }
 
         public List<Need> Needs { get; } = new List<Need>();
 
-        public ResourceBar ResourceBar { get; set; }
+        public List<Research> Research { get; } = new List<Research>();
+
+        public ResourceBar ResourceBar
+        {
+            get; set;
+        }
 
         public List<ResourcePart> StartResources { get; } = new List<ResourcePart>();
 
-        public Toolbar Toolbar { get; set; }
+        public Toolbar Toolbar
+        {
+            get; set;
+        }
 
         public static RuleSet Load(Stream stream)
         {

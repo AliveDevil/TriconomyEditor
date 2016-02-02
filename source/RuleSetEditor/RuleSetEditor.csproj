@@ -158,6 +158,14 @@
     <Compile Include="ViewModels\RelayCommand`1.cs" />
     <Compile Include="ViewModels\RuleSetViewModel.cs" />
     <Compile Include="ViewModels\RuleSetViewModels\BuildingListViewModel.cs" />
+    <Compile Include="ViewModels\RuleSetViewModels\ConditionViewModels\ConditionViewModel.cs" />
+    <Compile Include="ViewModels\RuleSetViewModels\ConditionViewModels\EditViewModels\ConditionEditViewModel.cs" />
+    <Compile Include="ViewModels\RuleSetViewModels\ConditionViewModels\EditViewModels\ElementNearByConditionEditViewModel.cs" />
+    <Compile Include="ViewModels\RuleSetViewModels\ConditionViewModels\EditViewModels\ExistingBuildingConditionEditViewModel.cs" />
+    <Compile Include="ViewModels\RuleSetViewModels\ConditionViewModels\EditViewModels\ResearchConditionEditViewModel.cs" />
+    <Compile Include="ViewModels\RuleSetViewModels\ConditionViewModels\ElementNearByConditionViewModel.cs" />
+    <Compile Include="ViewModels\RuleSetViewModels\ConditionViewModels\ExistingBuildingConditionViewModel.cs" />
+    <Compile Include="ViewModels\RuleSetViewModels\ConditionViewModels\ResearchConditionViewModel.cs" />
     <Compile Include="ViewModels\RuleSetViewModels\ElementViewModels\BuildingViewModel.cs" />
     <Compile Include="ViewModels\RuleSetViewModels\ElementViewModels\BuildingViewModels\BuildingEditViewModel.cs" />
     <Compile Include="ViewModels\RuleSetViewModels\ElementViewModels\BuildingViewModels\UpgradeEditViewModel.cs" />
@@ -166,6 +174,8 @@
     <Compile Include="ViewModels\RuleSetViewModels\ElementViewModels\JobViewModels\JobEditViewModel.cs" />
     <Compile Include="ViewModels\RuleSetViewModels\ElementViewModels\LivingResourceViewModel.cs" />
     <Compile Include="ViewModels\RuleSetViewModels\ElementViewModels\LivingResourceViewModels\LivingResourceEditViewModel.cs" />
+    <Compile Include="ViewModels\RuleSetViewModels\ResearchViewModels\ResearchViewModel.cs" />
+    <Compile Include="ViewModels\RuleSetViewModels\ResearchViewModels\EditViewModels\ResearchEditViewModel.cs" />
     <Compile Include="ViewModels\RuleSetViewModels\ElementViewModels\ResourceGroupViewModel.cs" />
     <Compile Include="ViewModels\RuleSetViewModels\ElementViewModels\ResourceViewModel.cs" />
     <Compile Include="ViewModels\RuleSetViewModels\ElementViewModels\ResourceViewModels\ResourceEditViewModel.cs" />
@@ -182,6 +192,7 @@
     <Compile Include="ViewModels\RuleSetViewModels\NeedViewModels\EditViewModels\ResourceNeedEditViewModel.cs" />
     <Compile Include="ViewModels\RuleSetViewModels\NeedViewModels\NeedViewModel.cs" />
     <Compile Include="ViewModels\RuleSetViewModels\NeedViewModels\ResourceNeedViewModel.cs" />
+    <Compile Include="ViewModels\RuleSetViewModels\ResearchListViewModel.cs" />
     <Compile Include="ViewModels\RuleSetViewModels\ResourceListViewModel.cs" />
     <Compile Include="ViewModels\RuleSetViewModelBase.cs" />
     <Compile Include="ViewModels\RuleSetViewModels\ResourcePartViewModel.cs" />
@@ -265,6 +276,12 @@
     </Compile>
     <Compile Include="Views\RuleSetViews\NeedViews\ResourceNeedEditView.xaml.cs">
       <DependentUpon>ResourceNeedEditView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\RuleSetViews\ResearchListView.xaml.cs">
+      <DependentUpon>ResearchListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\RuleSetViews\ResearchViews\ResearchEditView.xaml.cs">
+      <DependentUpon>ResearchEditView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\RuleSetViews\ResourceListView.xaml.cs">
       <DependentUpon>ResourceListView.xaml</DependentUpon>
@@ -439,6 +456,18 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\RuleSetViews\NeedViews\ResourceNeedEditView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\RuleSetViews\ResearchListView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\RuleSetViews\ResearchViews\ResearchEditView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\RuleSetViews\ResearchViews\ResearchViewTemplates.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

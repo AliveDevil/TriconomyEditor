@@ -8,14 +8,12 @@ using RuleSetEditor.ViewModels.EffectViewModels;
 
 namespace RuleSetEditor.ViewModels.RuleSetViewModels.ElementViewModels
 {
-    public class BuildingViewModel : ElementViewModel
+    public class BuildingViewModel : ElementViewModel<Building>
     {
         private IDisposable beforeUpgradeAdded;
         private IDisposable beforeUpgradeRemoved;
         private ReactiveList<UpgradeViewModel> upgradeList;
         private ReactiveProperty<int> variantsProperty;
-
-        public Building Building => (Building)Element;
 
         public ReactiveList<UpgradeViewModel> UpgradeList
         {
@@ -49,8 +47,8 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels.ElementViewModels
         protected override void OnElementChanged()
         {
             base.OnElementChanged();
-            Variants = ReactiveProperty.FromObject(Building, b => b.Variants);
-            UpgradeList = new ReactiveList<UpgradeViewModel>(Building.Upgrades.Select(u =>
+            Variants = ReactiveProperty.FromObject(Element, b => b.Variants);
+            UpgradeList = new ReactiveList<UpgradeViewModel>(Element.Upgrades.Select(u =>
             {
                 return new UpgradeViewModel()
                 {
@@ -61,8 +59,8 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels.ElementViewModels
             {
                 ChangeTrackingEnabled = true
             };
-            beforeUpgradeAdded = UpgradeList.BeforeItemsAdded.Subscribe(u => Building.Upgrades.Add(u.Upgrade));
-            beforeUpgradeRemoved = UpgradeList.BeforeItemsRemoved.Subscribe(u => Building.Upgrades.Remove(u.Upgrade));
+            beforeUpgradeAdded = UpgradeList.BeforeItemsAdded.Subscribe(u => Element.Upgrades.Add(u.Upgrade));
+            beforeUpgradeRemoved = UpgradeList.BeforeItemsRemoved.Subscribe(u => Element.Upgrades.Remove(u.Upgrade));
         }
     }
 }

@@ -38,8 +38,8 @@ namespace RuleSetEditor.ViewModels.EffectViewModels.EffectEditViewModels
                     return;
                 Building = ReactiveProperty.FromObject(DeliverEffect.DeliverEffect,
                     b => b.PreferredBuilding,
-                    b => Buildings.SingleOrDefault(e => e.Building == b),
-                    b => b?.Building);
+                    b => Buildings.SingleOrDefault(e => e.Element == b),
+                    b => b?.Element);
                 Priority = ReactiveProperty.FromObject(DeliverEffect.DeliverEffect, d => d.Priority);
                 Resource = ReactiveProperty.FromObject(DeliverEffect.DeliverEffect,
                     r => r.Resource,
