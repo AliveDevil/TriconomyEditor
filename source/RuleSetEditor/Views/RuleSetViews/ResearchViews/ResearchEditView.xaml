@@ -116,7 +116,7 @@
 						<RowDefinition Height="Auto" />
 						<RowDefinition Height="Auto" />
 					</Grid.RowDefinitions>
-					<Label Content="Effects" />
+					<Label Content="Conditions" />
 					<ListView ItemsSource="{Binding Conditions}"
 							  SelectedItem="{Binding SelectedCondition}"
 							  IsSynchronizedWithCurrentItem="True"
@@ -152,26 +152,6 @@
 								<MenuItem Header="Research"
 										  Command="{Binding AddConditionCommand}"
 										  CommandParameter="{x:Type cvm:ResearchCondition}" />
-								<!--<MenuItem Header="Helper">
-									<MenuItem Header="Assembly Point"
-											  Command="{Binding AddConditionCommand}"
-											  CommandParameter="{x:Type effects:AssemblyPointEffect}" />
-									<MenuItem Header="Deliver"
-											  Command="{Binding AddEffectCommand}"
-											  CommandParameter="{x:Type effects:DeliverEffect}" />
-									<MenuItem Header="Habit"
-											  Command="{Binding AddEffectCommand}"
-											  CommandParameter="{x:Type effects:HabitEffect}" />
-									<MenuItem Header="Research"
-											  Command="{Binding AddEffectCommand}"
-											  CommandParameter="{x:Type effects:ResearchEffect}" />
-									<MenuItem Header="Storage"
-											  Command="{Binding AddEffectCommand}"
-											  CommandParameter="{x:Type effects:StorageEffect}" />
-									<MenuItem Header="Workplace"
-											  Command="{Binding AddEffectCommand}"
-											  CommandParameter="{x:Type effects:WorkplaceEffect}" />
-								</MenuItem>-->
 							</ContextMenu>
 						</Button.ContextMenu>
 					</Button>

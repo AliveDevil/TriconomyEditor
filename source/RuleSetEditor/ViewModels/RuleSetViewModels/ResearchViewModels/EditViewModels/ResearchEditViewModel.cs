@@ -35,13 +35,6 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels.ResearchViewModels.EditView
                     Research.Conditions.Add(viewModel);
                     SelectedCondition = viewModel;
                     ViewStack.Push(ConditionViewModel.FindEditViewModel(viewModel, RuleSetViewModel));
-                    //ResourcePartViewModel model = new ResourcePartViewModel()
-                    //{
-                    //    RuleSetViewModel = RuleSetViewModel,
-                    //    ResourcePart = new ResourcePart()
-                    //};
-                    //Research.Costs.Add(model);
-                    //SelectedCost = model;
                 }));
             }
         }
@@ -130,7 +123,7 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels.ResearchViewModels.EditView
         {
             get
             {
-                return removeCostCommand ?? (removeCostCommand = new RelayCommand(() =>
+                return removeConditionCommand ?? (removeConditionCommand = new RelayCommand(() =>
                 {
                     Research.Conditions.Remove(SelectedCondition);
                 }));
