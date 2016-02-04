@@ -8,6 +8,7 @@ namespace RuleSetEditor.ViewModels.EffectViewModels.EffectEditViewModels
     public class ProduceResourceEffectEditViewModel : RuleSetViewModelBase
     {
         private ReactiveProperty<int> amountProperty;
+        private ReactiveProperty<bool> cheatModeProperty;
         private ReactiveProperty<int> delayProperty;
         private ProduceResourceEffectViewModel produceResourceEffect;
         private ReactiveProperty<ResourceViewModel> resource;
@@ -15,14 +16,38 @@ namespace RuleSetEditor.ViewModels.EffectViewModels.EffectEditViewModels
 
         public ReactiveProperty<int> Amount
         {
-            get { return amountProperty; }
-            private set { RaiseSetIfChanged(ref amountProperty, value); }
+            get
+            {
+                return amountProperty;
+            }
+            private set
+            {
+                RaiseSetIfChanged(ref amountProperty, value);
+            }
+        }
+
+        public ReactiveProperty<bool> CheatMode
+        {
+            get
+            {
+                return cheatModeProperty;
+            }
+            private set
+            {
+                RaiseSetIfChanged(ref cheatModeProperty, value);
+            }
         }
 
         public ReactiveProperty<int> Delay
         {
-            get { return delayProperty; }
-            private set { RaiseSetIfChanged(ref delayProperty, value); }
+            get
+            {
+                return delayProperty;
+            }
+            private set
+            {
+                RaiseSetIfChanged(ref delayProperty, value);
+            }
         }
 
         public ProduceResourceEffectViewModel ProduceResourceEffect
@@ -33,9 +58,11 @@ namespace RuleSetEditor.ViewModels.EffectViewModels.EffectEditViewModels
             }
             set
             {
-                if (!RaiseSetIfChanged(ref produceResourceEffect, value)) return;
+                if (!RaiseSetIfChanged(ref produceResourceEffect, value))
+                    return;
                 Amount = ReactiveProperty.FromObject(ProduceResourceEffect.ProduceResourceEffect, e => e.Amount);
                 Delay = ReactiveProperty.FromObject(ProduceResourceEffect.ProduceResourceEffect, e => e.Delay);
+                CheatMode = ReactiveProperty.FromObject(ProduceResourceEffect.ProduceResourceEffect, e => e.CheatModeOnly);
                 Resource = ReactiveProperty.FromObject(ProduceResourceEffect.ProduceResourceEffect,
                     r => r.Resource,
                     r => Resources.SingleOrDefault(e => e.Element == r),
@@ -45,14 +72,26 @@ namespace RuleSetEditor.ViewModels.EffectViewModels.EffectEditViewModels
 
         public ReactiveProperty<ResourceViewModel> Resource
         {
-            get { return resource; }
-            private set { RaiseSetIfChanged(ref resource, value); }
+            get
+            {
+                return resource;
+            }
+            private set
+            {
+                RaiseSetIfChanged(ref resource, value);
+            }
         }
 
         public IReactiveDerivedList<ResourceViewModel> Resources
         {
-            get { return resources; }
-            private set { RaiseSetIfChanged(ref resources, value); }
+            get
+            {
+                return resources;
+            }
+            private set
+            {
+                RaiseSetIfChanged(ref resources, value);
+            }
         }
 
         protected override void OnRuleSetChanged()

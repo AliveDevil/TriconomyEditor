@@ -5,11 +5,25 @@ namespace RuleSet.Effects
 {
     public class ProduceResourceEffect : Effect
     {
-        public int Amount { get; set; }
+        public int Amount
+        {
+            get; set;
+        }
 
-        public int Delay { get; set; }
+        public int Delay
+        {
+            get; set;
+        }
+
+        public bool CheatModeOnly
+        {
+            get; set;
+        }
 
         [KeepReference]
-        public Resource Resource { get; set; }
+        public Resource Resource
+        {
+            get; set;
+        }
     }
 }
