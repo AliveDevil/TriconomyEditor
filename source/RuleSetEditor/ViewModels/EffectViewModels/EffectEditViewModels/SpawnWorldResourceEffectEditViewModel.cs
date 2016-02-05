@@ -42,10 +42,10 @@ namespace RuleSetEditor.ViewModels.EffectViewModels.EffectEditViewModels
             {
                 if (!RaiseSetIfChanged(ref spawnWorldResourceEffect, value))
                     return;
-                Amount = ReactiveProperty.FromObject(SpawnWorldResourceEffect.SpawnWorldResourceEffect, e => e.Amount);
-                Delay = ReactiveProperty.FromObject(SpawnWorldResourceEffect.SpawnWorldResourceEffect, e => e.Delay);
-                Radius = ReactiveProperty.FromObject(SpawnWorldResourceEffect.SpawnWorldResourceEffect, e => e.Radius);
-                WorldResource = ReactiveProperty.FromObject(SpawnWorldResourceEffect.SpawnWorldResourceEffect,
+                Amount = ReactiveProperty.FromObject(SpawnWorldResourceEffect.Effect, e => e.Amount);
+                Delay = ReactiveProperty.FromObject(SpawnWorldResourceEffect.Effect, e => e.Delay);
+                Radius = ReactiveProperty.FromObject(SpawnWorldResourceEffect.Effect, e => e.Radius);
+                WorldResource = ReactiveProperty.FromObject(SpawnWorldResourceEffect.Effect,
                     e => e.WorldResource,
                     e => WorldResources.SingleOrDefault(s => s.Element == e),
                     e => e?.Element);

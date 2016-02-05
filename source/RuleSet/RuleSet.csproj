@@ -60,6 +60,7 @@
     <Compile Include="Effects\IncreaseProductivityEffect.cs" />
     <Compile Include="Effects\ProduceResourceEffect.cs" />
     <Compile Include="Effects\ResearchEffect.cs" />
+    <Compile Include="Effects\SpawnLivingResourceEffect.cs" />
     <Compile Include="Effects\SpawnWorldResourceEffect.cs" />
     <Compile Include="Effects\StorageEffect.cs" />
     <Compile Include="Effects\UseResourceEffect.cs" />

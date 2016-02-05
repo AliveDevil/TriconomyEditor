@@ -3,7 +3,7 @@ using RuleSet.Elements;
 
 namespace RuleSet.Effects
 {
-    public class SpawnWorldResourceEffect : Effect
+    public class SpawnLivingResourceEffect : Effect
     {
         public int Amount
         {
@@ -15,13 +15,13 @@ namespace RuleSet.Effects
             get; set;
         }
 
-        public int Radius
+        [KeepReference]
+        public LivingResource LivingResource
         {
             get; set;
         }
 
-        [KeepReference]
-        public WorldResource WorldResource
+        public int Radius
         {
             get; set;
         }

@@ -162,21 +162,26 @@
 											  CommandParameter="{x:Type effects:WorkplaceEffect}" />
 								</MenuItem>
 								<MenuItem Header="Resources">
-									<MenuItem Header="Produce Resource"
-											  Command="{Binding AddEffectCommand}"
-											  CommandParameter="{x:Type effects:ProduceResourceEffect}" />
-									<MenuItem Header="Spawn Resource"
-											  Command="{Binding AddEffectCommand}"
-											  CommandParameter="{x:Type effects:SpawnWorldResourceEffect}" />
-									<MenuItem Header="Use Resource"
-											  Command="{Binding AddEffectCommand}"
-											  CommandParameter="{x:Type effects:UseResourceEffect}" />
 									<MenuItem Header="Add Recipe"
 											  Command="{Binding AddEffectCommand}"
 											  CommandParameter="{x:Type effects:AddRecipeEffect}" />
 									<MenuItem Header="Gather Resource"
 											  Command="{Binding AddEffectCommand}"
 											  CommandParameter="{x:Type effects:GatherResourceEffect}" />
+									<MenuItem Header="Produce Resource"
+											  Command="{Binding AddEffectCommand}"
+											  CommandParameter="{x:Type effects:ProduceResourceEffect}" />
+									<MenuItem Header="Spawn Resource">
+										<MenuItem Header="Living"
+												  Command="{Binding AddEffectCommand}"
+												  CommandParameter="{x:Type effects:SpawnLivingResourceEffect}" />
+										<MenuItem Header="World Resource"
+												  Command="{Binding AddEffectCommand}"
+												  CommandParameter="{x:Type effects:SpawnWorldResourceEffect}" />
+									</MenuItem>
+									<MenuItem Header="Use Resource"
+											  Command="{Binding AddEffectCommand}"
+											  CommandParameter="{x:Type effects:UseResourceEffect}" />
 								</MenuItem>
 								<MenuItem Header="Extending">
 									<MenuItem Header="Extend Settler"

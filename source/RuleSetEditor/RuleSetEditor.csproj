@@ -138,6 +138,7 @@
     <Compile Include="ViewModels\EffectViewModels\EffectEditViewModels\HabitEffectEditViewModel.cs" />
     <Compile Include="ViewModels\EffectViewModels\EffectEditViewModels\ProduceResourceEffectEditViewModel.cs" />
     <Compile Include="ViewModels\EffectViewModels\EffectEditViewModels\ResearchEffectEditViewModel.cs" />
+    <Compile Include="ViewModels\EffectViewModels\EffectEditViewModels\SpawnLivingResourceEffectEditViewModel.cs" />
     <Compile Include="ViewModels\EffectViewModels\EffectEditViewModels\SpawnWorldResourceEffectEditViewModel.cs" />
     <Compile Include="ViewModels\EffectViewModels\EffectEditViewModels\StorageEffectEditViewModel.cs" />
     <Compile Include="ViewModels\EffectViewModels\EffectEditViewModels\UseResourceEffectEditViewModel.cs" />
@@ -149,6 +150,7 @@
     <Compile Include="ViewModels\EffectViewModels\HabitEffectViewModel.cs" />
     <Compile Include="ViewModels\EffectViewModels\ProduceResourceEffectViewModel.cs" />
     <Compile Include="ViewModels\EffectViewModels\ResearchEffectViewModel.cs" />
+    <Compile Include="ViewModels\EffectViewModels\SpawnLivingResourceEffectViewModel.cs" />
     <Compile Include="ViewModels\EffectViewModels\SpawnWorldResourceEffectViewModel.cs" />
     <Compile Include="ViewModels\EffectViewModels\StorageEffectViewModel.cs" />
     <Compile Include="ViewModels\EffectViewModels\UseResourceEffectViewModel.cs" />
@@ -231,6 +233,9 @@
     </Compile>
     <Compile Include="Views\EffectViews\ResearchView.xaml.cs">
       <DependentUpon>ResearchView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\EffectViews\SpawnLivingResourceEffectView.xaml.cs">
+      <DependentUpon>SpawnLivingResourceEffectView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\EffectViews\SpawnWorldResourceEffectView.xaml.cs">
       <DependentUpon>SpawnWorldResourceEffectView.xaml</DependentUpon>
@@ -378,6 +383,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\EffectViews\ResearchView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\EffectViews\SpawnLivingResourceEffectView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
