@@ -1,7 +1,13 @@
-﻿namespace RuleSet.Effects
+﻿using System;
+
+namespace RuleSet.Effects
 {
+    [Serializable]
     public class StorageEffect : Effect
     {
-        public bool PublicAccessible { get; set; }
+        public bool PublicAccessible
+        {
+            get; set;
+        }
     }
 }

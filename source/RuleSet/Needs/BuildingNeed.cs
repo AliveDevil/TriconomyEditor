@@ -1,13 +1,21 @@
-﻿using de.alivedevil.Attributes;
+﻿using System;
+using de.alivedevil.Attributes;
 using RuleSet.Elements;
 
 namespace RuleSet.Needs
 {
+    [Serializable]
     public class BuildingNeed : Need
     {
         [KeepReference]
-        public Building Building { get; set; }
+        public Building Building
+        {
+            get; set;
+        }
 
-        public int Radius { get; set; }
+        public int Radius
+        {
+            get; set;
+        }
     }
 }

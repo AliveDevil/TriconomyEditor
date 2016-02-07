@@ -3,7 +3,7 @@
 namespace RuleSet
 {
     [Serializable]
-    public abstract class SerializedObject
+    public class Event : SerializedObject
     {
     }
 }

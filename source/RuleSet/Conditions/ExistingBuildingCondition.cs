@@ -1,9 +1,14 @@
-﻿using RuleSet.Elements;
+﻿using System;
+using RuleSet.Elements;
 
 namespace RuleSet.Conditions
 {
+    [Serializable]
     public class ExistingBuildingCondition : Condition
     {
-        public Building Building { get; set; }
+        public Building Building
+        {
+            get; set;
+        }
     }
 }

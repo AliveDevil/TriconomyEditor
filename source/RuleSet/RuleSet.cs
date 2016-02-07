@@ -1,35 +1,21 @@
-﻿using System.Collections.Generic;
-using System.Globalization;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization.Formatters;
-using Newtonsoft.Json;
+using System.Runtime.Serialization.Formatters.Binary;
 using RuleSet.Elements;
 using RuleSet.Menus;
 
 namespace RuleSet
 {
+    [Serializable]
     public class RuleSet : SerializedObject
     {
-        private static readonly JsonSerializerSettings serializerSettings = new JsonSerializerSettings()
+        private static readonly BinaryFormatter ruleSetSerializer = new BinaryFormatter()
         {
-            ConstructorHandling = ConstructorHandling.AllowNonPublicDefaultConstructor,
-            Culture = CultureInfo.InvariantCulture,
-            DateFormatHandling = DateFormatHandling.IsoDateFormat,
-            DateParseHandling = DateParseHandling.DateTimeOffset,
-            DateTimeZoneHandling = DateTimeZoneHandling.RoundtripKind,
-            DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate,
-            FloatFormatHandling = FloatFormatHandling.Symbol,
-            FloatParseHandling = FloatParseHandling.Double,
-            Formatting = Formatting.None,
-            MetadataPropertyHandling = MetadataPropertyHandling.Ignore,
-            MissingMemberHandling = MissingMemberHandling.Ignore,
-            NullValueHandling = NullValueHandling.Ignore,
-            ObjectCreationHandling = ObjectCreationHandling.Auto,
-            PreserveReferencesHandling = PreserveReferencesHandling.None,
-            ReferenceLoopHandling = ReferenceLoopHandling.Serialize,
-            StringEscapeHandling = StringEscapeHandling.EscapeNonAscii,
-            TypeNameAssemblyFormat = FormatterAssemblyStyle.Simple,
-            TypeNameHandling = TypeNameHandling.Auto
+            AssemblyFormat = FormatterAssemblyStyle.Simple,
+            FilterLevel = TypeFilterLevel.Low,
+            TypeFormat = FormatterTypeStyle.TypesWhenNeeded
         };
 
         public List<Element> Elements { get; } = new List<Element>();
@@ -57,14 +43,14 @@ namespace RuleSet
 
         public static RuleSet Load(Stream stream)
         {
+            //return ruleSetSerializer.Deserialize(stream) as RuleSet;
             de.alivedevil.DeferredJsonSerializer ser = new de.alivedevil.DeferredJsonSerializer();
             return ser.Deserialize<RuleSet>(stream);
         }
 
         public static void Save(RuleSet ruleSet, Stream stream)
         {
-            de.alivedevil.DeferredJsonSerializer ser = new de.alivedevil.DeferredJsonSerializer();
-            ser.Serialize(ruleSet, stream);
+            ruleSetSerializer.Serialize(stream, ruleSet);
         }
     }
 }

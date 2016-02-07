@@ -1,7 +1,13 @@
-﻿namespace RuleSet.Elements
+﻿using System;
+
+namespace RuleSet.Elements
 {
+    [Serializable]
     public class Resource : Element
     {
-        public int StackSize { get; set; }
+        public int StackSize
+        {
+            get; set;
+        }
     }
 }

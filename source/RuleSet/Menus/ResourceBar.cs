@@ -1,9 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using de.alivedevil.Attributes;
 using RuleSet.Elements;
 
 namespace RuleSet.Menus
 {
+    [Serializable]
     public class ResourceBar : SerializedObject
     {
         [KeepReference]

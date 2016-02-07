@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace RuleSet.Elements
 {
+    [Serializable]
     public class Building : Element
     {
         public List<Upgrade> Upgrades { get; } = new List<Upgrade>();

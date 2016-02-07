@@ -1,8 +1,10 @@
-﻿using de.alivedevil.Attributes;
+﻿using System;
+using de.alivedevil.Attributes;
 using RuleSet.Elements;
 
 namespace RuleSet.Effects
 {
+    [Serializable]
     public class ProduceResourceEffect : Effect
     {
         public int Amount
@@ -10,12 +12,12 @@ namespace RuleSet.Effects
             get; set;
         }
 
-        public int Delay
+        public bool CheatModeOnly
         {
             get; set;
         }
 
-        public bool CheatModeOnly
+        public int Delay
         {
             get; set;
         }

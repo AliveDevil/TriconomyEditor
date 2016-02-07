@@ -1,8 +1,10 @@
-﻿using de.alivedevil.Attributes;
+﻿using System;
+using de.alivedevil.Attributes;
 using RuleSet.Elements;
 
 namespace RuleSet.Effects
 {
+    [Serializable]
     public class SpawnWorldResourceEffect : Effect
     {
         public int Amount

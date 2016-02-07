@@ -1,9 +1,13 @@
-﻿using Newtonsoft.Json;
+﻿using System;
 
 namespace RuleSet
 {
+    [Serializable]
     public abstract class Element : SerializedObject
     {
-        public string Name { get; set; }
+        public string Name
+        {
+            get; set;
+        }
     }
 }

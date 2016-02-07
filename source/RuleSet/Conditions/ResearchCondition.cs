@@ -1,8 +1,9 @@
 ﻿using de.alivedevil.Attributes;
-using RuleSet.Elements;
+using System;
 
 namespace RuleSet.Conditions
 {
+    [Serializable]
     public class ResearchCondition : Condition
     {
         [KeepReference]
