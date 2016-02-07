@@ -2,7 +2,6 @@
 using RuleSet.Conditions;
 using RuleSet.Effects;
 using RuleSet.Elements;
-using RuleSet.Events;
 using RuleSet.Menus;
 using RuleSet.Needs;
 
@@ -285,26 +284,7 @@ namespace RuleSet.Versions
                     r.AsReference = true;
                 });
             });
-
-            model.Add(typeof(Event), false).With(e =>
-            {
-                e.AddSubType(typeof(OneTimedEvent));
-                e.AddSubType(typeof(RangeTimedEvent));
-            });
-
-            model.Add(typeof(OneTimedEvent), false).With(e =>
-            {
-                e.AddField(1, "Frequency");
-                e.AddField(2, "Time");
-            });
-
-            model.Add(typeof(RangeTimedEvent), false).With(e =>
-            {
-                e.AddField(1, "End");
-                e.AddField(2, "Frequency");
-                e.AddField(3, "Start");
-            });
-
+            
             model.Add(typeof(Toolbar), false).With(b =>
             {
                 b.AddField(1, "Items").With(i =>

@@ -340,6 +340,16 @@ namespace RuleSet.Versions
                     a.OverwriteList = false;
                 });
                 e.AddField(2, "Frequency");
+                e.AddField(3, "Reset").With(a =>
+                {
+                    a.AsReference = false;
+                    a.OverwriteList = false;
+                });
+                e.AddField(4, "Set").With(a =>
+                {
+                    a.AsReference = false;
+                    a.OverwriteList = false;
+                });
             });
 
             model.Add(typeof(EventAction), false).With(a =>

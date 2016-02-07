@@ -13,5 +13,15 @@ namespace RuleSet
         {
             get; set;
         }
+
+        public List<Condition> Reset
+        {
+            get;
+        } = new List<Condition>();
+
+        public List<Condition> Set
+        {
+            get;
+        } = new List<Condition>();
     }
 }
