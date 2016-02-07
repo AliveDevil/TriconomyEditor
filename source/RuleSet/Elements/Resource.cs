@@ -1,9 +1,5 @@
-﻿using System;
-using ProtoBuf;
-
-namespace RuleSet.Elements
+﻿namespace RuleSet.Elements
 {
-    [Serializable]
     public class Resource : Element
     {
         public int StackSize

@@ -1,9 +1,7 @@
 ﻿using System;
-using ProtoBuf;
 
 namespace RuleSet.Events
 {
-    [Serializable]
     public class RangeTimedEvent : Event
     {
         public DateTime End

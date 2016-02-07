@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using ProtoBuf;
+﻿using System.Collections.Generic;
 
 namespace RuleSet.Menus
 {
-    [Serializable]
     public class Toolbar
     {
         public List<ToolbarItem> Items { get; } = new List<ToolbarItem>();

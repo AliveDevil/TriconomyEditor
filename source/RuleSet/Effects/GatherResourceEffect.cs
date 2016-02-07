@@ -1,11 +1,7 @@
-﻿using de.alivedevil.Attributes;
-using System;
-using RuleSet.Elements;
-using ProtoBuf;
+﻿using RuleSet.Elements;
 
 namespace RuleSet.Effects
 {
-    [Serializable]
     public class GatherResourceEffect : Effect
     {
         public int Radius
@@ -13,7 +9,6 @@ namespace RuleSet.Effects
             get; set;
         }
 
-        [KeepReference]
         public Resource Resource
         {
             get; set;

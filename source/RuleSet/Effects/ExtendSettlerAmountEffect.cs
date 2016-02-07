@@ -1,9 +1,5 @@
-﻿using System;
-using ProtoBuf;
-
-namespace RuleSet.Effects
+﻿namespace RuleSet.Effects
 {
-    [Serializable]
     public class ExtendSettlerAmountEffect : Effect
     {
         public int SettlerAmount

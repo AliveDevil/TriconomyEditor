@@ -1,10 +1,5 @@
-﻿using System;
-using ProtoBuf;
-using RuleSet.Conditions;
-
-namespace RuleSet
+﻿namespace RuleSet
 {
-    [Serializable]
     public class Condition
     {
     }

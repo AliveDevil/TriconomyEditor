@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using ProtoBuf;
-using RuleSet.Needs;
+﻿using System.Collections.Generic;
 
 namespace RuleSet
 {
-    [Serializable]
     public class Need
     {
         public List<Condition> Conditions { get; } = new List<Condition>();

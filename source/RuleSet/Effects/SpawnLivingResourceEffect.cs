@@ -1,11 +1,7 @@
-﻿using System;
-using de.alivedevil.Attributes;
-using ProtoBuf;
-using RuleSet.Elements;
+﻿using RuleSet.Elements;
 
 namespace RuleSet.Effects
 {
-    [Serializable]
     public class SpawnLivingResourceEffect : Effect
     {
         public int Amount
@@ -18,7 +14,6 @@ namespace RuleSet.Effects
             get; set;
         }
 
-        [KeepReference]
         public LivingResource LivingResource
         {
             get; set;

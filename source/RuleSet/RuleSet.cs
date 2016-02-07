@@ -1,18 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization.Formatters;
 using System.Runtime.Serialization.Formatters.Binary;
-using ProtoBuf;
-using ProtoBuf.Meta;
 using RuleSet.Elements;
 using RuleSet.Menus;
 using RuleSet.Versions;
-using ProtoBufSerializer = ProtoBuf.Serializer;
 
 namespace RuleSet
 {
-    [Serializable]
     public class RuleSet
     {
         private static readonly BinaryFormatter ruleSetSerializer = new BinaryFormatter()
@@ -48,10 +43,6 @@ namespace RuleSet
         public static RuleSet Load(Stream stream)
         {
             return VersionSelector.AutoLoad(stream);
-            //return ProtoBufSerializer.Deserialize<RuleSet>(stream);
-            //return ruleSetSerializer.Deserialize(stream) as RuleSet;
-            de.alivedevil.DeferredJsonSerializer ser = new de.alivedevil.DeferredJsonSerializer();
-            return ser.Deserialize<RuleSet>(stream);
         }
 
         public static void Save(RuleSet ruleSet, Stream stream)

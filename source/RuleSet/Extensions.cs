@@ -5,6 +5,11 @@ namespace RuleSet
 {
     public static class Extensions
     {
+        public static void AddSubType(this MetaType model, Type type)
+        {
+            model.AddSubType(type.Name.GetHashCode() & 0x3FFF, type);
+        }
+
         public static void With<T>(this T _, Action<T> a)
         {
             a(_);
@@ -14,11 +19,6 @@ namespace RuleSet
             where T : TOut
         {
             a((T)_);
-        }
-
-        public static void AddSubType(this MetaType model, Type type)
-        {
-            model.AddSubType(type.Name.GetHashCode() & 0x3FFF, type);
         }
 
         public static T WithRef<T>(this T _, Action<T> a)

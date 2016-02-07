@@ -1,14 +1,9 @@
-﻿using de.alivedevil.Attributes;
-using System;
-using RuleSet.Elements;
-using ProtoBuf;
+﻿using RuleSet.Elements;
 
 namespace RuleSet.Effects
 {
-    [Serializable]
     public class DeliverEffect : Effect
     {
-        [KeepReference]
         public Building PreferredBuilding
         {
             get; set;
@@ -19,7 +14,6 @@ namespace RuleSet.Effects
             get; set;
         }
 
-        [KeepReference]
         public Resource Resource
         {
             get; set;

@@ -1,10 +1,5 @@
-﻿using System;
-using de.alivedevil.Attributes;
-using ProtoBuf;
-
-namespace RuleSet.Conditions
+﻿namespace RuleSet.Conditions
 {
-    [Serializable]
     public class ElementNearByCondition : Condition
     {
         public int Distance
@@ -12,7 +7,6 @@ namespace RuleSet.Conditions
             get; set;
         }
 
-        [KeepReference]
         public Element Element
         {
             get; set;

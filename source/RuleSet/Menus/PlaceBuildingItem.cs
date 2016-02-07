@@ -1,14 +1,9 @@
-﻿using System;
-using de.alivedevil.Attributes;
-using ProtoBuf;
-using RuleSet.Elements;
+﻿using RuleSet.Elements;
 
 namespace RuleSet.Menus
 {
-    [Serializable]
     public class PlaceBuildingItem : ToolbarItem
     {
-        [KeepReference]
         public Building Building
         {
             get; set;
