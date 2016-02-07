@@ -23,16 +23,20 @@ namespace RuleSet.Versions
                 switch (value)
                 {
                     case 1:
-                        serializer = LoadedSerializers[value] = new V1Serializer();
+                        serializer = new V1Serializer();
+                        break;
+                    case 2:
+                        serializer = new V2Serializer();
                         break;
                 }
+                LoadedSerializers[value] = serializer;
             }
             return serializer;
         }
 
         public static void Save(RuleSet ruleSet, Stream stream)
         {
-            GetSerializer(1).Serialize(ruleSet, stream);
+            GetSerializer(2).Serialize(ruleSet, stream);
         }
     }
 }

@@ -68,6 +68,8 @@
     <Compile Include="Elements\Job.cs" />
     <Compile Include="Elements\LivingResource.cs" />
     <Compile Include="Event.cs" />
+    <Compile Include="EventAction.cs" />
+    <Compile Include="EventActions\PlaySoundEventAction.cs" />
     <Compile Include="EventFrequency.cs" />
     <Compile Include="Events\RangeTimedEvent.cs" />
     <Compile Include="Events\OneTimedEvent.cs" />
@@ -89,6 +91,7 @@
     <Compile Include="Upgrade.cs" />
     <Compile Include="Elements\WorldResource.cs" />
     <Compile Include="Versions\V1Serializer.cs" />
+    <Compile Include="Versions\V2Serializer.cs" />
     <Compile Include="Versions\VersionSelector.cs" />
     <Compile Include="Versions\VersionSerializer.cs" />
   </ItemGroup>
@@ -98,6 +101,7 @@
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
