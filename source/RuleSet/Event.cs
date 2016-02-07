@@ -1,9 +1,11 @@
 ﻿using System;
+using ProtoBuf;
+using RuleSet.Events;
 
 namespace RuleSet
 {
     [Serializable]
-    public class Event : SerializedObject
+    public class Event
     {
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using de.alivedevil.Attributes;
+using ProtoBuf;
 
 namespace RuleSet.Elements
 {

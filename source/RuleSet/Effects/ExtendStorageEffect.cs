@@ -2,6 +2,7 @@
 using de.alivedevil.Attributes;
 using System.Collections.Generic;
 using RuleSet.Elements;
+using ProtoBuf;
 
 namespace RuleSet.Effects
 {
@@ -12,8 +13,5 @@ namespace RuleSet.Effects
         {
             get; set;
         }
-
-        [KeepReference]
-        public List<Resource> ResourceTypes { get; set; } = new List<Resource>();
     }
 }

@@ -1,5 +1,6 @@
 ﻿using de.alivedevil.Attributes;
 using System;
+using ProtoBuf;
 
 namespace RuleSet.Conditions
 {

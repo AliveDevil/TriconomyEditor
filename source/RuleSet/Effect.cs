@@ -1,9 +1,11 @@
 ﻿using System;
+using ProtoBuf;
+using RuleSet.Effects;
 
 namespace RuleSet
 {
     [Serializable]
-    public abstract class Effect : SerializedObject
+    public class Effect
     {
     }
 }

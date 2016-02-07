@@ -1,10 +1,11 @@
 ﻿using System;
 using de.alivedevil.Attributes;
+using ProtoBuf;
 
 namespace RuleSet.Elements
 {
     [Serializable]
-    public class ResourcePart : SerializedObject
+    public class ResourcePart
     {
         public int Amount
         {

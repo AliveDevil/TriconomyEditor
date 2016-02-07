@@ -1,9 +1,11 @@
 ﻿using System;
+using ProtoBuf;
+using RuleSet.Elements;
 
 namespace RuleSet
 {
     [Serializable]
-    public abstract class Element : SerializedObject
+    public class Element
     {
         public string Name
         {

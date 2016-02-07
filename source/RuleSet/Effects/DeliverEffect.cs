@@ -1,6 +1,7 @@
 ﻿using de.alivedevil.Attributes;
 using System;
 using RuleSet.Elements;
+using ProtoBuf;
 
 namespace RuleSet.Effects
 {
