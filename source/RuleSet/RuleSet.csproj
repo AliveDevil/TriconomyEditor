@@ -43,9 +43,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Conditions\DateTimeCondition.cs" />
+    <Compile Include="Conditions\DayTimeCondition.cs" />
+    <Compile Include="Conditions\DelayCondition.cs" />
     <Compile Include="Conditions\ElementNearByCondition.cs" />
     <Compile Include="Conditions\ExistingBuildingCondition.cs" />
+    <Compile Include="Conditions\LevelCondition.cs" />
     <Compile Include="Conditions\ResearchCondition.cs" />
+    <Compile Include="Conditions\TraverseCondition.cs" />
+    <Compile Include="Conditions\TriggerCondition.cs" />
+    <Compile Include="Conditions\WorkingCondition.cs" />
     <Compile Include="Effects\AddRecipeEffect.cs" />
     <Compile Include="Effects\AssemblyPointEffect.cs" />
     <Compile Include="Effects\DeliverEffect.cs" />
@@ -69,10 +76,11 @@
     <Compile Include="Elements\LivingResource.cs" />
     <Compile Include="Event.cs" />
     <Compile Include="EventAction.cs" />
+    <Compile Include="EventActions\PlayAnimationEventAction.cs" />
     <Compile Include="EventActions\PlaySoundEventAction.cs" />
+    <Compile Include="EventActions\TriggerRandomAnimationEventAction.cs" />
+    <Compile Include="EventActions\TriggerRandomSoundEventAction.cs" />
     <Compile Include="EventFrequency.cs" />
-    <Compile Include="Events\RangeTimedEvent.cs" />
-    <Compile Include="Events\OneTimedEvent.cs" />
     <Compile Include="Research.cs" />
     <Compile Include="Elements\ResourcePart.cs" />
     <Compile Include="Elements\ResourceGroup.cs" />

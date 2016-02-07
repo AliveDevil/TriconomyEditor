@@ -3,7 +3,6 @@ using RuleSet.Conditions;
 using RuleSet.Effects;
 using RuleSet.Elements;
 using RuleSet.EventActions;
-using RuleSet.Events;
 using RuleSet.Menus;
 using RuleSet.Needs;
 
@@ -21,38 +20,53 @@ namespace RuleSet.Versions
 
         protected override void OnModelCreation(RuntimeTypeModel model)
         {
-            model.Add(typeof(RuleSet), false).With(m =>
-            {
-                m.AddField(1, "Elements").With(e =>
-                {
-                    e.AsReference = true;
-                    e.OverwriteList = false;
-                });
-                m.AddField(2, "Name");
-                m.AddField(3, "Needs").With(n =>
-                {
-                    n.AsReference = false;
-                    n.OverwriteList = false;
-                });
-                m.AddField(4, "Research").With(r =>
-                {
-                    r.AsReference = false;
-                    r.OverwriteList = false;
-                });
-                m.AddField(5, "ResourceBar");
-                m.AddField(6, "StartResources").With(s =>
-                {
-                    s.AsReference = false;
-                    s.OverwriteList = false;
-                });
-                m.AddField(7, "Toolbar");
-            });
+            CreateRuleSet(model);
 
+            CreateConditions(model);
+
+            CreateEffects(model);
+
+            CreateElements(model);
+
+            CreateEvents(model);
+
+            CreateToolbar(model);
+
+            CreateNeeds(model);
+
+            CreateResearch(model);
+
+            CreateUpgrade(model);
+        }
+
+        private static void CreateConditions(RuntimeTypeModel model)
+        {
             model.Add(typeof(Condition), false).With(c =>
             {
+                c.AddSubType(typeof(DateTimeCondition));
+                c.AddSubType(typeof(DayTimeCondition));
+                c.AddSubType(typeof(DelayCondition));
                 c.AddSubType(typeof(ElementNearByCondition));
                 c.AddSubType(typeof(ExistingBuildingCondition));
+                c.AddSubType(typeof(LevelCondition));
                 c.AddSubType(typeof(ResearchCondition));
+                c.AddSubType(typeof(TraverseCondition));
+                c.AddSubType(typeof(TriggerCondition));
+                c.AddSubType(typeof(WorkingCondition));
+            });
+
+            model.Add(typeof(DayTimeCondition), false).With(c =>
+            {
+                c.AddField(1, "DateTime");
+            });
+
+            model.Add(typeof(DayTimeCondition), false).With(c =>
+            {
+            });
+
+            model.Add(typeof(DelayCondition), false).With(c =>
+            {
+                c.AddField(1, "Delay");
             });
 
             model.Add(typeof(ElementNearByCondition), false).With(c =>
@@ -72,6 +86,11 @@ namespace RuleSet.Versions
                 });
             });
 
+            model.Add(typeof(LevelCondition), false).With(c =>
+            {
+                c.AddField(1, "Level");
+            });
+
             model.Add(typeof(ResearchCondition), false).With(c =>
             {
                 c.AddField(1, "Research").With(r =>
@@ -80,6 +99,21 @@ namespace RuleSet.Versions
                 });
             });
 
+            model.Add(typeof(TraverseCondition), false).With(c =>
+            {
+            });
+
+            model.Add(typeof(TriggerCondition), false).With(c =>
+            {
+            });
+
+            model.Add(typeof(WorkingCondition), false).With(c =>
+            {
+            });
+        }
+
+        private static void CreateEffects(RuntimeTypeModel model)
+        {
             model.Add(typeof(Effect), false).With(e =>
             {
                 e.AddSubType(typeof(AddRecipeEffect));
@@ -215,7 +249,10 @@ namespace RuleSet.Versions
                     j.AsReference = true;
                 });
             });
+        }
 
+        private static void CreateElements(RuntimeTypeModel model)
+        {
             model.Add(typeof(Element), false).With(e =>
             {
                 e.AddField(1, "Name");
@@ -291,7 +328,10 @@ namespace RuleSet.Versions
                     r.AsReference = true;
                 });
             });
+        }
 
+        private static void CreateEvents(RuntimeTypeModel model)
+        {
             model.Add(typeof(Event), false).With(e =>
             {
                 e.AddField(1, "Actions").With(a =>
@@ -299,27 +339,20 @@ namespace RuleSet.Versions
                     a.AsReference = false;
                     a.OverwriteList = false;
                 });
-
-                e.AddSubType(typeof(OneTimedEvent));
-                e.AddSubType(typeof(RangeTimedEvent));
-            });
-
-            model.Add(typeof(OneTimedEvent), false).With(e =>
-            {
-                e.AddField(1, "Frequency");
-                e.AddField(2, "Time");
-            });
-
-            model.Add(typeof(RangeTimedEvent), false).With(e =>
-            {
-                e.AddField(1, "End");
                 e.AddField(2, "Frequency");
-                e.AddField(3, "Start");
             });
 
             model.Add(typeof(EventAction), false).With(a =>
             {
+                a.AddSubType(typeof(PlayAnimationEventAction));
                 a.AddSubType(typeof(PlaySoundEventAction));
+                a.AddSubType(typeof(TriggerRandomAnimationEventAction));
+                a.AddSubType(typeof(TriggerRandomSoundEventAction));
+            });
+
+            model.Add(typeof(PlayAnimationEventAction), false).With(a =>
+            {
+                a.AddField(1, "Animation");
             });
 
             model.Add(typeof(PlaySoundEventAction), false).With(a =>
@@ -327,6 +360,109 @@ namespace RuleSet.Versions
                 a.AddField(1, "SoundName");
             });
 
+            model.Add(typeof(TriggerRandomAnimationEventAction), false).With(a =>
+            {
+                a.AddField(1, "Sources").With(s =>
+                {
+                    s.AsReference = false;
+                    s.OverwriteList = false;
+                });
+            });
+
+            model.Add(typeof(TriggerRandomSoundEventAction), false).With(a =>
+            {
+                a.AddField(1, "Sources").With(s =>
+                {
+                    s.AsReference = false;
+                    s.OverwriteList = false;
+                });
+            });
+        }
+
+        private static void CreateNeeds(RuntimeTypeModel model)
+        {
+            model.Add(typeof(Need), false).With(n =>
+            {
+                n.AddField(1, "Conditions").With(c =>
+                {
+                    c.AsReference = false;
+                    c.OverwriteList = false;
+                });
+
+                n.AddSubType(typeof(BuildingNeed));
+                n.AddSubType(typeof(ResourceNeed));
+            });
+
+            model.Add(typeof(BuildingNeed), false).With(n =>
+            {
+                n.AddField(1, "Building").With(b =>
+                {
+                    b.AsReference = true;
+                });
+                n.AddField(2, "Radius");
+            });
+
+            model.Add(typeof(ResourceNeed), false).With(n =>
+            {
+                n.AddField(1, "Amount");
+                n.AddField(2, "Resource").With(r =>
+                {
+                    r.AsReference = true;
+                });
+            });
+        }
+
+        private static void CreateResearch(RuntimeTypeModel model)
+        {
+            model.Add(typeof(Research), false).With(r =>
+            {
+                r.AddField(1, "Conditions").With(c =>
+                {
+                    c.AsReference = false;
+                    c.OverwriteList = false;
+                });
+                r.AddField(2, "Costs").With(c =>
+                {
+                    c.AsReference = false;
+                    c.OverwriteList = false;
+                });
+                r.AddField(3, "Name");
+                r.AddField(4, "Time");
+            });
+        }
+
+        private static void CreateRuleSet(RuntimeTypeModel model)
+        {
+            model.Add(typeof(RuleSet), false).With(m =>
+            {
+                m.AddField(1, "Elements").With(e =>
+                {
+                    e.AsReference = true;
+                    e.OverwriteList = false;
+                });
+                m.AddField(2, "Name");
+                m.AddField(3, "Needs").With(n =>
+                {
+                    n.AsReference = false;
+                    n.OverwriteList = false;
+                });
+                m.AddField(4, "Research").With(r =>
+                {
+                    r.AsReference = false;
+                    r.OverwriteList = false;
+                });
+                m.AddField(5, "ResourceBar");
+                m.AddField(6, "StartResources").With(s =>
+                {
+                    s.AsReference = false;
+                    s.OverwriteList = false;
+                });
+                m.AddField(7, "Toolbar");
+            });
+        }
+
+        private static void CreateToolbar(RuntimeTypeModel model)
+        {
             model.Add(typeof(Toolbar), false).With(b =>
             {
                 b.AddField(1, "Items").With(i =>
@@ -364,53 +500,10 @@ namespace RuleSet.Versions
                     b.AsReference = true;
                 });
             });
+        }
 
-            model.Add(typeof(Need), false).With(n =>
-            {
-                n.AddField(1, "Conditions").With(c =>
-                {
-                    c.AsReference = false;
-                    c.OverwriteList = false;
-                });
-
-                n.AddSubType(typeof(BuildingNeed));
-                n.AddSubType(typeof(ResourceNeed));
-            });
-
-            model.Add(typeof(BuildingNeed), false).With(n =>
-            {
-                n.AddField(1, "Building").With(b =>
-                {
-                    b.AsReference = true;
-                });
-                n.AddField(2, "Radius");
-            });
-
-            model.Add(typeof(ResourceNeed), false).With(n =>
-            {
-                n.AddField(1, "Amount");
-                n.AddField(2, "Resource").With(r =>
-                {
-                    r.AsReference = true;
-                });
-            });
-
-            model.Add(typeof(Research), false).With(r =>
-            {
-                r.AddField(1, "Conditions").With(c =>
-                {
-                    c.AsReference = false;
-                    c.OverwriteList = false;
-                });
-                r.AddField(2, "Costs").With(c =>
-                {
-                    c.AsReference = false;
-                    c.OverwriteList = false;
-                });
-                r.AddField(3, "Name");
-                r.AddField(4, "Time");
-            });
-
+        private static void CreateUpgrade(RuntimeTypeModel model)
+        {
             model.Add(typeof(Upgrade), false).With(u =>
             {
                 u.AddField(1, "Conditions").With(c =>

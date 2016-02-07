@@ -8,5 +8,10 @@ namespace RuleSet
         {
             get;
         } = new List<EventAction>();
+
+        public EventFrequency Frequency
+        {
+            get; set;
+        }
     }
 }

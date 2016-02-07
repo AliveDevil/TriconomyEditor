@@ -1,8 +1,8 @@
 ﻿namespace RuleSet.EventActions
 {
-    public class PlaySoundEventAction : EventAction
+    public class PlayAnimationEventAction : EventAction
     {
-        public string Source
+        public string Animation
         {
             get; set;
         }
