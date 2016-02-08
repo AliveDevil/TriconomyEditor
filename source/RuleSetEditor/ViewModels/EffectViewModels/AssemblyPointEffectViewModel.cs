@@ -1,10 +1,8 @@
-﻿namespace RuleSetEditor.ViewModels.EffectViewModels
+﻿using RuleSet.Effects;
+
+namespace RuleSetEditor.ViewModels.EffectViewModels
 {
-    public class AssemblyPointEffectViewModel : EffectViewModel
+    public class AssemblyPointEffectViewModel : EffectViewModel<AssemblyPointEffect>
     {
-        public override string ToString()
-        {
-            return "Assembly Point";
-        }
     }
 }

@@ -3,28 +3,34 @@ using System.Linq;
 using ReactiveUI;
 using RuleSet.Menus;
 using RuleSetEditor.ViewModels.RuleSetViewModels.ElementViewModels;
-using RuleSetEditor.ViewModels.RuleSetViewModels.ElementViewModels.ResourceViewModels;
 
 namespace RuleSetEditor.ViewModels.RuleSetViewModels.ToolbarViewModels
 {
     public class ResourceBarViewModel : RuleSetViewModelBase
     {
         private IReactiveDerivedList<ResourceViewModel> availableResources;
-        private IDisposable beforeItemsAdded;
-        private IDisposable beforeItemsRemoved;
+        private IDisposable itemsAdded;
+        private IDisposable itemsRemoved;
         private ReactiveList<ResourceViewModel> resources;
         private ResourceViewModel selectedResource;
 
         public RelayCommand AddResourceCommand => new RelayCommand(() =>
         {
-            if (Resources.Contains(SelectedResource)) return;
+            if (Resources.Contains(SelectedResource))
+                return;
             Resources.Add(SelectedResource);
         });
 
         public IReactiveDerivedList<ResourceViewModel> AvailableResources
         {
-            get { return availableResources; }
-            private set { RaiseSetIfChanged(ref availableResources, value); }
+            get
+            {
+                return availableResources;
+            }
+            private set
+            {
+                RaiseSetIfChanged(ref availableResources, value);
+            }
         }
 
         public RelayCommand RemoveResourceCommand => new RelayCommand(() =>
@@ -34,43 +40,56 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels.ToolbarViewModels
 
         public ResourceBar ResourceBar
         {
-            get { return RuleSetViewModel.RuleSet.ResourceBar ?? (RuleSetViewModel.RuleSet.ResourceBar = new ResourceBar()); }
+            get
+            {
+                return RuleSetViewModel.RuleSet.ResourceBar ?? (RuleSetViewModel.RuleSet.ResourceBar = new ResourceBar());
+            }
         }
 
         public ReactiveList<ResourceViewModel> Resources
         {
-            get { return resources; }
-            private set { RaiseSetIfChanged(ref resources, value); }
+            get
+            {
+                return resources;
+            }
+            private set
+            {
+                RaiseSetIfChanged(ref resources, value);
+            }
         }
 
         public ResourceViewModel SelectedResource
         {
-            get { return selectedResource; }
-            set { RaiseSetIfChanged(ref selectedResource, value); }
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
+            get
             {
-                Dispose(ref beforeItemsAdded);
-                Dispose(ref beforeItemsRemoved);
-                Dispose(ref availableResources);
-                Resources.Clear();
-
-                AddResourceCommand.Dispose();
-                RemoveResourceCommand.Dispose();
+                return selectedResource;
             }
-            base.Dispose(disposing);
+            set
+            {
+                RaiseSetIfChanged(ref selectedResource, value);
+            }
+        }
+        
+        protected override void OnInitialize()
+        {
+            base.OnInitialize();
+
+            AvailableResources = RuleSetViewModel.ElementList.CreateDerivedCollection(e => (ResourceViewModel)e, e => e is ResourceViewModel, (l, r) => l.Name.Value.CompareTo(r.Name.Value));
+            Resources = new ReactiveList<ResourceViewModel>();
+            Resources.ChangeTrackingEnabled = true;
         }
 
-        protected override void OnRuleSetChanged()
+        protected override void OnPostInitialize()
         {
-            base.OnRuleSetChanged();
-            AvailableResources = RuleSetViewModel.ElementList.CreateDerivedCollection(e => (ResourceViewModel)e, e => e is ResourceViewModel, (l, r) => l.Name.Value.CompareTo(r.Name.Value));
-            Resources = new ReactiveList<ResourceViewModel>(ResourceBar.Resources.Select(r => (ResourceViewModel)RuleSetViewModel.ElementList.FirstOrDefault(e => e is ResourceViewModel && e.Element == r)).Where(r => r.Element != null));
-            beforeItemsAdded = Resources.BeforeItemsAdded.Subscribe(r => ResourceBar.Resources.Add(r.Element));
-            beforeItemsRemoved = Resources.BeforeItemsRemoved.Subscribe(r => ResourceBar.Resources.Remove(r.Element));
+            base.OnPostInitialize();
+
+            foreach (var item in ResourceBar.Resources)
+            {
+                Resources.Add(RuleSetViewModel.ElementList.OfType<ResourceViewModel>().First(e => e.Element == item));
+            }
+
+            itemsAdded = Resources.ItemsAdded.Subscribe(r => ResourceBar.Resources.Add(r.Element));
+            itemsRemoved = Resources.ItemsRemoved.Subscribe(r => ResourceBar.Resources.Remove(r.Element));
         }
     }
 }

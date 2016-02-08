@@ -4,10 +4,10 @@
 			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 			 xmlns:tk="http://schemas.xceed.com/wpf/xaml/toolkit"
-			 xmlns:vm="clr-namespace:RuleSetEditor.ViewModels.EffectViewModels.EffectEditViewModels"
+			 xmlns:vm="clr-namespace:RuleSetEditor.ViewModels.EffectViewModels"
 			 xmlns:local="clr-namespace:RuleSetEditor.Views.EffectViews"
 			 mc:Ignorable="d"
-			 d:DataContext="{d:DesignInstance Type=vm:SpawnLivingResourceEffectEditViewModel}"
+			 d:DataContext="{d:DesignInstance Type=vm:SpawnLivingResourceEffectViewModel}"
 			 d:DesignHeight="300"
 			 d:DesignWidth="300">
 	<Grid>

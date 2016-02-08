@@ -16,6 +16,8 @@ namespace RuleSetEditor.ViewModels
                     ViewStack.Set<RuleSetViewModel>()._(_ =>
                     {
                         _.RuleSet = new RuleSet.RuleSet() { Name = "New RuleSet" };
+                        _.Initialize();
+                        _.PostInitialize();
                     });
                 }));
             }
@@ -36,6 +38,8 @@ namespace RuleSetEditor.ViewModels
                     {
                         _.SourceFilePath = file.FullName;
                         _.RuleSet = ruleSet;
+                        _.Initialize();
+                        _.PostInitialize();
                     });
                 }, () => !string.IsNullOrEmpty(Settings.Default.LastFile) && File.Exists(Settings.Default.LastFile)));
             }

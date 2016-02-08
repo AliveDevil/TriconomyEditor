@@ -3,13 +3,27 @@ using RuleSet.Effects;
 
 namespace RuleSetEditor.ViewModels.EffectViewModels
 {
-    public class StorageEffectViewModel : EffectViewModel
+    public class StorageEffectViewModel : EffectViewModel<StorageEffect>
     {
-        public StorageEffect StorageEffect => (StorageEffect)Effect;
+        private ReactiveProperty<bool> publicAccessibleProperty;
 
-        public override string ToString()
+        public ReactiveProperty<bool> PublicAccessible
         {
-            return "Storage";
+            get
+            {
+                return publicAccessibleProperty;
+            }
+            private set
+            {
+                RaiseSetIfChanged(ref publicAccessibleProperty, value);
+            }
+        }
+
+        protected override void OnInitialize()
+        {
+            base.OnInitialize();
+
+            PublicAccessible = ReactiveProperty.FromObject(Effect, e => e.PublicAccessible);
         }
     }
 }

@@ -6,15 +6,15 @@ namespace RuleSet.Versions
 {
     public abstract class VersionSerializer
     {
-        private RuntimeTypeModel model;
+        private TypeModel model;
 
-        public RuntimeTypeModel Model
+        public TypeModel Model
         {
             get
             {
                 if (model == null)
                 {
-                    model = TypeModel.Create();
+                    model = Factory();
                     OnModelCreation(model);
                 }
                 return model;
@@ -77,6 +77,13 @@ namespace RuleSet.Versions
             return model.Add(typeof(T), false);
         }
 
-        protected abstract void OnModelCreation(RuntimeTypeModel model);
+        protected virtual TypeModel Factory()
+        {
+            return TypeModel.Create();
+        }
+
+        protected virtual void OnModelCreation(TypeModel model)
+        {
+        }
     }
 }

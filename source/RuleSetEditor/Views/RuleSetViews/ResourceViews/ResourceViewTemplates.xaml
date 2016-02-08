@@ -1,15 +1,14 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 					xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-					xmlns:vm="clr-namespace:RuleSetEditor.ViewModels.RuleSetViewModels.ElementViewModels.ResourceViewModels"
-					xmlns:vmp="clr-namespace:RuleSetEditor.ViewModels.RuleSetViewModels.ResourcePartViewModels"
+					xmlns:vm="clr-namespace:RuleSetEditor.ViewModels.RuleSetViewModels.ElementViewModels"
 					xmlns:local="clr-namespace:RuleSetEditor.Views.RuleSetViews.ResourceViews">
-	<DataTemplate DataType="{x:Type vm:ResourceEditViewModel}">
-		<local:ResourceEditView />
+	<DataTemplate DataType="{x:Type vm:ResourceViewModel}">
+		<local:ResourceView />
 	</DataTemplate>
-	<DataTemplate DataType="{x:Type vm:ResourceGroupEditViewModel}">
-		<local:ResourceGroupEditView />
+	<DataTemplate DataType="{x:Type vm:ResourceGroupViewModel}">
+		<local:ResourceGroupView />
 	</DataTemplate>
-	<DataTemplate DataType="{x:Type vmp:ResourcePartEditViewModel}">
-		<local:ResourcePartEditView />
+	<DataTemplate DataType="{x:Type vm:ResourcePartViewModel}">
+		<local:ResourcePartView />
 	</DataTemplate>
 </ResourceDictionary>

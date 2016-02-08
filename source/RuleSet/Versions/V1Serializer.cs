@@ -17,9 +17,10 @@ namespace RuleSet.Versions
             }
         }
 
-        protected override void OnModelCreation(RuntimeTypeModel model)
+        protected override void OnModelCreation(TypeModel model)
         {
-            model.Add(typeof(RuleSet), false).With(m =>
+            var runtimeTypeModel = (RuntimeTypeModel)model;
+            runtimeTypeModel.Add(typeof(RuleSet), false).With(m =>
             {
                 m.AddField(1, "Elements").With(e =>
                 {
@@ -46,14 +47,14 @@ namespace RuleSet.Versions
                 m.AddField(7, "Toolbar");
             });
 
-            model.Add(typeof(Condition), false).With(c =>
+            runtimeTypeModel.Add(typeof(Condition), false).With(c =>
             {
                 c.AddSubType(typeof(ElementNearByCondition));
                 c.AddSubType(typeof(ExistingBuildingCondition));
                 c.AddSubType(typeof(ResearchCondition));
             });
 
-            model.Add(typeof(ElementNearByCondition), false).With(c =>
+            runtimeTypeModel.Add(typeof(ElementNearByCondition), false).With(c =>
             {
                 c.AddField(1, "Distance");
                 c.AddField(2, "Element").With(e =>
@@ -62,7 +63,7 @@ namespace RuleSet.Versions
                 });
             });
 
-            model.Add(typeof(ExistingBuildingCondition), false).With(c =>
+            runtimeTypeModel.Add(typeof(ExistingBuildingCondition), false).With(c =>
             {
                 c.AddField(1, "Building").With(b =>
                 {
@@ -70,7 +71,7 @@ namespace RuleSet.Versions
                 });
             });
 
-            model.Add(typeof(ResearchCondition), false).With(c =>
+            runtimeTypeModel.Add(typeof(ResearchCondition), false).With(c =>
             {
                 c.AddField(1, "Research").With(r =>
                 {
@@ -78,7 +79,7 @@ namespace RuleSet.Versions
                 });
             });
 
-            model.Add(typeof(Effect), false).With(e =>
+            runtimeTypeModel.Add(typeof(Effect), false).With(e =>
             {
                 e.AddSubType(typeof(AddRecipeEffect));
                 e.AddSubType(typeof(AssemblyPointEffect));
@@ -97,7 +98,7 @@ namespace RuleSet.Versions
                 e.AddSubType(typeof(WorkplaceEffect));
             });
 
-            model.Add(typeof(AddRecipeEffect), false).With(e =>
+            runtimeTypeModel.Add(typeof(AddRecipeEffect), false).With(e =>
             {
                 e.AddField(1, "InResources").With(r =>
                 {
@@ -111,11 +112,11 @@ namespace RuleSet.Versions
                 });
             });
 
-            model.Add(typeof(AssemblyPointEffect), false).With(e =>
+            runtimeTypeModel.Add(typeof(AssemblyPointEffect), false).With(e =>
             {
             });
 
-            model.Add(typeof(DeliverEffect), false).With(e =>
+            runtimeTypeModel.Add(typeof(DeliverEffect), false).With(e =>
             {
                 e.AddField(1, "PreferredBuilding").With(b =>
                 {
@@ -128,17 +129,17 @@ namespace RuleSet.Versions
                 });
             });
 
-            model.Add(typeof(ExtendSettlerAmountEffect), false).With(e =>
+            runtimeTypeModel.Add(typeof(ExtendSettlerAmountEffect), false).With(e =>
             {
                 e.AddField(1, "SettlerAmount");
             });
 
-            model.Add(typeof(ExtendStorageEffect), false).With(e =>
+            runtimeTypeModel.Add(typeof(ExtendStorageEffect), false).With(e =>
             {
                 e.AddField(1, "Amount");
             });
 
-            model.Add(typeof(GatherResourceEffect), false).With(e =>
+            runtimeTypeModel.Add(typeof(GatherResourceEffect), false).With(e =>
             {
                 e.AddField(1, "Radius");
                 e.AddField(2, "Resource").With(r =>
@@ -147,15 +148,15 @@ namespace RuleSet.Versions
                 });
             });
 
-            model.Add(typeof(HabitEffect), false).With(e =>
+            runtimeTypeModel.Add(typeof(HabitEffect), false).With(e =>
             {
             });
 
-            model.Add(typeof(IncreaseProductivityEffect), false).With(e =>
+            runtimeTypeModel.Add(typeof(IncreaseProductivityEffect), false).With(e =>
             {
             });
 
-            model.Add(typeof(ProduceResourceEffect), false).With(e =>
+            runtimeTypeModel.Add(typeof(ProduceResourceEffect), false).With(e =>
             {
                 e.AddField(1, "Amount");
                 e.AddField(2, "CheatModeOnly");
@@ -166,11 +167,11 @@ namespace RuleSet.Versions
                 });
             });
 
-            model.Add(typeof(ResearchEffect), false).With(e =>
+            runtimeTypeModel.Add(typeof(ResearchEffect), false).With(e =>
             {
             });
 
-            model.Add(typeof(SpawnLivingResourceEffect), false).With(e =>
+            runtimeTypeModel.Add(typeof(SpawnLivingResourceEffect), false).With(e =>
             {
                 e.AddField(1, "Amount");
                 e.AddField(2, "Delay");
@@ -181,7 +182,7 @@ namespace RuleSet.Versions
                 e.AddField(4, "Radius");
             });
 
-            model.Add(typeof(SpawnWorldResourceEffect), false).With(e =>
+            runtimeTypeModel.Add(typeof(SpawnWorldResourceEffect), false).With(e =>
             {
                 e.AddField(1, "Amount");
                 e.AddField(2, "Delay");
@@ -192,12 +193,12 @@ namespace RuleSet.Versions
                 });
             });
 
-            model.Add(typeof(StorageEffect), false).With(e =>
+            runtimeTypeModel.Add(typeof(StorageEffect), false).With(e =>
             {
                 e.AddField(1, "PublicAccessible");
             });
 
-            model.Add(typeof(UseResourceEffect), false).With(e =>
+            runtimeTypeModel.Add(typeof(UseResourceEffect), false).With(e =>
             {
                 e.AddField(1, "Amount");
                 e.AddField(2, "Resource").With(r =>
@@ -206,7 +207,7 @@ namespace RuleSet.Versions
                 });
             });
 
-            model.Add(typeof(WorkplaceEffect), false).With(e =>
+            runtimeTypeModel.Add(typeof(WorkplaceEffect), false).With(e =>
             {
                 e.AddField(1, "Job").With(j =>
                 {
@@ -214,7 +215,7 @@ namespace RuleSet.Versions
                 });
             });
 
-            model.Add(typeof(Element), false).With(e =>
+            runtimeTypeModel.Add(typeof(Element), false).With(e =>
             {
                 e.AddField(1, "Name");
 
@@ -225,7 +226,7 @@ namespace RuleSet.Versions
                 e.AddSubType(typeof(WorldResource));
             });
 
-            model.Add(typeof(Building), false).With(e =>
+            runtimeTypeModel.Add(typeof(Building), false).With(e =>
             {
                 e.AddField(1, "Upgrades").With(u =>
                 {
@@ -235,11 +236,11 @@ namespace RuleSet.Versions
                 e.AddField(2, "Variants");
             });
 
-            model.Add(typeof(Job), false).With(e =>
+            runtimeTypeModel.Add(typeof(Job), false).With(e =>
             {
             });
 
-            model.Add(typeof(LivingResource), false).With(e =>
+            runtimeTypeModel.Add(typeof(LivingResource), false).With(e =>
             {
                 e.AddField(1, "Amount");
                 e.AddField(2, "AutoSpawn");
@@ -249,14 +250,14 @@ namespace RuleSet.Versions
                 });
             });
 
-            model.Add(typeof(Resource), false).With(e =>
+            runtimeTypeModel.Add(typeof(Resource), false).With(e =>
             {
                 e.AddField(1, "StackSize");
 
                 e.AddSubType(typeof(ResourceGroup));
             });
 
-            model.Add(typeof(ResourceGroup), false).With(e =>
+            runtimeTypeModel.Add(typeof(ResourceGroup), false).With(e =>
             {
                 e.AddField(1, "Resources").With(r =>
                 {
@@ -265,7 +266,7 @@ namespace RuleSet.Versions
                 });
             });
 
-            model.Add(typeof(WorldResource), false).With(e =>
+            runtimeTypeModel.Add(typeof(WorldResource), false).With(e =>
             {
                 e.AddField(1, "Amount");
                 e.AddField(2, "AutoSpawn");
@@ -276,7 +277,7 @@ namespace RuleSet.Versions
                 e.AddField(4, "Variants");
             });
 
-            model.Add(typeof(ResourcePart), false).With(e =>
+            runtimeTypeModel.Add(typeof(ResourcePart), false).With(e =>
             {
                 e.AddField(1, "Amount");
                 e.AddField(2, "Resource").With(r =>
@@ -284,8 +285,8 @@ namespace RuleSet.Versions
                     r.AsReference = true;
                 });
             });
-            
-            model.Add(typeof(Toolbar), false).With(b =>
+
+            runtimeTypeModel.Add(typeof(Toolbar), false).With(b =>
             {
                 b.AddField(1, "Items").With(i =>
                 {
@@ -295,7 +296,7 @@ namespace RuleSet.Versions
                 b.AddField(2, "Name");
             });
 
-            model.Add(typeof(ResourceBar), false).With(b =>
+            runtimeTypeModel.Add(typeof(ResourceBar), false).With(b =>
             {
                 b.AddField(1, "Resources").With(r =>
                 {
@@ -304,18 +305,18 @@ namespace RuleSet.Versions
                 });
             });
 
-            model.Add(typeof(ToolbarItem), false).With(i =>
+            runtimeTypeModel.Add(typeof(ToolbarItem), false).With(i =>
             {
                 i.AddSubType(typeof(OpenToolbarItem));
                 i.AddSubType(typeof(PlaceBuildingItem));
             });
 
-            model.Add(typeof(OpenToolbarItem), false).With(i =>
+            runtimeTypeModel.Add(typeof(OpenToolbarItem), false).With(i =>
             {
                 i.AddField(1, "Toolbar");
             });
 
-            model.Add(typeof(PlaceBuildingItem), false).With(i =>
+            runtimeTypeModel.Add(typeof(PlaceBuildingItem), false).With(i =>
             {
                 i.AddField(1, "Building").With(b =>
                 {
@@ -323,7 +324,7 @@ namespace RuleSet.Versions
                 });
             });
 
-            model.Add(typeof(Need), false).With(n =>
+            runtimeTypeModel.Add(typeof(Need), false).With(n =>
             {
                 n.AddField(1, "Conditions").With(c =>
                 {
@@ -335,7 +336,7 @@ namespace RuleSet.Versions
                 n.AddSubType(typeof(ResourceNeed));
             });
 
-            model.Add(typeof(BuildingNeed), false).With(n =>
+            runtimeTypeModel.Add(typeof(BuildingNeed), false).With(n =>
             {
                 n.AddField(1, "Building").With(b =>
                 {
@@ -344,7 +345,7 @@ namespace RuleSet.Versions
                 n.AddField(2, "Radius");
             });
 
-            model.Add(typeof(ResourceNeed), false).With(n =>
+            runtimeTypeModel.Add(typeof(ResourceNeed), false).With(n =>
             {
                 n.AddField(1, "Amount");
                 n.AddField(2, "Resource").With(r =>
@@ -353,7 +354,7 @@ namespace RuleSet.Versions
                 });
             });
 
-            model.Add(typeof(Research), false).With(r =>
+            runtimeTypeModel.Add(typeof(Research), false).With(r =>
             {
                 r.AddField(1, "Conditions").With(c =>
                 {
@@ -369,7 +370,7 @@ namespace RuleSet.Versions
                 r.AddField(4, "Time");
             });
 
-            model.Add(typeof(Upgrade), false).With(u =>
+            runtimeTypeModel.Add(typeof(Upgrade), false).With(u =>
             {
                 u.AddField(1, "Conditions").With(c =>
                 {
@@ -388,6 +389,8 @@ namespace RuleSet.Versions
                 });
                 u.AddField(4, "Level");
             });
+
+            runtimeTypeModel.Freeze();
         }
     }
 }

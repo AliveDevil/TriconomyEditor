@@ -14,57 +14,60 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels.NeedViewModels
 
         public ReactiveProperty<int> Amount
         {
-            get { return amountProperty; }
-            private set { RaiseSetIfChanged(ref amountProperty, value); }
+            get
+            {
+                return amountProperty;
+            }
+            private set
+            {
+                RaiseSetIfChanged(ref amountProperty, value);
+            }
         }
 
         public ReactiveProperty<ResourceViewModel> Resource
         {
-            get { return resource; }
-            private set { RaiseSetIfChanged(ref resource, value); }
+            get
+            {
+                return resource;
+            }
+            private set
+            {
+                RaiseSetIfChanged(ref resource, value);
+            }
         }
 
         public IReactiveDerivedList<ResourceViewModel> Resources
         {
-            get { return resources; }
-            private set { RaiseSetIfChanged(ref resources, value); }
-        }
-
-        public override string ToString()
-        {
-            return $"Need Resource {{{Resource?.Value?.Name?.Value ?? "None"}}}";
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
+            get
             {
-                Resource?.Value?.Dispose();
-                Resource?.Dispose();
-                Resources.Dispose();
-
-                resources = null;
-                resource = null;
+                return resources;
             }
-            base.Dispose(disposing);
+            private set
+            {
+                RaiseSetIfChanged(ref resources, value);
+            }
         }
-
-        protected override void OnElementChanged()
+        
+        protected override void OnInitialize()
         {
-            base.OnElementChanged();
+            base.OnInitialize();
+
             Amount = ReactiveProperty.FromObject(Need,
                 r => r.Amount);
+        }
+
+        protected override void OnPostInitialize()
+        {
+            base.OnPostInitialize();
+
+            Resources = RuleSetViewModel.ElementList.CreateDerivedCollection(e => (ResourceViewModel)e, e => e is ResourceViewModel, (l, r) => l.Name.Value.CompareTo(r.Name.Value));
+            Resources.ChangeTrackingEnabled = true;
+
             Resource = ReactiveProperty.FromObject(Need,
                 r => r.Resource,
                 r => Resources.SingleOrDefault(e => e.Element == r),
                 r => r?.Element);
             Resource.PropertyChanged += OnPropertyChanged;
-        }
-
-        protected override void OnRuleSetChanged()
-        {
-            base.OnRuleSetChanged();
-            Resources = RuleSetViewModel.ElementList.CreateDerivedCollection(e => (ResourceViewModel)e, e => e is ResourceViewModel);
         }
     }
 }

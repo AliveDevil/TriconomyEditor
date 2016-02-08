@@ -18,11 +18,6 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels.ElementViewModels
             {
                 if (!RaiseSetIfChanged(ref element, value))
                     return;
-                Name = ReactiveProperty.FromObject(Element, e => e.Name);
-                if (!DeferChanged)
-                    OnElementChanged();
-                else
-                    DeferQueue.Enqueue(OnElementChanged);
             }
         }
 
@@ -40,23 +35,14 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels.ElementViewModels
                 Name.PropertyChanged += OnPropertyChanged;
             }
         }
-
-        public override string ToString()
-        {
-            return Element.Name;
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                Dispose(ref nameProperty);
-            }
-            base.Dispose(disposing);
-        }
-
+        
         protected virtual void OnElementChanged()
         {
+        }
+
+        protected override void OnInitialize()
+        {
+            Name = ReactiveProperty.FromObject(Element, e => e.Name);
         }
     }
 
@@ -65,8 +51,14 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels.ElementViewModels
     {
         public new TElement Element
         {
-            get { return (TElement)base.Element; }
-            set { base.Element = value; }
+            get
+            {
+                return (TElement)base.Element;
+            }
+            set
+            {
+                base.Element = value;
+            }
         }
     }
 }

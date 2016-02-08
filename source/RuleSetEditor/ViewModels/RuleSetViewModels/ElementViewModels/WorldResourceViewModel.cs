@@ -72,46 +72,31 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels.ElementViewModels
                 RaiseSetIfChanged(ref variantsProperty, value);
             }
         }
-
-        protected override void Dispose(bool disposing)
+        
+        protected override void OnInitialize()
         {
-            if (disposing)
-            {
-                Amount?.Dispose();
-                AutoSpawn?.Dispose();
-                Resource?.Value?.Dispose();
-                Resource?.Dispose();
-                Variants?.Dispose();
-                Resources.Dispose();
+            base.OnInitialize();
 
-                resource = null;
-                resources = null;
-                amountProperty = null;
-                variantsProperty = null;
-            }
-            base.Dispose(disposing);
-        }
-
-        protected override void OnElementChanged()
-        {
-            base.OnElementChanged();
             Amount = ReactiveProperty.FromObject(Element, w => w.Amount);
             Amount.PropertyChanged += OnPropertyChanged;
             AutoSpawn = ReactiveProperty.FromObject(Element, w => w.AutoSpawn);
             AutoSpawn.PropertyChanged += OnPropertyChanged;
+            Variants = ReactiveProperty.FromObject(Element, r => r.Variants);
+            Variants.PropertyChanged += OnPropertyChanged;
+        }
+
+        protected override void OnPostInitialize()
+        {
+            base.OnPostInitialize();
+
+            Resources = RuleSetViewModel.ElementList.CreateDerivedCollection(e => (ResourceViewModel)e, e => e is ResourceViewModel, (l, r) => l.Name.Value.CompareTo(r.Name.Value));
+            Resources.ChangeTrackingEnabled = true;
+
             Resource = ReactiveProperty.FromObject(Element,
                 r => r.Resource,
                 r => Resources.SingleOrDefault(e => e.Element == r),
                 r => r?.Element);
             Resource.PropertyChanged += OnPropertyChanged;
-            Variants = ReactiveProperty.FromObject(Element, r => r.Variants);
-            Variants.PropertyChanged += OnPropertyChanged;
-        }
-
-        protected override void OnRuleSetChanged()
-        {
-            base.OnRuleSetChanged();
-            Resources = RuleSetViewModel.ElementList.CreateDerivedCollection(e => (ResourceViewModel)e, e => e is ResourceViewModel);
         }
     }
 }

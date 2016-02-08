@@ -129,20 +129,6 @@
     <Compile Include="ViewModels\EffectViewModels\AddRecipeEffectViewModel.cs" />
     <Compile Include="ViewModels\EffectViewModels\AssemblyPointEffectViewModel.cs" />
     <Compile Include="ViewModels\EffectViewModels\DeliverEffectViewModel.cs" />
-    <Compile Include="ViewModels\EffectViewModels\EffectEditViewModels\AddRecipeEffectEditViewModel.cs" />
-    <Compile Include="ViewModels\EffectViewModels\EffectEditViewModels\AssemblyPointEffectEditViewModel.cs" />
-    <Compile Include="ViewModels\EffectViewModels\EffectEditViewModels\DeliverEffectEditViewModel.cs" />
-    <Compile Include="ViewModels\EffectViewModels\EffectEditViewModels\ExtendSettlerAmountEffectEditViewModel.cs" />
-    <Compile Include="ViewModels\EffectViewModels\EffectEditViewModels\ExtendStorageEffectEditViewModel.cs" />
-    <Compile Include="ViewModels\EffectViewModels\EffectEditViewModels\GatherResourceEffectEditViewModel.cs" />
-    <Compile Include="ViewModels\EffectViewModels\EffectEditViewModels\HabitEffectEditViewModel.cs" />
-    <Compile Include="ViewModels\EffectViewModels\EffectEditViewModels\ProduceResourceEffectEditViewModel.cs" />
-    <Compile Include="ViewModels\EffectViewModels\EffectEditViewModels\ResearchEffectEditViewModel.cs" />
-    <Compile Include="ViewModels\EffectViewModels\EffectEditViewModels\SpawnLivingResourceEffectEditViewModel.cs" />
-    <Compile Include="ViewModels\EffectViewModels\EffectEditViewModels\SpawnWorldResourceEffectEditViewModel.cs" />
-    <Compile Include="ViewModels\EffectViewModels\EffectEditViewModels\StorageEffectEditViewModel.cs" />
-    <Compile Include="ViewModels\EffectViewModels\EffectEditViewModels\UseResourceEffectEditViewModel.cs" />
-    <Compile Include="ViewModels\EffectViewModels\EffectEditViewModels\WorkplaceEffectEditViewModel.cs" />
     <Compile Include="ViewModels\EffectViewModels\EffectViewModel.cs" />
     <Compile Include="ViewModels\EffectViewModels\ExtendSettlerAmountEffectViewModel.cs" />
     <Compile Include="ViewModels\EffectViewModels\ExtendStorageEffectViewModel.cs" />
@@ -161,44 +147,29 @@
     <Compile Include="ViewModels\RuleSetViewModel.cs" />
     <Compile Include="ViewModels\RuleSetViewModels\BuildingListViewModel.cs" />
     <Compile Include="ViewModels\RuleSetViewModels\ConditionViewModels\ConditionViewModel.cs" />
-    <Compile Include="ViewModels\RuleSetViewModels\ConditionViewModels\EditViewModels\ConditionEditViewModel.cs" />
-    <Compile Include="ViewModels\RuleSetViewModels\ConditionViewModels\EditViewModels\ElementNearByConditionEditViewModel.cs" />
-    <Compile Include="ViewModels\RuleSetViewModels\ConditionViewModels\EditViewModels\ExistingBuildingConditionEditViewModel.cs" />
-    <Compile Include="ViewModels\RuleSetViewModels\ConditionViewModels\EditViewModels\ResearchConditionEditViewModel.cs" />
     <Compile Include="ViewModels\RuleSetViewModels\ConditionViewModels\ElementNearByConditionViewModel.cs" />
     <Compile Include="ViewModels\RuleSetViewModels\ConditionViewModels\ExistingBuildingConditionViewModel.cs" />
     <Compile Include="ViewModels\RuleSetViewModels\ConditionViewModels\ResearchConditionViewModel.cs" />
     <Compile Include="ViewModels\RuleSetViewModels\ElementViewModels\BuildingViewModel.cs" />
-    <Compile Include="ViewModels\RuleSetViewModels\ElementViewModels\BuildingViewModels\BuildingEditViewModel.cs" />
-    <Compile Include="ViewModels\RuleSetViewModels\ElementViewModels\BuildingViewModels\UpgradeEditViewModel.cs" />
     <Compile Include="ViewModels\RuleSetViewModels\ElementViewModels\ElementViewModel.cs" />
     <Compile Include="ViewModels\RuleSetViewModels\ElementViewModels\JobViewModel.cs" />
-    <Compile Include="ViewModels\RuleSetViewModels\ElementViewModels\JobViewModels\JobEditViewModel.cs" />
     <Compile Include="ViewModels\RuleSetViewModels\ElementViewModels\LivingResourceViewModel.cs" />
-    <Compile Include="ViewModels\RuleSetViewModels\ElementViewModels\LivingResourceViewModels\LivingResourceEditViewModel.cs" />
     <Compile Include="ViewModels\RuleSetViewModels\ResearchViewModels\ResearchViewModel.cs" />
-    <Compile Include="ViewModels\RuleSetViewModels\ResearchViewModels\EditViewModels\ResearchEditViewModel.cs" />
     <Compile Include="ViewModels\RuleSetViewModels\ElementViewModels\ResourceGroupViewModel.cs" />
     <Compile Include="ViewModels\RuleSetViewModels\ElementViewModels\ResourceViewModel.cs" />
-    <Compile Include="ViewModels\RuleSetViewModels\ElementViewModels\ResourceViewModels\ResourceEditViewModel.cs" />
-    <Compile Include="ViewModels\RuleSetViewModels\ElementViewModels\ResourceViewModels\ResourceGroupEditViewModel.cs" />
     <Compile Include="ViewModels\RuleSetViewModels\ElementViewModels\UpgradeViewModel.cs" />
-    <Compile Include="ViewModels\RuleSetViewModels\ElementViewModels\WorldResourceViewModels\WorldResourceEditViewModel.cs" />
     <Compile Include="ViewModels\RuleSetViewModels\ElementViewModels\WorldResourceViewModel.cs" />
     <Compile Include="ViewModels\RuleSetViewModels\JobListViewModel.cs" />
     <Compile Include="ViewModels\RuleSetViewModels\LandingPageViewModel.cs" />
     <Compile Include="ViewModels\RuleSetViewModels\LivingResourceListViewModel.cs" />
     <Compile Include="ViewModels\RuleSetViewModels\NeedsListViewModel.cs" />
     <Compile Include="ViewModels\RuleSetViewModels\NeedViewModels\BuildingNeedViewModel.cs" />
-    <Compile Include="ViewModels\RuleSetViewModels\NeedViewModels\EditViewModels\BuildingNeedEditViewModel.cs" />
-    <Compile Include="ViewModels\RuleSetViewModels\NeedViewModels\EditViewModels\ResourceNeedEditViewModel.cs" />
     <Compile Include="ViewModels\RuleSetViewModels\NeedViewModels\NeedViewModel.cs" />
     <Compile Include="ViewModels\RuleSetViewModels\NeedViewModels\ResourceNeedViewModel.cs" />
     <Compile Include="ViewModels\RuleSetViewModels\ResearchListViewModel.cs" />
     <Compile Include="ViewModels\RuleSetViewModels\ResourceListViewModel.cs" />
     <Compile Include="ViewModels\RuleSetViewModelBase.cs" />
-    <Compile Include="ViewModels\RuleSetViewModels\ResourcePartViewModel.cs" />
-    <Compile Include="ViewModels\RuleSetViewModels\ResourcePartViewModels\ResourcePartEditViewModel.cs" />
+    <Compile Include="ViewModels\RuleSetViewModels\ElementViewModels\ResourcePartViewModel.cs" />
     <Compile Include="ViewModels\RuleSetViewModels\StartInventoryListViewModel.cs" />
     <Compile Include="ViewModels\RuleSetViewModels\ToolbarViewModels\OpenToolbarItemViewModel.cs" />
     <Compile Include="ViewModels\RuleSetViewModels\ToolbarViewModels\PlaceBuildingItemViewModel.cs" />
@@ -252,14 +223,11 @@
     <Compile Include="Views\RuleSetViews\BuildingListView.xaml.cs">
       <DependentUpon>BuildingListView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\RuleSetViews\BuildingViews\BuildingEditView.xaml.cs">
-      <DependentUpon>BuildingEditView.xaml</DependentUpon>
+    <Compile Include="Views\RuleSetViews\BuildingViews\BuildingView.xaml.cs">
+      <DependentUpon>BuildingView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\RuleSetViews\BuildingViews\UpgradeEditView.xaml.cs">
-      <DependentUpon>UpgradeEditView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\RuleSetViews\ConditionViews\ResearchConditionEditView.xaml.cs">
-      <DependentUpon>ResearchConditionEditView.xaml</DependentUpon>
+    <Compile Include="Views\RuleSetViews\BuildingViews\UpgradeView.xaml.cs">
+      <DependentUpon>UpgradeView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\RuleSetViews\ConditionViews\ResearchConditionView.xaml.cs">
       <DependentUpon>ResearchConditionView.xaml</DependentUpon>
@@ -267,8 +235,8 @@
     <Compile Include="Views\RuleSetViews\JobListView.xaml.cs">
       <DependentUpon>JobListView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\RuleSetViews\JobViews\JobEditView.xaml.cs">
-      <DependentUpon>JobEditView.xaml</DependentUpon>
+    <Compile Include="Views\RuleSetViews\JobViews\JobView.xaml.cs">
+      <DependentUpon>JobView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\RuleSetViews\LandingPageView.xaml.cs">
       <DependentUpon>LandingPageView.xaml</DependentUpon>
@@ -276,17 +244,17 @@
     <Compile Include="Views\RuleSetViews\LivingResourceListView.xaml.cs">
       <DependentUpon>LivingResourceListView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\RuleSetViews\LivingResourceViews\LivingResourceEditView.xaml.cs">
-      <DependentUpon>LivingResourceEditView.xaml</DependentUpon>
+    <Compile Include="Views\RuleSetViews\LivingResourceViews\LivingResourceView.xaml.cs">
+      <DependentUpon>LivingResourceView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\RuleSetViews\NeedListView.xaml.cs">
       <DependentUpon>NeedListView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\RuleSetViews\NeedViews\BuildingNeedEditView.xaml.cs">
-      <DependentUpon>BuildingNeedEditView.xaml</DependentUpon>
+    <Compile Include="Views\RuleSetViews\NeedViews\BuildingNeedView.xaml.cs">
+      <DependentUpon>BuildingNeedView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\RuleSetViews\NeedViews\ResourceNeedEditView.xaml.cs">
-      <DependentUpon>ResourceNeedEditView.xaml</DependentUpon>
+    <Compile Include="Views\RuleSetViews\NeedViews\ResourceNeedView.xaml.cs">
+      <DependentUpon>ResourceNeedView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\RuleSetViews\ResearchListView.xaml.cs">
       <DependentUpon>ResearchListView.xaml</DependentUpon>
@@ -297,14 +265,14 @@
     <Compile Include="Views\RuleSetViews\ResourceListView.xaml.cs">
       <DependentUpon>ResourceListView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\RuleSetViews\ResourceViews\ResourceEditView.xaml.cs">
-      <DependentUpon>ResourceEditView.xaml</DependentUpon>
+    <Compile Include="Views\RuleSetViews\ResourceViews\ResourceView.xaml.cs">
+      <DependentUpon>ResourceView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\RuleSetViews\ResourceViews\ResourceGroupEditView.xaml.cs">
-      <DependentUpon>ResourceGroupEditView.xaml</DependentUpon>
+    <Compile Include="Views\RuleSetViews\ResourceViews\ResourceGroupView.xaml.cs">
+      <DependentUpon>ResourceGroupView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\RuleSetViews\ResourceViews\ResourcePartEditView.xaml.cs">
-      <DependentUpon>ResourcePartEditView.xaml</DependentUpon>
+    <Compile Include="Views\RuleSetViews\ResourceViews\ResourcePartView.xaml.cs">
+      <DependentUpon>ResourcePartView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\RuleSetViews\StartInventoryListView.xaml.cs">
       <DependentUpon>StartInventoryListView.xaml</DependentUpon>
@@ -324,8 +292,8 @@
     <Compile Include="Views\RuleSetViews\WorldResourceListView.xaml.cs">
       <DependentUpon>WorldResourceListView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\RuleSetViews\WorldResourceViews\WorldResourceEditView.xaml.cs">
-      <DependentUpon>WorldResourceEditView.xaml</DependentUpon>
+    <Compile Include="Views\RuleSetViews\WorldResourceViews\WorldResourceView.xaml.cs">
+      <DependentUpon>WorldResourceView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ViewToCheckedConverter.cs" />
     <Compile Include="Views\LandingPageView.xaml.cs">
@@ -418,7 +386,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\RuleSetViews\BuildingViews\BuildingEditView.xaml">
+    <Page Include="Views\RuleSetViews\BuildingViews\BuildingView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -426,11 +394,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\RuleSetViews\BuildingViews\UpgradeEditView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\RuleSetViews\ConditionViews\ResearchConditionEditView.xaml">
+    <Page Include="Views\RuleSetViews\BuildingViews\UpgradeView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -446,7 +410,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\RuleSetViews\JobViews\JobEditView.xaml">
+    <Page Include="Views\RuleSetViews\JobViews\JobView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -462,7 +426,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\RuleSetViews\LivingResourceViews\LivingResourceEditView.xaml">
+    <Page Include="Views\RuleSetViews\LivingResourceViews\LivingResourceView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -474,7 +438,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\RuleSetViews\NeedViews\BuildingNeedEditView.xaml">
+    <Page Include="Views\RuleSetViews\NeedViews\BuildingNeedView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -482,7 +446,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\RuleSetViews\NeedViews\ResourceNeedEditView.xaml">
+    <Page Include="Views\RuleSetViews\NeedViews\ResourceNeedView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -502,15 +466,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\RuleSetViews\ResourceViews\ResourceEditView.xaml">
+    <Page Include="Views\RuleSetViews\ResourceViews\ResourceView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\RuleSetViews\ResourceViews\ResourceGroupEditView.xaml">
+    <Page Include="Views\RuleSetViews\ResourceViews\ResourceGroupView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\RuleSetViews\ResourceViews\ResourcePartEditView.xaml">
+    <Page Include="Views\RuleSetViews\ResourceViews\ResourcePartView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -550,7 +514,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\RuleSetViews\WorldResourceViews\WorldResourceEditView.xaml">
+    <Page Include="Views\RuleSetViews\WorldResourceViews\WorldResourceView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

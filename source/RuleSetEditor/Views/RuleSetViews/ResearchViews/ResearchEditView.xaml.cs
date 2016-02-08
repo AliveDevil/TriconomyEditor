@@ -18,9 +18,9 @@ namespace RuleSetEditor.Views.RuleSetViews.ResearchViews
     /// <summary>
     /// Interaktionslogik für ResearchEditView.xaml
     /// </summary>
-    public partial class ResearchEditView : UserControl
+    public partial class ResearchView : UserControl
     {
-        public ResearchEditView()
+        public ResearchView()
         {
             InitializeComponent();
         }

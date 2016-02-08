@@ -16,10 +16,6 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels.NeedViewModels
             {
                 if (!RaiseSetIfChanged(ref need, value))
                     return;
-                if (!DeferChanged)
-                    OnElementChanged();
-                else
-                    DeferQueue.Enqueue(OnElementChanged);
             }
         }
 

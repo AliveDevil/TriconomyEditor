@@ -3,30 +3,33 @@ using RuleSet.Menus;
 
 namespace RuleSetEditor.ViewModels.RuleSetViewModels.ToolbarViewModels
 {
-    public class OpenToolbarItemViewModel : ToolbarItemViewModel
+    public class OpenToolbarItemViewModel : ToolbarItemViewModel<OpenToolbarItem>
     {
         private ReactiveProperty<ToolbarViewModel> toolbarProperty;
 
-        public OpenToolbarItem OpenToolbar => (OpenToolbarItem)MenuItem;
-
         public ReactiveProperty<ToolbarViewModel> Toolbar
         {
-            get { return toolbarProperty; }
-            private set { toolbarProperty = value; }
+            get
+            {
+                return toolbarProperty;
+            }
+            private set
+            {
+                toolbarProperty = value;
+            }
         }
-        
-        protected override void OnMenuItemChanged()
+
+        protected override void OnInitialize()
         {
-            base.OnMenuItemChanged();
-            Toolbar = ReactiveProperty.FromObject(OpenToolbar,
+            base.OnInitialize();
+
+            Toolbar = ReactiveProperty.FromObject(MenuItem,
                 t => t.Toolbar,
-                t => new ToolbarViewModel() { Toolbar = t, RuleSetViewModel = RuleSetViewModel },
+                t => RuleSetViewModel.Create<ToolbarViewModel>(v =>
+                {
+                    v.Toolbar = t;
+                }),
                 t => t?.Toolbar);
-        }
-        
-        protected override void OnViewStackChanged()
-        {
-            Toolbar.Value.ViewStack = ViewStack;
         }
     }
 }

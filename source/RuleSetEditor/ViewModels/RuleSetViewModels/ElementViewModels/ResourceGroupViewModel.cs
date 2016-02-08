@@ -5,40 +5,78 @@ using RuleSet.Elements;
 
 namespace RuleSetEditor.ViewModels.RuleSetViewModels.ElementViewModels
 {
-    public class ResourceGroupViewModel : ResourceViewModel
+    public class ResourceGroupViewModel : ResourceViewModel<ResourceGroup>
     {
-        private IDisposable beforeItemsAdded;
-        private IDisposable beforeItemsRemoved;
+        private RelayCommand addResourceCommand;
+        private IReactiveDerivedList<ResourceViewModel> availableResources;
+        private IDisposable itemsAdded;
+        private IDisposable itemsRemoved;
         private ReactiveList<ResourceViewModel> resourcesList;
+        private ResourceViewModel selectedResource;
 
-        public ResourceGroup ResourceGroup => (ResourceGroup)Element;
+        public RelayCommand AddResourceCommand => addResourceCommand ?? (addResourceCommand = new RelayCommand(() =>
+        {
+            if (ResourceList.Contains(SelectedResource))
+                return;
+            ResourceList.Add(SelectedResource);
+        }));
+
+        public IReactiveDerivedList<ResourceViewModel> AvailableResources
+        {
+            get
+            {
+                return availableResources;
+            }
+            private set
+            {
+                RaiseSetIfChanged(ref availableResources, value);
+            }
+        }
 
         public ReactiveList<ResourceViewModel> ResourceList
         {
-            get { return resourcesList; }
-            private set { RaiseSetIfChanged(ref resourcesList, value); }
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
+            get
             {
-                beforeItemsAdded.Dispose();
-                beforeItemsRemoved.Dispose();
-                ResourceList.Clear();
-
-                resourcesList = null;
+                return resourcesList;
             }
-            base.Dispose(disposing);
+            private set
+            {
+                RaiseSetIfChanged(ref resourcesList, value);
+            }
         }
 
-        protected override void OnElementChanged()
+        public ResourceViewModel SelectedResource
         {
-            base.OnElementChanged();
-            ResourceList = new ReactiveList<ResourceViewModel>(ResourceGroup.Resources.Select(r => (ResourceViewModel)RuleSetViewModel.ElementList.First(e => e is ResourceViewModel && e.Element == r)));
+            get
+            {
+                return selectedResource;
+            }
+            set
+            {
+                RaiseSetIfChanged(ref selectedResource, value);
+            }
+        }
+        
+        protected override void OnInitialize()
+        {
+            base.OnInitialize();
+
+            AvailableResources = RuleSetViewModel.ElementList.CreateDerivedCollection(
+                e => (ResourceViewModel)e,
+                e => e is ResourceViewModel,
+                (l, r) => l.Name.Value.CompareTo(r.Name.Value));
+            AvailableResources.ChangeTrackingEnabled = true;
+        }
+
+        protected override void OnPostInitialize()
+        {
+            base.OnPostInitialize();
+
+            ResourceList = new ReactiveList<ResourceViewModel>(Element.Resources.Select(r => AvailableResources.OfType<ResourceViewModel>().First(e => e.Element == r)));
             ResourceList.ChangeTrackingEnabled = true;
-            beforeItemsAdded = ResourceList.BeforeItemsAdded.Subscribe(r => ResourceGroup.Resources.Add(r.Element));
-            beforeItemsRemoved = ResourceList.BeforeItemsRemoved.Subscribe(r => ResourceGroup.Resources.Remove(r.Element));
+
+            itemsAdded = ResourceList.ItemsAdded.Subscribe(r => Element.Resources.Add(r.Element));
+            itemsRemoved = ResourceList.ItemsRemoved.Subscribe(r => Element.Resources.Remove(r.Element));
         }
     }
 }

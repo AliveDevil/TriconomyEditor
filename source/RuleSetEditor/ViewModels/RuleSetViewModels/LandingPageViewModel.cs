@@ -11,45 +11,44 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels
 
         public ReactiveProperty<string> Name
         {
-            get { return nameProperty; }
-            private set { RaiseSetIfChanged(ref nameProperty, value); }
-        }
-
-        public RelayCommand SaveCommand
-        {
             get
             {
-                return saveCommand ?? (saveCommand = new RelayCommand(() =>
-                {
-                    FileInfo sourceFile = null;
-                    if (string.IsNullOrEmpty(RuleSetViewModel.SourceFilePath))
-                        sourceFile = new FileInfo($"{RuleSetViewModel.RuleSet.Name}.ruleset");
-                    else
-                        sourceFile = new FileInfo(RuleSetViewModel.SourceFilePath);
-                    if (sourceFile.Extension != ".ruleset")
-                        sourceFile.MoveTo(Path.Combine(sourceFile.Directory.FullName, $"{Path.GetFileNameWithoutExtension(sourceFile.Name)}.ruleset"));
-                    if (Path.GetFileNameWithoutExtension(sourceFile.Name) != RuleSetViewModel.RuleSet.Name)
-                        sourceFile.MoveTo(Path.Combine(sourceFile.Directory.FullName, $"{RuleSetViewModel.RuleSet.Name}.ruleset"));
-
-                    using (var stream = sourceFile.Open(FileMode.Create, FileAccess.ReadWrite, FileShare.Read))
-                        RuleSet.RuleSet.Save(RuleSetViewModel.RuleSet, stream);
-                }));
+                return nameProperty;
+            }
+            private set
+            {
+                RaiseSetIfChanged(ref nameProperty, value);
             }
         }
+
+        public RelayCommand SaveCommand => saveCommand ?? (saveCommand = new RelayCommand(() =>
+        {
+            FileInfo sourceFile = null;
+            if (string.IsNullOrEmpty(RuleSetViewModel.SourceFilePath))
+                sourceFile = new FileInfo($"{RuleSetViewModel.RuleSet.Name}.ruleset");
+            else
+                sourceFile = new FileInfo(RuleSetViewModel.SourceFilePath);
+            if (sourceFile.Extension != ".ruleset")
+                sourceFile.MoveTo(Path.Combine(sourceFile.Directory.FullName, $"{Path.GetFileNameWithoutExtension(sourceFile.Name)}.ruleset"));
+            if (Path.GetFileNameWithoutExtension(sourceFile.Name) != RuleSetViewModel.RuleSet.Name)
+                sourceFile.MoveTo(Path.Combine(sourceFile.Directory.FullName, $"{RuleSetViewModel.RuleSet.Name}.ruleset"));
+
+            using (var stream = sourceFile.Open(FileMode.Create, FileAccess.ReadWrite, FileShare.Read))
+                RuleSet.RuleSet.Save(RuleSetViewModel.RuleSet, stream);
+        }));
 
         protected override void Dispose(bool disposing)
         {
             if (disposing)
             {
-                Dispose(ref nameProperty);
                 Dispose(ref saveCommand);
             }
             base.Dispose(disposing);
         }
 
-        protected override void OnRuleSetChanged()
+        protected override void OnInitialize()
         {
-            base.OnRuleSetChanged();
+            base.OnInitialize();
             Name = RuleSetViewModel.Name;
         }
     }

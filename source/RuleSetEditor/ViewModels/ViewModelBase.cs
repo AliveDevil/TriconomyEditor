@@ -23,14 +23,20 @@ namespace RuleSetEditor.ViewModels
             }
             set
             {
-                if (!RaiseSetIfChanged(ref viewStack, value)) return;
+                if (!RaiseSetIfChanged(ref viewStack, value))
+                    return;
                 OnViewStackChanged();
             }
         }
 
         public void Dispose()
         {
-            Dispose(!disposed);
+            if (disposed)
+                return;
+            Dispose(true);
+            PropertyChanged = null;
+            closeCommand = null;
+            disposed = true;
         }
 
         public void Dispose<T>(ref T t) where T : class, IDisposable
@@ -46,9 +52,6 @@ namespace RuleSetEditor.ViewModels
 
         protected virtual void Dispose(bool disposing)
         {
-            PropertyChanged = null;
-            closeCommand = null;
-            disposed = true;
         }
 
         protected void OnPropertyChanged([CallerMemberName]string propertyName = null)
@@ -67,7 +70,8 @@ namespace RuleSetEditor.ViewModels
 
         protected bool RaiseSetIfChanged<T>(ref T field, T value, [CallerMemberName]string propertyName = null)
         {
-            if (Equals(field, value)) return false;
+            if (Equals(field, value))
+                return false;
             field = value;
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
             return true;

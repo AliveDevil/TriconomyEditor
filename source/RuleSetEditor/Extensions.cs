@@ -8,13 +8,13 @@ namespace RuleSetEditor
     {
         public static T _<T>(this T t, Action<T> a)
         {
-            a(t);
+            a?.Invoke(t);
             return t;
         }
 
         public static T _<T>(this T t, RefAction<T> a)
         {
-            a(ref t);
+            a?.Invoke(ref t);
             return t;
         }
     }

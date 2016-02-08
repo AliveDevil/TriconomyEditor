@@ -1,11 +1,11 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 					xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-					xmlns:vm="clr-namespace:RuleSetEditor.ViewModels.RuleSetViewModels.NeedViewModels.EditViewModels"
+					xmlns:vm="clr-namespace:RuleSetEditor.ViewModels.RuleSetViewModels.NeedViewModels"
 					xmlns:local="clr-namespace:RuleSetEditor.Views.RuleSetViews.NeedViews">
-	<DataTemplate DataType="{x:Type vm:BuildingNeedEditViewModel}">
-		<local:BuildingNeedEditView />
+	<DataTemplate DataType="{x:Type vm:BuildingNeedViewModel}">
+		<local:BuildingNeedView />
 	</DataTemplate>
-	<DataTemplate DataType="{x:Type vm:ResourceNeedEditViewModel}">
-		<local:ResourceNeedEditView />
+	<DataTemplate DataType="{x:Type vm:ResourceNeedViewModel}">
+		<local:ResourceNeedView />
 	</DataTemplate>
 </ResourceDictionary>

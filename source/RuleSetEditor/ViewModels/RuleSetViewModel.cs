@@ -1,14 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using System.Reactive.Linq;
 using libUIStack;
 using Reactive.Bindings;
 using ReactiveUI;
 using RuleSet.Elements;
 using RuleSet.Needs;
-using RuleSetEditor.ViewModels.RuleSetViewModels;
 using RuleSetEditor.ViewModels.RuleSetViewModels.ElementViewModels;
 using RuleSetEditor.ViewModels.RuleSetViewModels.NeedViewModels;
 using RuleSetEditor.ViewModels.RuleSetViewModels.ResearchViewModels;
@@ -18,15 +16,39 @@ namespace RuleSetEditor.ViewModels
     public class RuleSetViewModel : ViewModelBase, IViewStack
     {
         private IView currentView;
+        private IDisposable elementAdded;
         private ReactiveList<ElementViewModel> elementList;
+        private IDisposable elementListConstructor;
+        private IDisposable elementListInitializer;
+        private IDisposable elementListPostDisposer;
+        private IDisposable elementListPostInitializer;
+        private IDisposable elementRemoved;
         private Stack<IView> loadedViews = new Stack<IView>();
         private ReactiveProperty<string> nameProperty;
         private ReactiveList<NeedViewModel> needs;
+        private IDisposable needsAdded;
+        private IDisposable needsListConstructor;
+        private IDisposable needsListInitializer;
+        private IDisposable needsListPostDisposer;
+        private IDisposable needsListPostInitializer;
+        private IDisposable needsRemoved;
         private RelayCommand<Type> openViewCommand;
         private ReactiveList<ResearchViewModel> research;
+        private IDisposable researchAdded;
+        private IDisposable researchListConstructor;
+        private IDisposable researchListInitializer;
+        private IDisposable researchListPostDisposer;
+        private IDisposable researchListPostInitializer;
+        private IDisposable researchRemoved;
         private RuleSet.RuleSet ruleSet;
         private string sourceFilePath;
         private ReactiveList<ResourcePartViewModel> startInventory;
+        private IDisposable startResourceAdded;
+        private IDisposable startResourceListConstructor;
+        private IDisposable startResourceRemoved;
+        private IDisposable startResourcesListInitializer;
+        private IDisposable startResourcesListPostDisposer;
+        private IDisposable startResourcesListPostInitializer;
 
         public ReactiveList<ElementViewModel> ElementList
         {
@@ -70,7 +92,12 @@ namespace RuleSetEditor.ViewModels
             {
                 return openViewCommand ?? (openViewCommand = new RelayCommand<Type>(t =>
                 {
-                    Set((ViewModelBase)Activator.CreateInstance(t));
+                    var instance = (RuleSetViewModelBase)Activator.CreateInstance(t);
+                    instance.RuleSetViewModel = this;
+                    instance.ViewStack = this;
+                    instance.Initialize();
+                    Set(instance);
+                    instance.PostInitialize();
                 }));
             }
         }
@@ -96,88 +123,6 @@ namespace RuleSetEditor.ViewModels
             set
             {
                 RaiseSetIfChanged(ref ruleSet, value);
-                Name = ReactiveProperty.FromObject(RuleSet, r => r.Name);
-
-                ElementList = new ReactiveList<ElementViewModel>(RuleSet.Elements.Select(element =>
-                {
-                    ElementViewModel viewModel = null;
-                    if (element is ResourceGroup)
-                        viewModel = new ResourceGroupViewModel();
-                    else if (element is WorldResource)
-                        viewModel = new WorldResourceViewModel();
-                    else if (element is LivingResource)
-                        viewModel = new LivingResourceViewModel();
-                    else if (element is Building)
-                        viewModel = new BuildingViewModel();
-                    else if (element is Job)
-                        viewModel = new JobViewModel();
-                    else if (element is Resource)
-                        viewModel = new ResourceViewModel();
-
-                    if (viewModel != null)
-                    {
-                        viewModel.DeferChanged = true;
-                        viewModel.RuleSetViewModel = this;
-                        viewModel.Element = element;
-                    }
-
-                    return viewModel;
-                }).Where(e => e != null));
-                Needs = new ReactiveList<NeedViewModel>(RuleSet.Needs.Select(need =>
-                {
-                    NeedViewModel viewModel = null;
-
-                    if (need is ResourceNeed)
-                        viewModel = new ResourceNeedViewModel();
-                    else if (need is BuildingNeed)
-                        viewModel = new BuildingNeedViewModel();
-
-                    if (viewModel != null)
-                    {
-                        viewModel.DeferChanged = true;
-                        viewModel.RuleSetViewModel = this;
-                        viewModel.Need = need;
-                    }
-
-                    return viewModel;
-                }).Where(e => e != null));
-                Research = new ReactiveList<ResearchViewModel>(RuleSet.Research.Select(research => new ResearchViewModel()
-                {
-                    DeferChanged = true,
-                    RuleSetViewModel = this,
-                    Research = research
-                }));
-                StartResources = new ReactiveList<ResourcePartViewModel>(RuleSet.StartResources.Select(resourcePart => new ResourcePartViewModel()
-                {
-                    DeferChanged = true,
-                    RuleSetViewModel = this,
-                    ResourcePart = resourcePart
-                }));
-
-                ElementList.ChangeTrackingEnabled = true;
-                Needs.ChangeTrackingEnabled = true;
-                Research.ChangeTrackingEnabled = true;
-                StartResources.ChangeTrackingEnabled = true;
-
-                foreach (var item in ElementList)
-                    item.DeferChanged = false;
-                foreach (var item in Needs)
-                    item.DeferChanged = false;
-                foreach (var item in Research)
-                    item.DeferChanged = false;
-                foreach (var item in StartResources)
-                    item.DeferChanged = false;
-
-                ElementList.BeforeItemsAdded.Subscribe(e => RuleSet.Elements.Add(e?.Element));
-                ElementList.BeforeItemsRemoved.Subscribe(e => RuleSet.Elements.Remove(e?.Element));
-                Needs.BeforeItemsAdded.Subscribe(e => RuleSet.Needs.Add(e?.Need));
-                Needs.BeforeItemsRemoved.Subscribe(e => RuleSet.Needs.Remove(e?.Need));
-                Research.BeforeItemsAdded.Subscribe(e => RuleSet.Research.Add(e?.Research));
-                Research.BeforeItemsRemoved.Subscribe(e => RuleSet.Research.Remove(e?.Research));
-                StartResources.BeforeItemsAdded.Subscribe(e => RuleSet.StartResources.Add(e?.ResourcePart));
-                StartResources.BeforeItemsRemoved.Subscribe(e => RuleSet.StartResources.Remove(e?.ResourcePart));
-
-                Set<RuleSetViewModels.LandingPageViewModel>();
             }
         }
 
@@ -223,6 +168,36 @@ namespace RuleSetEditor.ViewModels
             UpdateCurrentView();
         }
 
+        public T Create<T>(Action<T> preInitializer) where T : RuleSetViewModelBase, new()
+        {
+            return new T()
+            {
+                RuleSetViewModel = this,
+                ViewStack = this
+            }._(preInitializer);
+        }
+
+        public void Initialize()
+        {
+            Name = ReactiveProperty.FromObject(RuleSet, r => r.Name);
+
+            ElementList = new ReactiveList<ElementViewModel>() { ChangeTrackingEnabled = true };
+            elementListInitializer = ElementList.BeforeItemsAdded.Subscribe(e => e.Initialize());
+            elementListPostDisposer = ElementList.ItemsRemoved.Subscribe(e => e.Dispose());
+
+            Needs = new ReactiveList<NeedViewModel>() { ChangeTrackingEnabled = true };
+            needsListInitializer = Needs.BeforeItemsAdded.Subscribe(n => n.Initialize());
+            needsListPostDisposer = Needs.BeforeItemsRemoved.Subscribe(n => n.Dispose());
+
+            Research = new ReactiveList<ResearchViewModel>() { ChangeTrackingEnabled = true };
+            researchListInitializer = Research.BeforeItemsAdded.Subscribe(n => n.Initialize());
+            researchListPostDisposer = Research.BeforeItemsRemoved.Subscribe(n => n.Dispose());
+
+            StartResources = new ReactiveList<ResourcePartViewModel>() { ChangeTrackingEnabled = true };
+            startResourcesListInitializer = StartResources.BeforeItemsAdded.Subscribe(n => n.Initialize());
+            startResourcesListPostDisposer = StartResources.BeforeItemsRemoved.Subscribe(n => n.Dispose());
+        }
+
         public bool IsOpen(Type viewType)
         {
             foreach (var view in loadedViews)
@@ -235,6 +210,105 @@ namespace RuleSetEditor.ViewModels
         {
             PopInternal();
             UpdateCurrentView();
+        }
+
+        public void PostInitialize()
+        {
+            foreach (var item in RuleSet.Elements)
+            {
+                ElementViewModel viewModel = null;
+                if (item is ResourceGroup)
+                    viewModel = new ResourceGroupViewModel();
+                else if (item is WorldResource)
+                    viewModel = new WorldResourceViewModel();
+                else if (item is LivingResource)
+                    viewModel = new LivingResourceViewModel();
+                else if (item is Building)
+                    viewModel = new BuildingViewModel();
+                else if (item is Job)
+                    viewModel = new JobViewModel();
+                else if (item is Resource)
+                    viewModel = new ResourceViewModel();
+                else
+                    continue;
+
+                viewModel.RuleSetViewModel = this;
+                viewModel.ViewStack = this;
+                viewModel.Element = item;
+                ElementList.Add(viewModel);
+            }
+
+            elementListPostInitializer = ElementList.ItemsAdded.Subscribe(e => e.PostInitialize());
+            elementListConstructor = ElementList.BeforeItemsAdded.Subscribe(e => e.Construct());
+            elementAdded = ElementList.BeforeItemsAdded.Subscribe(e => RuleSet.Elements.Add(e?.Element));
+            elementRemoved = ElementList.ItemsRemoved.Subscribe(e => RuleSet.Elements.Remove(e?.Element));
+
+            foreach (var item in RuleSet.Needs)
+            {
+                NeedViewModel viewModel = null;
+
+                if (item is ResourceNeed)
+                    viewModel = new ResourceNeedViewModel();
+                else if (item is BuildingNeed)
+                    viewModel = new BuildingNeedViewModel();
+                else
+                    continue;
+
+                viewModel.RuleSetViewModel = this;
+                viewModel.ViewStack = this;
+                viewModel.Need = item;
+
+                Needs.Add(viewModel);
+            }
+
+            needsListPostInitializer = Needs.ItemsAdded.Subscribe(n => n.PostInitialize());
+            needsListConstructor = Needs.BeforeItemsAdded.Subscribe(e => e.Construct());
+            needsAdded = Needs.BeforeItemsAdded.Subscribe(e => RuleSet.Needs.Add(e?.Need));
+            needsRemoved = Needs.ItemsRemoved.Subscribe(e => RuleSet.Needs.Remove(e?.Need));
+
+            foreach (var item in RuleSet.Research)
+            {
+                Research.Add(new ResearchViewModel()
+                {
+                    RuleSetViewModel = this,
+                    ViewStack = this,
+                    Research = item
+                });
+            }
+
+            researchListPostInitializer = Research.ItemsAdded.Subscribe(n => n.PostInitialize());
+            researchListConstructor = Research.BeforeItemsAdded.Subscribe(e => e.Construct());
+            researchAdded = Research.BeforeItemsAdded.Subscribe(e => RuleSet.Research.Add(e?.Research));
+            researchRemoved = Research.ItemsRemoved.Subscribe(e => RuleSet.Research.Remove(e?.Research));
+
+            foreach (var item in RuleSet.StartResources)
+            {
+                StartResources.Add(new ResourcePartViewModel()
+                {
+                    RuleSetViewModel = this,
+                    ViewStack = this,
+                    ResourcePart = item
+                });
+            }
+
+            startResourcesListPostInitializer = StartResources.ItemsAdded.Subscribe(n => n.PostInitialize());
+            startResourceListConstructor = StartResources.BeforeItemsAdded.Subscribe(e => e.Construct());
+            startResourceAdded = StartResources.BeforeItemsAdded.Subscribe(e => RuleSet.StartResources.Add(e?.ResourcePart));
+            startResourceRemoved = StartResources.ItemsRemoved.Subscribe(e => RuleSet.StartResources.Remove(e?.ResourcePart));
+
+            foreach (var item in ElementList)
+                item.PostInitialize();
+            foreach (var item in Needs)
+                item.PostInitialize();
+            foreach (var item in Research)
+                item.PostInitialize();
+            foreach (var item in StartResources)
+                item.PostInitialize();
+
+            Set(Create<RuleSetViewModels.LandingPageViewModel>(v =>
+            {
+                v.Initialize();
+            }));
         }
 
         public T Push<T>() where T : IView, new()
@@ -279,7 +353,6 @@ namespace RuleSetEditor.ViewModels
 
         private void PushInternal(IView view)
         {
-            SetProperties(view);
             loadedViews.Push(view);
         }
 
@@ -287,15 +360,6 @@ namespace RuleSetEditor.ViewModels
         {
             ClearInternal();
             PushInternal(view);
-        }
-
-        private void SetProperties(IView view)
-        {
-            view.ViewStack = this;
-            if (view is RuleSetViewModelBase)
-                ((RuleSetViewModelBase)view).RuleSetViewModel = this;
-            if (view is ViewModelBase)
-                ((ViewModelBase)view).Update();
         }
 
         private void UpdateCurrentView()

@@ -1,47 +1,47 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 					xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 					xmlns:local="clr-namespace:RuleSetEditor.Views.EffectViews"
-					xmlns:vm="clr-namespace:RuleSetEditor.ViewModels.EffectViewModels.EffectEditViewModels">
-	<DataTemplate DataType="{x:Type vm:AddRecipeEffectEditViewModel}">
+					xmlns:vm="clr-namespace:RuleSetEditor.ViewModels.EffectViewModels">
+	<DataTemplate DataType="{x:Type vm:AddRecipeEffectViewModel}">
 		<local:AddRecipeEffectView />
 	</DataTemplate>
-	<DataTemplate DataType="{x:Type vm:AssemblyPointEffectEditViewModel}">
+	<DataTemplate DataType="{x:Type vm:AssemblyPointEffectViewModel}">
 		<local:AssemblyPointEffectView />
 	</DataTemplate>
-	<DataTemplate DataType="{x:Type vm:DeliverEffectEditViewModel}">
+	<DataTemplate DataType="{x:Type vm:DeliverEffectViewModel}">
 		<local:DeliverEffectView />
 	</DataTemplate>
-	<DataTemplate DataType="{x:Type vm:ExtendSettlerAmountEffectEditViewModel}">
+	<DataTemplate DataType="{x:Type vm:ExtendSettlerAmountEffectViewModel}">
 		<local:ExtendSettlerAmountEffectView />
 	</DataTemplate>
-	<DataTemplate DataType="{x:Type vm:ExtendStorageEffectEditViewModel}">
+	<DataTemplate DataType="{x:Type vm:ExtendStorageEffectViewModel}">
 		<local:ExtendStoragEffectView />
 	</DataTemplate>
-	<DataTemplate DataType="{x:Type vm:GatherResourceEffectEditViewModel}">
+	<DataTemplate DataType="{x:Type vm:GatherResourceEffectViewModel}">
 		<local:GatherResourceEffectView />
 	</DataTemplate>
-	<DataTemplate DataType="{x:Type vm:HabitEffectEditViewModel}">
+	<DataTemplate DataType="{x:Type vm:HabitEffectViewModel}">
 		<local:HabitEffectView />
 	</DataTemplate>
-	<DataTemplate DataType="{x:Type vm:ProduceResourceEffectEditViewModel}">
+	<DataTemplate DataType="{x:Type vm:ProduceResourceEffectViewModel}">
 		<local:ProduceResourceEffectView />
 	</DataTemplate>
-	<DataTemplate DataType="{x:Type vm:ResearchEffectEditViewModel}">
+	<DataTemplate DataType="{x:Type vm:ResearchEffectViewModel}">
 		<local:ResearchView />
 	</DataTemplate>
-	<DataTemplate DataType="{x:Type vm:SpawnLivingResourceEffectEditViewModel}">
+	<DataTemplate DataType="{x:Type vm:SpawnLivingResourceEffectViewModel}">
 		<local:SpawnLivingResourceEffectView />
 	</DataTemplate>
-	<DataTemplate DataType="{x:Type vm:SpawnWorldResourceEffectEditViewModel}">
+	<DataTemplate DataType="{x:Type vm:SpawnWorldResourceEffectViewModel}">
 		<local:SpawnWorldResourceEffectView />
 	</DataTemplate>
-	<DataTemplate DataType="{x:Type vm:StorageEffectEditViewModel}">
+	<DataTemplate DataType="{x:Type vm:StorageEffectViewModel}">
 		<local:StorageEffectView />
 	</DataTemplate>
-	<DataTemplate DataType="{x:Type vm:UseResourceEffectEditViewModel}">
+	<DataTemplate DataType="{x:Type vm:UseResourceEffectViewModel}">
 		<local:UseResourceEffectView />
 	</DataTemplate>
-	<DataTemplate DataType="{x:Type vm:WorkplaceEffectEditViewModel}">
+	<DataTemplate DataType="{x:Type vm:WorkplaceEffectViewModel}">
 		<local:WorkplaceEffectView />
 	</DataTemplate>
 </ResourceDictionary>

@@ -14,48 +14,41 @@ namespace RuleSet.Versions
         {
             get
             {
-                return 1;
+                return 2;
             }
         }
 
-        protected override void OnModelCreation(RuntimeTypeModel model)
+        protected override void OnModelCreation(TypeModel model)
         {
-            CreateRuleSet(model);
+            var runtimeTypeModel = (RuntimeTypeModel)model;
+            runtimeTypeModel.AutoAddMissingTypes = false;
+            runtimeTypeModel.AutoAddProtoContractTypesOnly = false;
+            runtimeTypeModel.AutoCompile = true;
 
-            CreateConditions(model);
+            CreateRuleSet(runtimeTypeModel);
 
-            CreateEffects(model);
+            CreateConditions(runtimeTypeModel);
 
-            CreateElements(model);
+            CreateEffects(runtimeTypeModel);
 
-            CreateEvents(model);
+            CreateElements(runtimeTypeModel);
 
-            CreateToolbar(model);
+            CreateEvents(runtimeTypeModel);
 
-            CreateNeeds(model);
+            CreateToolbar(runtimeTypeModel);
 
-            CreateResearch(model);
+            CreateNeeds(runtimeTypeModel);
 
-            CreateUpgrade(model);
+            CreateResearch(runtimeTypeModel);
+
+            CreateUpgrade(runtimeTypeModel);
+
+            runtimeTypeModel.Freeze();
         }
 
         private static void CreateConditions(RuntimeTypeModel model)
         {
-            model.Add(typeof(Condition), false).With(c =>
-            {
-                c.AddSubType(typeof(DateTimeCondition));
-                c.AddSubType(typeof(DayTimeCondition));
-                c.AddSubType(typeof(DelayCondition));
-                c.AddSubType(typeof(ElementNearByCondition));
-                c.AddSubType(typeof(ExistingBuildingCondition));
-                c.AddSubType(typeof(LevelCondition));
-                c.AddSubType(typeof(ResearchCondition));
-                c.AddSubType(typeof(TraverseCondition));
-                c.AddSubType(typeof(TriggerCondition));
-                c.AddSubType(typeof(WorkingCondition));
-            });
-
-            model.Add(typeof(DayTimeCondition), false).With(c =>
+            model.Add(typeof(DateTimeCondition), false).With(c =>
             {
                 c.AddField(1, "DateTime");
             });
@@ -110,29 +103,24 @@ namespace RuleSet.Versions
             model.Add(typeof(WorkingCondition), false).With(c =>
             {
             });
+
+            model.Add(typeof(Condition), false).With(c =>
+            {
+                c.AddSubType(typeof(DateTimeCondition));
+                c.AddSubType(typeof(DayTimeCondition));
+                c.AddSubType(typeof(DelayCondition));
+                c.AddSubType(typeof(ElementNearByCondition));
+                c.AddSubType(typeof(ExistingBuildingCondition));
+                c.AddSubType(typeof(LevelCondition));
+                c.AddSubType(typeof(ResearchCondition));
+                c.AddSubType(typeof(TraverseCondition));
+                c.AddSubType(typeof(TriggerCondition));
+                c.AddSubType(typeof(WorkingCondition));
+            });
         }
 
         private static void CreateEffects(RuntimeTypeModel model)
         {
-            model.Add(typeof(Effect), false).With(e =>
-            {
-                e.AddSubType(typeof(AddRecipeEffect));
-                e.AddSubType(typeof(AssemblyPointEffect));
-                e.AddSubType(typeof(DeliverEffect));
-                e.AddSubType(typeof(ExtendSettlerAmountEffect));
-                e.AddSubType(typeof(ExtendStorageEffect));
-                e.AddSubType(typeof(GatherResourceEffect));
-                e.AddSubType(typeof(HabitEffect));
-                e.AddSubType(typeof(IncreaseProductivityEffect));
-                e.AddSubType(typeof(ProduceResourceEffect));
-                e.AddSubType(typeof(ResearchEffect));
-                e.AddSubType(typeof(SpawnLivingResourceEffect));
-                e.AddSubType(typeof(SpawnWorldResourceEffect));
-                e.AddSubType(typeof(StorageEffect));
-                e.AddSubType(typeof(UseResourceEffect));
-                e.AddSubType(typeof(WorkplaceEffect));
-            });
-
             model.Add(typeof(AddRecipeEffect), false).With(e =>
             {
                 e.AddField(1, "InResources").With(r =>
@@ -249,21 +237,29 @@ namespace RuleSet.Versions
                     j.AsReference = true;
                 });
             });
+
+            model.Add(typeof(Effect), false).With(e =>
+            {
+                e.AddSubType(typeof(AddRecipeEffect));
+                e.AddSubType(typeof(AssemblyPointEffect));
+                e.AddSubType(typeof(DeliverEffect));
+                e.AddSubType(typeof(ExtendSettlerAmountEffect));
+                e.AddSubType(typeof(ExtendStorageEffect));
+                e.AddSubType(typeof(GatherResourceEffect));
+                e.AddSubType(typeof(HabitEffect));
+                e.AddSubType(typeof(IncreaseProductivityEffect));
+                e.AddSubType(typeof(ProduceResourceEffect));
+                e.AddSubType(typeof(ResearchEffect));
+                e.AddSubType(typeof(SpawnLivingResourceEffect));
+                e.AddSubType(typeof(SpawnWorldResourceEffect));
+                e.AddSubType(typeof(StorageEffect));
+                e.AddSubType(typeof(UseResourceEffect));
+                e.AddSubType(typeof(WorkplaceEffect));
+            });
         }
 
         private static void CreateElements(RuntimeTypeModel model)
         {
-            model.Add(typeof(Element), false).With(e =>
-            {
-                e.AddField(1, "Name");
-
-                e.AddSubType(typeof(Building));
-                e.AddSubType(typeof(Job));
-                e.AddSubType(typeof(LivingResource));
-                e.AddSubType(typeof(Resource));
-                e.AddSubType(typeof(WorldResource));
-            });
-
             model.Add(typeof(Building), false).With(e =>
             {
                 e.AddField(1, "Events").With(v =>
@@ -293,13 +289,6 @@ namespace RuleSet.Versions
                 });
             });
 
-            model.Add(typeof(Resource), false).With(e =>
-            {
-                e.AddField(1, "StackSize");
-
-                e.AddSubType(typeof(ResourceGroup));
-            });
-
             model.Add(typeof(ResourceGroup), false).With(e =>
             {
                 e.AddField(1, "Resources").With(r =>
@@ -307,6 +296,13 @@ namespace RuleSet.Versions
                     r.AsReference = true;
                     r.OverwriteList = false;
                 });
+            });
+
+            model.Add(typeof(Resource), false).With(e =>
+            {
+                e.AddField(1, "StackSize");
+
+                e.AddSubType(typeof(ResourceGroup));
             });
 
             model.Add(typeof(WorldResource), false).With(e =>
@@ -318,6 +314,17 @@ namespace RuleSet.Versions
                     r.AsReference = true;
                 });
                 e.AddField(4, "Variants");
+            });
+
+            model.Add(typeof(Element), false).With(e =>
+            {
+                e.AddField(1, "Name");
+
+                e.AddSubType(typeof(Building));
+                e.AddSubType(typeof(Job));
+                e.AddSubType(typeof(LivingResource));
+                e.AddSubType(typeof(Resource));
+                e.AddSubType(typeof(WorldResource));
             });
 
             model.Add(typeof(ResourcePart), false).With(e =>
@@ -352,14 +359,6 @@ namespace RuleSet.Versions
                 });
             });
 
-            model.Add(typeof(EventAction), false).With(a =>
-            {
-                a.AddSubType(typeof(PlayAnimationEventAction));
-                a.AddSubType(typeof(PlaySoundEventAction));
-                a.AddSubType(typeof(TriggerRandomAnimationEventAction));
-                a.AddSubType(typeof(TriggerRandomSoundEventAction));
-            });
-
             model.Add(typeof(PlayAnimationEventAction), false).With(a =>
             {
                 a.AddField(1, "Animation");
@@ -367,7 +366,7 @@ namespace RuleSet.Versions
 
             model.Add(typeof(PlaySoundEventAction), false).With(a =>
             {
-                a.AddField(1, "SoundName");
+                a.AddField(1, "Source");
             });
 
             model.Add(typeof(TriggerRandomAnimationEventAction), false).With(a =>
@@ -387,22 +386,18 @@ namespace RuleSet.Versions
                     s.OverwriteList = false;
                 });
             });
+
+            model.Add(typeof(EventAction), false).With(a =>
+            {
+                a.AddSubType(typeof(PlayAnimationEventAction));
+                a.AddSubType(typeof(PlaySoundEventAction));
+                a.AddSubType(typeof(TriggerRandomAnimationEventAction));
+                a.AddSubType(typeof(TriggerRandomSoundEventAction));
+            });
         }
 
         private static void CreateNeeds(RuntimeTypeModel model)
         {
-            model.Add(typeof(Need), false).With(n =>
-            {
-                n.AddField(1, "Conditions").With(c =>
-                {
-                    c.AsReference = false;
-                    c.OverwriteList = false;
-                });
-
-                n.AddSubType(typeof(BuildingNeed));
-                n.AddSubType(typeof(ResourceNeed));
-            });
-
             model.Add(typeof(BuildingNeed), false).With(n =>
             {
                 n.AddField(1, "Building").With(b =>
@@ -419,6 +414,18 @@ namespace RuleSet.Versions
                 {
                     r.AsReference = true;
                 });
+            });
+
+            model.Add(typeof(Need), false).With(n =>
+            {
+                n.AddField(1, "Conditions").With(c =>
+                {
+                    c.AsReference = false;
+                    c.OverwriteList = false;
+                });
+
+                n.AddSubType(typeof(BuildingNeed));
+                n.AddSubType(typeof(ResourceNeed));
             });
         }
 
@@ -492,12 +499,6 @@ namespace RuleSet.Versions
                 });
             });
 
-            model.Add(typeof(ToolbarItem), false).With(i =>
-            {
-                i.AddSubType(typeof(OpenToolbarItem));
-                i.AddSubType(typeof(PlaceBuildingItem));
-            });
-
             model.Add(typeof(OpenToolbarItem), false).With(i =>
             {
                 i.AddField(1, "Toolbar");
@@ -509,6 +510,12 @@ namespace RuleSet.Versions
                 {
                     b.AsReference = true;
                 });
+            });
+
+            model.Add(typeof(ToolbarItem), false).With(i =>
+            {
+                i.AddSubType(typeof(OpenToolbarItem));
+                i.AddSubType(typeof(PlaceBuildingItem));
             });
         }
 

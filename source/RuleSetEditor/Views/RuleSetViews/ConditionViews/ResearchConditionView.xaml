@@ -10,7 +10,39 @@
 			 d:DesignHeight="300"
 			 d:DesignWidth="300">
 	<Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="*" />
+			<RowDefinition Height="Auto" />
+		</Grid.RowDefinitions>
+
 		<Label Content="{Binding Research.Value.Name.Value, FallbackValue=None}"
-			   ContentStringFormat="Research {0}" />
+			   ContentStringFormat="Research Condition: {0}"
+			   HorizontalContentAlignment="Center"
+			   FontWeight="Light"
+			   FontSize="18" />
+
+		<ScrollViewer VerticalScrollBarVisibility="Auto"
+					  Grid.Row="1">
+			<StackPanel Grid.IsSharedSizeScope="True">
+				<Grid>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="Auto"
+										  SharedSizeGroup="LabelFieldGroup" />
+						<ColumnDefinition Width="*" />
+					</Grid.ColumnDefinitions>
+					<Label Content="Research" />
+					<ComboBox SelectedItem="{Binding Research.Value}"
+							  ItemsSource="{Binding ResearchList}"
+							  DisplayMemberPath="Name.Value"
+							  Grid.Column="1" />
+				</Grid>
+			</StackPanel>
+		</ScrollViewer>
+
+		<Button Content="Back"
+				Command="{Binding CloseCommand}"
+				HorizontalAlignment="Left"
+				Grid.Row="2" />
 	</Grid>
 </UserControl>

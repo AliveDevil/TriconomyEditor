@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using Reactive.Bindings;
 using ReactiveUI;
 using RuleSet.Menus;
@@ -13,7 +12,13 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels.ToolbarViewModels
         private ReactiveProperty<string> nameProperty;
         private ToolbarItemViewModel selectedToolbarItem;
         private Toolbar toolbar;
+        private IDisposable toolbarAdded;
         private ReactiveList<ToolbarItemViewModel> toolbarItems;
+        private IDisposable toolbarListConstructor;
+        private IDisposable toolbarListInitializer;
+        private IDisposable toolbarListPostDisposer;
+        private IDisposable toolbarListPostInitializer;
+        private IDisposable toolbarRemoved;
 
         public RelayCommand AddOpenToolbarItemCommand => new RelayCommand(() =>
         {
@@ -36,8 +41,14 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels.ToolbarViewModels
 
         public ReactiveProperty<string> Name
         {
-            get { return nameProperty; }
-            private set { RaiseSetIfChanged(ref nameProperty, value); }
+            get
+            {
+                return nameProperty;
+            }
+            private set
+            {
+                RaiseSetIfChanged(ref nameProperty, value);
+            }
         }
 
         public RelayCommand RemoveToolbarItemCommand => new RelayCommand(() =>
@@ -49,66 +60,74 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels.ToolbarViewModels
 
         public ToolbarItemViewModel SelectedToolbarItem
         {
-            get { return selectedToolbarItem; }
-            set { RaiseSetIfChanged(ref selectedToolbarItem, value); }
+            get
+            {
+                return selectedToolbarItem;
+            }
+            set
+            {
+                RaiseSetIfChanged(ref selectedToolbarItem, value);
+            }
         }
 
         public Toolbar Toolbar
         {
-            get { return toolbar ?? (Toolbar = RuleSetViewModel.RuleSet.Toolbar ?? (RuleSetViewModel.RuleSet.Toolbar = new Toolbar() { Name = "Default" })); }
-            set { RaiseSetIfChanged(ref toolbar, value); }
+            get
+            {
+                return toolbar ?? (Toolbar = RuleSetViewModel.RuleSet.Toolbar ?? (RuleSetViewModel.RuleSet.Toolbar = new Toolbar() { Name = "Default" }));
+            }
+            set
+            {
+                RaiseSetIfChanged(ref toolbar, value);
+            }
         }
 
         public ReactiveList<ToolbarItemViewModel> ToolbarItems
         {
-            get { return toolbarItems; }
-            private set { RaiseSetIfChanged(ref toolbarItems, value); }
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
+            get
             {
-                Dispose(ref itemAddedSubscription);
-                Dispose(ref itemAddedSubscription);
-                ToolbarItems.Clear();
-
-                Dispose(ref nameProperty);
-                AddOpenToolbarItemCommand.Dispose();
-                AddPlaceBuildingItemCommand.Dispose();
-                EditToolbarItemCommand.Dispose();
-                RemoveToolbarItemCommand.Dispose();
+                return toolbarItems;
             }
-            base.Dispose(disposing);
+            private set
+            {
+                RaiseSetIfChanged(ref toolbarItems, value);
+            }
+        }
+        
+        protected override void OnInitialize()
+        {
+            base.OnInitialize();
+
+            Name = ReactiveProperty.FromObject(Toolbar, t => t.Name);
+            ToolbarItems = new ReactiveList<ToolbarItemViewModel>();
+            ToolbarItems.ChangeTrackingEnabled = true;
+            toolbarListInitializer = ToolbarItems.BeforeItemsAdded.Subscribe(e => e.Initialize());
+            toolbarListPostInitializer = ToolbarItems.ItemsAdded.Subscribe(e => e.PostInitialize());
+            toolbarListPostDisposer = ToolbarItems.ItemsRemoved.Subscribe(e => e.Dispose());
         }
 
-        protected override void OnRuleSetChanged()
+        protected override void OnPostInitialize()
         {
-            base.OnRuleSetChanged();
-            Name = ReactiveProperty.FromObject(Toolbar, t => t.Name);
-            ToolbarItems = new ReactiveList<ToolbarItemViewModel>(Toolbar.Items.Select(i =>
+            base.OnPostInitialize();
+
+            foreach (var item in Toolbar.Items)
             {
                 ToolbarItemViewModel menuItem = null;
-                if (i is PlaceBuildingItem)
+                if (item is PlaceBuildingItem)
                     menuItem = new PlaceBuildingItemViewModel();
-                else if (i is OpenToolbarItem)
+                else if (item is OpenToolbarItem)
                     menuItem = new OpenToolbarItemViewModel();
+                else
+                    continue;
 
-                if (menuItem != null)
-                {
-                    menuItem.DeferChanged = true;
-                    menuItem.RuleSetViewModel = RuleSetViewModel;
-                    menuItem.MenuItem = i;
-                }
-
-                return menuItem;
-            }).Where(i => i != null));
-
-            foreach (var item in ToolbarItems)
-                item.DeferChanged = false;
-
-            itemAddedSubscription = ToolbarItems.BeforeItemsAdded.Subscribe(i => Toolbar.Items.Add(i.MenuItem));
-            itemsRemovedSubscription = ToolbarItems.BeforeItemsRemoved.Subscribe(i => Toolbar.Items.Remove(i.MenuItem));
+                menuItem.RuleSetViewModel = RuleSetViewModel;
+                menuItem.ViewStack = RuleSetViewModel;
+                menuItem.MenuItem = item;
+                ToolbarItems.Add(menuItem);
+            }
+            toolbarListConstructor = ToolbarItems.BeforeItemsAdded.Subscribe(e => e.Construct());
+            toolbarAdded = ToolbarItems.BeforeItemsAdded.Subscribe(e => Toolbar.Items.Add(e?.MenuItem));
+            toolbarRemoved = ToolbarItems.ItemsRemoved.Subscribe(e => Toolbar.Items.Remove(e?.MenuItem));
         }
 
         private TViewModel AddAndSelectNewToolbarItem<TViewModel, TItem>(Action<TItem> itemAction, Action<TViewModel> viewModelAction)
@@ -117,7 +136,10 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels.ToolbarViewModels
         {
             TItem item = new TItem();
             itemAction?.Invoke(item);
-            TViewModel model = new TViewModel() { RuleSetViewModel = RuleSetViewModel, MenuItem = item };
+            TViewModel model = RuleSetViewModel.Create<TViewModel>(v =>
+            {
+                v.MenuItem = item;
+            });
             viewModelAction?.Invoke(model);
             ToolbarItems.Add(model);
             SelectedToolbarItem = model;

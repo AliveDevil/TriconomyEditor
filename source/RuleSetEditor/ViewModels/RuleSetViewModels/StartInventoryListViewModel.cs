@@ -1,6 +1,6 @@
 ﻿using ReactiveUI;
 using RuleSet.Elements;
-using RuleSetEditor.ViewModels.RuleSetViewModels.ResourcePartViewModels;
+using RuleSetEditor.ViewModels.RuleSetViewModels.ElementViewModels;
 
 namespace RuleSetEditor.ViewModels.RuleSetViewModels
 {
@@ -12,61 +12,52 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels
         private ResourcePartViewModel selectedResourcePart;
         private IReactiveDerivedList<ResourcePartViewModel> startResources;
 
-        public RelayCommand AddResourcePartCommand
+        public RelayCommand AddResourcePartCommand => addResourcePartCommand ?? (addResourcePartCommand = new RelayCommand(() =>
         {
-            get
+            RuleSetViewModel.StartResources.Add(ViewStack.Push(RuleSetViewModel.Create<ResourcePartViewModel>(v =>
             {
-                return addResourcePartCommand ?? (addResourcePartCommand = new RelayCommand(() =>
-                {
-                    ResourcePartViewModel model = new ResourcePartViewModel()
-                    {
-                        RuleSetViewModel = RuleSetViewModel,
-                        ResourcePart = new ResourcePart()
-                    };
-                    RuleSetViewModel.StartResources.Add(model);
-                    SelectedResourcePart = model;
-                }));
-            }
-        }
+                v.ResourcePart = new ResourcePart();
+            })));
+        }));
 
-        public RelayCommand<ResourcePartViewModel> EditResourcePartCommand
+        public RelayCommand<ResourcePartViewModel> EditResourcePartCommand => editResourcePartCommand ?? (editResourcePartCommand = new RelayCommand<ResourcePartViewModel>(resourcePart =>
         {
-            get
-            {
-                return editResourcePartCommand ?? (editResourcePartCommand = new RelayCommand<ResourcePartViewModel>(resourcePart =>
-                {
-                    SelectedResourcePart = resourcePart;
-                    ViewStack.Push<ResourcePartEditViewModel>()._(_ => { _.ResourcePart = resourcePart; });
-                }));
-            }
-        }
+            ViewStack.Push(SelectedResourcePart = resourcePart);
+        }));
 
-        public RelayCommand RemoveResourcePartCommand
+        public RelayCommand RemoveResourcePartCommand => removeResourcePartCommand ?? (removeResourcePartCommand = new RelayCommand(() =>
         {
-            get
-            {
-                return removeResourcePartCommand ?? (removeResourcePartCommand = new RelayCommand(() =>
-                {
-                    RuleSetViewModel.StartResources.Remove(SelectedResourcePart);
-                }));
-            }
-        }
+            RuleSetViewModel.StartResources.Remove(SelectedResourcePart);
+        }));
 
         public ResourcePartViewModel SelectedResourcePart
         {
-            get { return selectedResourcePart; }
-            set { RaiseSetIfChanged(ref selectedResourcePart, value); }
+            get
+            {
+                return selectedResourcePart;
+            }
+            set
+            {
+                RaiseSetIfChanged(ref selectedResourcePart, value);
+            }
         }
 
         public IReactiveDerivedList<ResourcePartViewModel> StartResources
         {
-            get { return startResources; }
-            private set { RaiseSetIfChanged(ref startResources, value); }
+            get
+            {
+                return startResources;
+            }
+            private set
+            {
+                RaiseSetIfChanged(ref startResources, value);
+            }
         }
 
-        protected override void OnRuleSetChanged()
+        protected override void OnInitialize()
         {
-            base.OnRuleSetChanged();
+            base.OnInitialize();
+
             StartResources = RuleSetViewModel.StartResources.CreateDerivedCollection(e => e);
             StartResources.ChangeTrackingEnabled = true;
         }

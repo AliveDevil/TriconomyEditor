@@ -17,11 +17,9 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels.ConditionViewModels
             {
                 return research;
             }
-            set
+            private set
             {
-                if (research == value)
-                    return;
-                research = value;
+                RaiseSetIfChanged(ref research, value);
             }
         }
 
@@ -37,20 +35,22 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels.ConditionViewModels
             }
         }
 
-        protected override void OnConditionChanged()
+        protected override void OnInitialize()
         {
-            base.OnConditionChanged();
+            base.OnInitialize();
+
+            ResearchList = RuleSetViewModel.Research.CreateDerivedCollection(e => e, null, (l, r) => l.Name.Value.CompareTo(r.Name.Value));
+            ResearchList.ChangeTrackingEnabled = true;
+        }
+
+        protected override void OnPostInitialize()
+        {
+            base.OnPostInitialize();
+
             Research = ReactiveProperty.FromObject(Condition,
                 r => r.Research,
                 r => ResearchList.SingleOrDefault(e => e.Research == r),
                 r => r?.Research);
-        }
-
-        protected override void OnRuleSetChanged()
-        {
-            base.OnRuleSetChanged();
-            ResearchList = RuleSetViewModel.Research.CreateDerivedCollection(e => e, null, (l, r) => l.Name.Value.CompareTo(r.Name.Value));
-            ResearchList.ChangeTrackingEnabled = true;
         }
     }
 }

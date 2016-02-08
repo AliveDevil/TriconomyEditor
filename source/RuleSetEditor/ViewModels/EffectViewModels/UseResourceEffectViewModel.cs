@@ -6,13 +6,68 @@ using RuleSetEditor.ViewModels.RuleSetViewModels.ElementViewModels;
 
 namespace RuleSetEditor.ViewModels.EffectViewModels
 {
-    public class UseResourceEffectViewModel : EffectViewModel
+    public class UseResourceEffectViewModel : EffectViewModel<UseResourceEffect>
     {
-        public UseResourceEffect UseResourceEffect => (UseResourceEffect)Effect;
+        private ReactiveProperty<int> amountProperty;
+        private ReactiveProperty<ResourceViewModel> resource;
+        private IReactiveDerivedList<ResourceViewModel> resources;
 
-        public override string ToString()
+        public ReactiveProperty<int> Amount
         {
-            return "Use Resource";
+            get
+            {
+                return amountProperty;
+            }
+            private set
+            {
+                RaiseSetIfChanged(ref amountProperty, value);
+            }
+        }
+
+        public ReactiveProperty<ResourceViewModel> Resource
+        {
+            get
+            {
+                return resource;
+            }
+            private set
+            {
+                RaiseSetIfChanged(ref resource, value);
+            }
+        }
+
+        public IReactiveDerivedList<ResourceViewModel> Resources
+        {
+            get
+            {
+                return resources;
+            }
+            private set
+            {
+                RaiseSetIfChanged(ref resources, value);
+            }
+        }
+
+        protected override void OnInitialize()
+        {
+            base.OnInitialize();
+
+            Amount = ReactiveProperty.FromObject(Effect, e => e.Amount);
+            Amount.PropertyChanged += OnPropertyChanged;
+        }
+
+        protected override void OnPostInitialize()
+        {
+            base.OnPostInitialize();
+
+            Resources = RuleSetViewModel.ElementList.CreateDerivedCollection(e => (ResourceViewModel)e, e => e is ResourceViewModel, (l, r) => l.Name.Value.CompareTo(r.Name.Value));
+            Resources.ChangeTrackingEnabled = true;
+
+            Resource = ReactiveProperty.FromObject(Effect,
+                    r => r.Resource,
+                    r => Resources.SingleOrDefault(e => e.Element == r),
+                    r => r?.Element);
+            Resource.PropertyChanged += OnPropertyChanged;
         }
     }
 }

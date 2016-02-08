@@ -1,23 +1,59 @@
 ﻿using System;
-using System.Linq;
 using Reactive.Bindings;
 using ReactiveUI;
 using RuleSet;
+using RuleSet.Elements;
 using RuleSetEditor.ViewModels.RuleSetViewModels.ConditionViewModels;
+using RuleSetEditor.ViewModels.RuleSetViewModels.ElementViewModels;
 
 namespace RuleSetEditor.ViewModels.RuleSetViewModels.ResearchViewModels
 {
     public class ResearchViewModel : RuleSetViewModelBase
     {
+        private RelayCommand<Type> addConditionCommand;
+        private RelayCommand addCostCommand;
         private IDisposable beforeConditionAdded;
         private IDisposable beforeConditionRemoved;
         private IDisposable beforeCostAdded;
         private IDisposable beforeCostRemoved;
+        private IDisposable conditionAdded;
+        private IDisposable conditionListConstructor;
+        private IDisposable conditionListInitializer;
+        private IDisposable conditionListPostDisposer;
+        private IDisposable conditionListPostInitializer;
+        private IDisposable conditionRemoved;
         private ReactiveList<ConditionViewModel> conditions;
+        private IDisposable costAdded;
+        private IDisposable costListConstructor;
+        private IDisposable costListInitializer;
+        private IDisposable costListPostDisposer;
+        private IDisposable costListPostInitializer;
+        private IDisposable costRemoved;
         private ReactiveList<ResourcePartViewModel> costs;
+        private RelayCommand<ConditionViewModel> editConditionCommand;
+        private RelayCommand<ResourcePartViewModel> editCostCommand;
         private ReactiveProperty<string> name;
+        private RelayCommand removeConditionCommand;
+        private RelayCommand removeCostCommand;
         private Research research;
+        private ConditionViewModel selectedCondition;
+        private ResourcePartViewModel selectedCost;
         private ReactiveProperty<int> timeProperty;
+
+        public RelayCommand<Type> AddConditionCommand => addConditionCommand ?? (addConditionCommand = new RelayCommand<Type>(t =>
+        {
+            var condition = (Condition)Activator.CreateInstance(t);
+            var viewModel = ConditionViewModel.FindViewModel(condition, RuleSetViewModel);
+            Conditions.Add(ViewStack.Push(SelectedCondition = viewModel));
+        }));
+
+        public RelayCommand AddCostCommand => addCostCommand ?? (addCostCommand = new RelayCommand(() =>
+        {
+            Costs.Add(ViewStack.Push(RuleSetViewModel.Create<ResourcePartViewModel>(f =>
+            {
+                f.ResourcePart = new ResourcePart();
+            })));
+        }));
 
         public ReactiveList<ConditionViewModel> Conditions
         {
@@ -43,6 +79,16 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels.ResearchViewModels
             }
         }
 
+        public RelayCommand<ConditionViewModel> EditConditionCommand => editConditionCommand ?? (editConditionCommand = new RelayCommand<ConditionViewModel>(condition =>
+        {
+            ViewStack.Push(SelectedCondition = condition);
+        }));
+
+        public RelayCommand<ResourcePartViewModel> EditCostCommand => editCostCommand ?? (editCostCommand = new RelayCommand<ResourcePartViewModel>(resourcePart =>
+        {
+            ViewStack.Push(SelectedCost = resourcePart);
+        }));
+
         public ReactiveProperty<string> Name
         {
             get
@@ -55,6 +101,16 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels.ResearchViewModels
             }
         }
 
+        public RelayCommand RemoveConditionCommand => removeConditionCommand ?? (removeConditionCommand = new RelayCommand(() =>
+        {
+            Conditions.Remove(SelectedCondition);
+        }));
+
+        public RelayCommand RemoveCostCommand => removeCostCommand ?? (removeCostCommand = new RelayCommand(() =>
+        {
+            Costs.Remove(SelectedCost);
+        }));
+
         public Research Research
         {
             get
@@ -65,11 +121,30 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels.ResearchViewModels
             {
                 if (!RaiseSetIfChanged(ref research, value))
                     return;
+            }
+        }
 
-                if (!DeferChanged)
-                    OnElementChanged();
-                else
-                    DeferQueue.Enqueue(OnElementChanged);
+        public ConditionViewModel SelectedCondition
+        {
+            get
+            {
+                return selectedCondition;
+            }
+            set
+            {
+                RaiseSetIfChanged(ref selectedCondition, value);
+            }
+        }
+
+        public ResourcePartViewModel SelectedCost
+        {
+            get
+            {
+                return selectedCost;
+            }
+            set
+            {
+                RaiseSetIfChanged(ref selectedCost, value);
             }
         }
 
@@ -84,55 +159,48 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels.ResearchViewModels
                 RaiseSetIfChanged(ref timeProperty, value);
             }
         }
-
-        protected override void Dispose(bool disposing)
+        
+        protected override void OnInitialize()
         {
-            if (disposing)
-            {
-                Dispose(ref beforeConditionAdded);
-                Dispose(ref beforeConditionRemoved);
-                Dispose(ref beforeCostAdded);
-                Dispose(ref beforeCostRemoved);
-                Dispose(ref timeProperty);
+            base.OnInitialize();
 
-                foreach (var item in Conditions)
-                    item.Dispose();
-                foreach (var item in Costs)
-                    item.Dispose();
-
-                Conditions.Clear();
-                Costs.Clear();
-
-                conditions = null;
-                costs = null;
-            }
-            base.Dispose(disposing);
-        }
-
-        private void OnElementChanged()
-        {
             Name = ReactiveProperty.FromObject(Research, r => r.Name);
             Name.PropertyChanged += OnPropertyChanged;
 
             Time = ReactiveProperty.FromObject(Research, r => r.Time);
 
-            Conditions = new ReactiveList<ConditionViewModel>(Research.Conditions.Select(e => ConditionViewModel.FindViewModel(e, RuleSetViewModel)))
-            {
-                ChangeTrackingEnabled = true
-            };
-            beforeConditionAdded = Conditions.BeforeItemsAdded.Subscribe(e => Research.Conditions.Add(e?.Condition));
-            beforeConditionRemoved = Conditions.BeforeItemsRemoved.Subscribe(e => Research.Conditions.Remove(e?.Condition));
+            Conditions = new ReactiveList<ConditionViewModel>() { ChangeTrackingEnabled = true };
+            conditionListInitializer = Conditions.BeforeItemsAdded.Subscribe(c => c.Initialize());
+            conditionListPostInitializer = Conditions.ItemsAdded.Subscribe(c => c.PostInitialize());
+            conditionListPostDisposer = Conditions.BeforeItemsRemoved.Subscribe(c => c.Dispose());
 
-            Costs = new ReactiveList<ResourcePartViewModel>(Research.Costs.Select(e => new ResourcePartViewModel()
+            Costs = new ReactiveList<ResourcePartViewModel>() { ChangeTrackingEnabled = true };
+            costListInitializer = Costs.BeforeItemsAdded.Subscribe(c => c.Initialize());
+            costListPostInitializer = Costs.ItemsAdded.Subscribe(c => c.PostInitialize());
+            costListPostDisposer = Costs.BeforeItemsRemoved.Subscribe(c => c.Dispose());
+        }
+
+        protected override void OnPostInitialize()
+        {
+            base.OnPostInitialize();
+            foreach (var item in Research.Conditions)
             {
-                RuleSetViewModel = RuleSetViewModel,
-                ResourcePart = e
-            }))
+                Conditions.Add(ConditionViewModel.FindViewModel(item, RuleSetViewModel));
+            }
+            conditionListConstructor = Conditions.BeforeItemsAdded.Subscribe(c => c.Construct());
+            conditionAdded = Conditions.BeforeItemsAdded.Subscribe(c => Research.Conditions.Add(c.Condition));
+            conditionRemoved = Conditions.ItemsRemoved.Subscribe(c => Research.Conditions.Remove(c.Condition));
+
+            foreach (var item in Research.Costs)
             {
-                ChangeTrackingEnabled = true
-            };
-            beforeCostAdded = Costs.BeforeItemsAdded.Subscribe(e => Research.Costs.Add(e?.ResourcePart));
-            beforeCostRemoved = Costs.BeforeItemsRemoved.Subscribe(e => Research.Costs.Remove(e?.ResourcePart));
+                Costs.Add(RuleSetViewModel.Create<ResourcePartViewModel>(v =>
+                {
+                    v.ResourcePart = item;
+                }));
+            }
+            costListConstructor = Costs.BeforeItemsAdded.Subscribe(c => c.Construct());
+            costAdded = Costs.BeforeItemsAdded.Subscribe(c => Research.Costs.Add(c.ResourcePart));
+            costRemoved = Costs.ItemsRemoved.Subscribe(c => Research.Costs.Remove(c.ResourcePart));
         }
     }
 }

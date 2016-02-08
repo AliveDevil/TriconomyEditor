@@ -1,6 +1,5 @@
 ﻿using RuleSet;
 using RuleSet.Effects;
-using RuleSetEditor.ViewModels.EffectViewModels.EffectEditViewModels;
 
 namespace RuleSetEditor.ViewModels.EffectViewModels
 {
@@ -18,105 +17,9 @@ namespace RuleSetEditor.ViewModels.EffectViewModels
             {
                 if (!RaiseSetIfChanged(ref effect, value))
                     return;
-                if (DeferChanged)
-                    DeferQueue.Enqueue(OnEffectChanged);
-                else
-                    OnEffectChanged();
             }
         }
-
-        public static RuleSetViewModelBase FindEditViewModel(EffectViewModel effectViewModel, RuleSetViewModel ruleSetViewModel)
-        {
-            RuleSetViewModelBase viewModelBase = null;
-
-            if (effectViewModel is AddRecipeEffectViewModel)
-                viewModelBase = new AddRecipeEffectEditViewModel()
-                {
-                    RuleSetViewModel = ruleSetViewModel,
-                    AddRecipeEffect = (AddRecipeEffectViewModel)effectViewModel
-                };
-            else if (effectViewModel is AssemblyPointEffectViewModel)
-                viewModelBase = new AssemblyPointEffectEditViewModel()
-                {
-                    RuleSetViewModel = ruleSetViewModel,
-                    AssemblyPointEffect = (AssemblyPointEffectViewModel)effectViewModel
-                };
-            else if (effectViewModel is DeliverEffectViewModel)
-                viewModelBase = new DeliverEffectEditViewModel()
-                {
-                    RuleSetViewModel = ruleSetViewModel,
-                    DeliverEffect = (DeliverEffectViewModel)effectViewModel
-                };
-            else if (effectViewModel is ExtendSettlerAmountEffectViewModel)
-                viewModelBase = new ExtendSettlerAmountEffectEditViewModel()
-                {
-                    RuleSetViewModel = ruleSetViewModel,
-                    ExtendSettlerAmountEffect = (ExtendSettlerAmountEffectViewModel)effectViewModel
-                };
-            else if (effectViewModel is ExtendStorageEffectViewModel)
-                viewModelBase = new ExtendStorageEffectEditViewModel()
-                {
-                    RuleSetViewModel = ruleSetViewModel,
-                    ExtendStorageEffect = (ExtendStorageEffectViewModel)effectViewModel
-                };
-            else if (effectViewModel is GatherResourceEffectViewModel)
-                viewModelBase = new GatherResourceEffectEditViewModel()
-                {
-                    RuleSetViewModel = ruleSetViewModel,
-                    GatherResourceEffect = (GatherResourceEffectViewModel)effectViewModel
-                };
-            else if (effectViewModel is HabitEffectViewModel)
-                viewModelBase = new HabitEffectEditViewModel()
-                {
-                    RuleSetViewModel = ruleSetViewModel,
-                    HabitEffect = (HabitEffectViewModel)effectViewModel
-                };
-            else if (effectViewModel is ProduceResourceEffectViewModel)
-                viewModelBase = new ProduceResourceEffectEditViewModel()
-                {
-                    RuleSetViewModel = ruleSetViewModel,
-                    ProduceResourceEffect = (ProduceResourceEffectViewModel)effectViewModel
-                };
-            else if (effectViewModel is ResearchEffectViewModel)
-                viewModelBase = new ResearchEffectEditViewModel()
-                {
-                    RuleSetViewModel = ruleSetViewModel,
-                    ResearchEffect = (ResearchEffectViewModel)effectViewModel
-                };
-            else if (effectViewModel is SpawnLivingResourceEffectViewModel)
-                viewModelBase = new SpawnLivingResourceEffectEditViewModel()
-                {
-                    RuleSetViewModel = ruleSetViewModel,
-                    SpawnLivingResourceEffect = (SpawnLivingResourceEffectViewModel)effectViewModel
-                };
-            else if (effectViewModel is SpawnWorldResourceEffectViewModel)
-                viewModelBase = new SpawnWorldResourceEffectEditViewModel()
-                {
-                    RuleSetViewModel = ruleSetViewModel,
-                    SpawnWorldResourceEffect = (SpawnWorldResourceEffectViewModel)effectViewModel
-                };
-            else if (effectViewModel is StorageEffectViewModel)
-                viewModelBase = new StorageEffectEditViewModel()
-                {
-                    RuleSetViewModel = ruleSetViewModel,
-                    StorageEffect = (StorageEffectViewModel)effectViewModel
-                };
-            else if (effectViewModel is UseResourceEffectViewModel)
-                viewModelBase = new UseResourceEffectEditViewModel()
-                {
-                    RuleSetViewModel = ruleSetViewModel,
-                    UseResourceEffect = (UseResourceEffectViewModel)effectViewModel
-                };
-            else if (effectViewModel is WorkplaceEffectViewModel)
-                viewModelBase = new WorkplaceEffectEditViewModel()
-                {
-                    RuleSetViewModel = ruleSetViewModel,
-                    WorkplaceEffect = (WorkplaceEffectViewModel)effectViewModel
-                };
-
-            return viewModelBase;
-        }
-
+        
         public static EffectViewModel FindViewModel(Effect effect, RuleSetViewModel ruleSetViewModel)
         {
             EffectViewModel model = null;
@@ -153,14 +56,11 @@ namespace RuleSetEditor.ViewModels.EffectViewModels
             if (model != null)
             {
                 model.RuleSetViewModel = ruleSetViewModel;
+                model.ViewStack = ruleSetViewModel;
                 model.Effect = effect;
             }
 
             return model;
-        }
-
-        protected virtual void OnEffectChanged()
-        {
         }
     }
 

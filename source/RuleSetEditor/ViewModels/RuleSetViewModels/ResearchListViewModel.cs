@@ -1,7 +1,6 @@
 ﻿using ReactiveUI;
 using RuleSet;
 using RuleSetEditor.ViewModels.RuleSetViewModels.ResearchViewModels;
-using RuleSetEditor.ViewModels.RuleSetViewModels.ResearchViewModels.EditViewModels;
 
 namespace RuleSetEditor.ViewModels.RuleSetViewModels
 {
@@ -9,45 +8,27 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels
     {
         private RelayCommand addResearchCommand;
         private RelayCommand<ResearchViewModel> editResearchCommand;
-        private IReactiveDerivedList<ResearchViewModel> research;
         private RelayCommand removeResearchCommand;
+        private IReactiveDerivedList<ResearchViewModel> research;
         private ResearchViewModel selectedResearch;
 
-        public RelayCommand AddResearchCommand
+        public RelayCommand AddResearchCommand => addResearchCommand ?? (addResearchCommand = new RelayCommand(() =>
         {
-            get
+            RuleSetViewModel.Research.Add(ViewStack.Push(RuleSetViewModel.Create<ResearchViewModel>(v =>
             {
-                return addResearchCommand ?? (addResearchCommand = new RelayCommand(() =>
-                {
-                    ResearchViewModel model = new ResearchViewModel()
-                    {
-                        RuleSetViewModel = RuleSetViewModel,
-                        Research = new Research()
-                        {
-                            Name = "New Research"
-                        }
-                    };
-                    RuleSetViewModel.Research.Add(model);
-                    SelectedResearch = model;
-                }));
-            }
-        }
+                v.Research = new Research() { Name = "New Research" };
+            })));
+        }));
 
-        public RelayCommand<ResearchViewModel> EditResearchCommand
+        public RelayCommand<ResearchViewModel> EditResearchCommand => editResearchCommand ?? (editResearchCommand = new RelayCommand<ResearchViewModel>(research =>
         {
-            get
-            {
-                return editResearchCommand ?? (editResearchCommand = new RelayCommand<ResearchViewModel>(research =>
-                {
-                    SelectedResearch = research;
-                    ViewStack.Push<ResearchEditViewModel>()._(_ =>
-                    {
-                        _.RuleSetViewModel = RuleSetViewModel;
-                        _.Research = research;
-                    });
-                }));
-            }
-        }
+            ViewStack.Push(SelectedResearch = research);
+        }));
+
+        public RelayCommand RemoveResearchCommand => removeResearchCommand ?? (removeResearchCommand = new RelayCommand(() =>
+        {
+            RuleSetViewModel.Research.Remove(SelectedResearch);
+        }));
 
         public IReactiveDerivedList<ResearchViewModel> Research
         {
@@ -58,17 +39,6 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels
             private set
             {
                 RaiseSetIfChanged(ref research, value);
-            }
-        }
-
-        public RelayCommand RemoveResearchCommand
-        {
-            get
-            {
-                return removeResearchCommand ?? (removeResearchCommand = new RelayCommand(() =>
-                {
-                    RuleSetViewModel.Research.Remove(SelectedResearch);
-                }));
             }
         }
 
@@ -84,9 +54,10 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels
             }
         }
 
-        protected override void OnRuleSetChanged()
+        protected override void OnInitialize()
         {
-            base.OnRuleSetChanged();
+            base.OnInitialize();
+
             Research = RuleSetViewModel.Research.CreateDerivedCollection(e => e, null, (l, r) => l.Name.Value.CompareTo(r.Name.Value));
             Research.ChangeTrackingEnabled = true;
         }

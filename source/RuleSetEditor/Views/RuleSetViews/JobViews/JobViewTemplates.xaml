@@ -1,8 +1,8 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:vm="clr-namespace:RuleSetEditor.ViewModels.RuleSetViewModels.ElementViewModels.JobViewModels"
+                    xmlns:vm="clr-namespace:RuleSetEditor.ViewModels.RuleSetViewModels.ElementViewModels"
                     xmlns:local="clr-namespace:RuleSetEditor.Views.RuleSetViews.JobViews">
-    <DataTemplate DataType="{x:Type vm:JobEditViewModel}">
-        <local:JobEditView />
+    <DataTemplate DataType="{x:Type vm:JobViewModel}">
+        <local:JobView />
     </DataTemplate>
 </ResourceDictionary>

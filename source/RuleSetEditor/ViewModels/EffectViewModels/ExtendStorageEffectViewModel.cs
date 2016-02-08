@@ -3,13 +3,27 @@ using RuleSet.Effects;
 
 namespace RuleSetEditor.ViewModels.EffectViewModels
 {
-    public class ExtendStorageEffectViewModel : EffectViewModel
+    public class ExtendStorageEffectViewModel : EffectViewModel<ExtendStorageEffect>
     {
-        public ExtendStorageEffect ExtendStorageEffect => (ExtendStorageEffect)Effect;
+        private ReactiveProperty<int> amountProperty;
 
-        public override string ToString()
+        public ReactiveProperty<int> Amount
         {
-            return "Extend Storage";
+            get
+            {
+                return amountProperty;
+            }
+            private set
+            {
+                RaiseSetIfChanged(ref amountProperty, value);
+            }
+        }
+
+        protected override void OnInitialize()
+        {
+            base.OnInitialize();
+
+            Amount = ReactiveProperty.FromObject(Effect, e => e.Amount);
         }
     }
 }

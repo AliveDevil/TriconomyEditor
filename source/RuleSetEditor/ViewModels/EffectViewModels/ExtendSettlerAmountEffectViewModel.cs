@@ -1,14 +1,29 @@
-﻿using RuleSet.Effects;
+﻿using Reactive.Bindings;
+using RuleSet.Effects;
 
 namespace RuleSetEditor.ViewModels.EffectViewModels
 {
-    public class ExtendSettlerAmountEffectViewModel : EffectViewModel
+    public class ExtendSettlerAmountEffectViewModel : EffectViewModel<ExtendSettlerAmountEffect>
     {
-        public ExtendSettlerAmountEffect ExtendSettlerAmountEffect => (ExtendSettlerAmountEffect)Effect;
+        private ReactiveProperty<int> amountProperty;
 
-        public override string ToString()
+        public ReactiveProperty<int> Amount
         {
-            return "Extend Settler Amount";
+            get
+            {
+                return amountProperty;
+            }
+            private set
+            {
+                RaiseSetIfChanged(ref amountProperty, value);
+            }
+        }
+
+        protected override void OnInitialize()
+        {
+            base.OnInitialize();
+
+            Amount = ReactiveProperty.FromObject(Effect, e => e.SettlerAmount);
         }
     }
 }

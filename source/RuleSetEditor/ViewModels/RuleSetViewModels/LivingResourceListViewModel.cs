@@ -1,50 +1,63 @@
 ﻿using ReactiveUI;
 using RuleSet.Elements;
 using RuleSetEditor.ViewModels.RuleSetViewModels.ElementViewModels;
-using RuleSetEditor.ViewModels.RuleSetViewModels.ElementViewModels.LivingResourceViewModels;
 
 namespace RuleSetEditor.ViewModels.RuleSetViewModels
 {
     public class LivingResourceListViewModel : RuleSetViewModelBase
     {
-        private LivingResourceViewModel selectedLivingResourceViewModel;
+        private RelayCommand addLivingResourceCommand;
+        private RelayCommand<LivingResourceViewModel> editLivingResourceCommand;
         private IReactiveDerivedList<LivingResourceViewModel> livingResources;
-        private RelayCommand<LivingResourceViewModel> editWorldResourceCommand;
+        private RelayCommand removeLivingResourceCommand;
+        private LivingResourceViewModel selectedLivingResourceViewModel;
 
-        public RelayCommand AddLivingResourceCommand => new RelayCommand(() =>
+        public RelayCommand AddLivingResourceCommand => addLivingResourceCommand ?? (addLivingResourceCommand = new RelayCommand(() =>
         {
-            LivingResourceViewModel model = new LivingResourceViewModel() { RuleSetViewModel = RuleSetViewModel, Element = new LivingResource() { Name = "New Living Resource" } };
+            LivingResourceViewModel model = new LivingResourceViewModel()
+            {
+                RuleSetViewModel = RuleSetViewModel,
+                Element = new LivingResource()
+                {
+                    Name = "New Living Resource"
+                }
+            };
             RuleSetViewModel.ElementList.Add(model);
             SelectedLivingResource = model;
-        });
+        }));
 
-        public RelayCommand<LivingResourceViewModel> EditLivingResourceCommand
+        public RelayCommand<LivingResourceViewModel> EditLivingResourceCommand => editLivingResourceCommand ?? (editLivingResourceCommand = new RelayCommand<LivingResourceViewModel>(worldResource =>
         {
-            get
-            {
-                return editWorldResourceCommand ?? (editWorldResourceCommand = new RelayCommand<LivingResourceViewModel>(worldResource =>
-                {
-                    SelectedLivingResource = worldResource;
-                    ViewStack.Push<LivingResourceEditViewModel>()._(_ => _.LivingResource = worldResource);
-                }));
-            }
-        }
-
-        public RelayCommand RemoveLivingResourceCommand => new RelayCommand(() =>
-        {
-            RuleSetViewModel.ElementList.Remove(SelectedLivingResource);
-        });
-
-        public LivingResourceViewModel SelectedLivingResource
-        {
-            get { return selectedLivingResourceViewModel; }
-            set { RaiseSetIfChanged(ref selectedLivingResourceViewModel, value); }
-        }
+            ViewStack.Push(SelectedLivingResource = worldResource);
+        }));
 
         public IReactiveDerivedList<LivingResourceViewModel> LivingResources
         {
-            get { return livingResources; }
-            private set { RaiseSetIfChanged(ref livingResources, value); }
+            get
+            {
+                return livingResources;
+            }
+            private set
+            {
+                RaiseSetIfChanged(ref livingResources, value);
+            }
+        }
+
+        public RelayCommand RemoveLivingResourceCommand => removeLivingResourceCommand ?? (removeLivingResourceCommand = new RelayCommand(() =>
+        {
+            RuleSetViewModel.ElementList.Remove(SelectedLivingResource);
+        }));
+
+        public LivingResourceViewModel SelectedLivingResource
+        {
+            get
+            {
+                return selectedLivingResourceViewModel;
+            }
+            set
+            {
+                RaiseSetIfChanged(ref selectedLivingResourceViewModel, value);
+            }
         }
 
         protected override void Dispose(bool disposing)
@@ -52,16 +65,16 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels
             if (disposing)
             {
                 Dispose(ref livingResources);
-                AddLivingResourceCommand.Dispose();
-                EditLivingResourceCommand.Dispose();
-                RemoveLivingResourceCommand.Dispose();
+                Dispose(ref addLivingResourceCommand);
+                Dispose(ref editLivingResourceCommand);
+                Dispose(ref removeLivingResourceCommand);
             }
             base.Dispose(disposing);
         }
 
-        protected override void OnRuleSetChanged()
+        protected override void OnInitialize()
         {
-            base.OnRuleSetChanged();
+            base.OnInitialize();
             LivingResources = RuleSetViewModel.ElementList.CreateDerivedCollection(e => (LivingResourceViewModel)e, e => e is LivingResourceViewModel, (l, r) => l.Name.Value.CompareTo(r.Name.Value));
             LivingResources.ChangeTrackingEnabled = true;
         }

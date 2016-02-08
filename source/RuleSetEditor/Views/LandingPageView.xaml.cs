@@ -1,19 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.IO;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using RuleSetEditor.Properties;
 using RuleSetEditor.ViewModels;
 
 namespace RuleSetEditor.Views
@@ -23,6 +10,22 @@ namespace RuleSetEditor.Views
         public LandingPageView()
         {
             InitializeComponent();
+        }
+
+        private void Label_DragEnter(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+            {
+                string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
+                if (files.Length == 1)
+                {
+                    e.Effects = DragDropEffects.Link;
+                    e.Handled = true;
+                    return;
+                }
+            }
+            e.Effects = DragDropEffects.None;
+            e.Handled = true;
         }
 
         private void Label_DragOver(object sender, DragEventArgs e)
@@ -57,25 +60,11 @@ namespace RuleSetEditor.Views
                     {
                         _.SourceFilePath = file.FullName;
                         _.RuleSet = ruleSet;
+                        _.Initialize();
+                        _.PostInitialize();
                     });
                 }
             }
-        }
-
-        private void Label_DragEnter(object sender, DragEventArgs e)
-        {
-            if (e.Data.GetDataPresent(DataFormats.FileDrop))
-            {
-                string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
-                if (files.Length == 1)
-                {
-                    e.Effects = DragDropEffects.Link;
-                    e.Handled = true;
-                    return;
-                }
-            }
-            e.Effects = DragDropEffects.None;
-            e.Handled = true;
         }
     }
 }

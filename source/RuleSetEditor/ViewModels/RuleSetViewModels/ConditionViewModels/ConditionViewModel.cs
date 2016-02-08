@@ -1,6 +1,5 @@
 ﻿using RuleSet;
 using RuleSet.Conditions;
-using RuleSetEditor.ViewModels.RuleSetViewModels.ConditionViewModels.EditViewModels;
 
 namespace RuleSetEditor.ViewModels.RuleSetViewModels.ConditionViewModels
 {
@@ -18,31 +17,7 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels.ConditionViewModels
             {
                 if (!RaiseSetIfChanged(ref condition, value))
                     return;
-                if (!DeferChanged)
-                    OnConditionChanged();
-                else
-                    DeferQueue.Enqueue(OnConditionChanged);
             }
-        }
-
-        public static RuleSetViewModelBase FindEditViewModel(ConditionViewModel effectViewModel, RuleSetViewModel ruleSetViewModel)
-        {
-            ConditionEditViewModel viewModelBase = null;
-
-            if (effectViewModel is ElementNearByConditionViewModel)
-                viewModelBase = new ElementNearByConditionEditViewModel();
-            else if (effectViewModel is ExistingBuildingConditionViewModel)
-                viewModelBase = new ExistingBuildingConditionEditViewModel();
-            else if (effectViewModel is ResearchConditionViewModel)
-                viewModelBase = new ResearchConditionEditViewModel();
-
-            if (viewModelBase != null)
-            {
-                viewModelBase.RuleSetViewModel = ruleSetViewModel;
-                viewModelBase.Condition = effectViewModel;
-            }
-
-            return viewModelBase;
         }
 
         public static ConditionViewModel FindViewModel(Condition condition, RuleSetViewModel ruleSetViewModel)
@@ -59,6 +34,7 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels.ConditionViewModels
             if (model != null)
             {
                 model.RuleSetViewModel = ruleSetViewModel;
+                model.ViewStack = ruleSetViewModel;
                 model.Condition = condition;
             }
 

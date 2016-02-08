@@ -2,78 +2,188 @@
 using System.Linq;
 using ReactiveUI;
 using RuleSet.Effects;
-using RuleSetEditor.ViewModels.RuleSetViewModels;
+using RuleSet.Elements;
+using RuleSetEditor.ViewModels.RuleSetViewModels.ElementViewModels;
 
 namespace RuleSetEditor.ViewModels.EffectViewModels
 {
     public class AddRecipeEffectViewModel : EffectViewModel<AddRecipeEffect>
     {
+        private RelayCommand addInResourcePartCommand;
+        private RelayCommand addOutResourcePartCommand;
         private IDisposable beforeInPartAdded;
         private IDisposable beforeInPartRemoved;
         private IDisposable beforeOutPartAdded;
         private IDisposable beforeOutPartRemoved;
+        private RelayCommand<ResourcePartViewModel> editResourcePartCommand;
         private ReactiveList<ResourcePartViewModel> inParts;
+        private IDisposable inPartsAdded;
+        private IDisposable inPartsListConstructor;
+        private IDisposable inPartsListInitializer;
+        private IDisposable inPartsListPostDisposer;
+        private IDisposable inPartsListPostInitializer;
+        private IDisposable inPartsRemoved;
         private ReactiveList<ResourcePartViewModel> outParts;
+        private IDisposable outPartsAdded;
+        private IDisposable outPartsListConstructor;
+        private IDisposable outPartsListInitializer;
+        private IDisposable outPartsListPostDisposer;
+        private IDisposable outPartsListPostInitializer;
+        private IDisposable outPartsRemoved;
+        private RelayCommand removeInResourcePartCommand;
+        private RelayCommand removeOutResourcePartCommand;
+        private ResourcePartViewModel selectedInPart;
+        private ResourcePartViewModel selectedOutPart;
+
+        public RelayCommand AddInResourcePartCommand
+        {
+            get
+            {
+                return addInResourcePartCommand ?? (addInResourcePartCommand = new RelayCommand(() =>
+                {
+                    InParts.Add(ViewStack.Push(RuleSetViewModel.Create<ResourcePartViewModel>(v =>
+                    {
+                        v.ResourcePart = new ResourcePart();
+                    })));
+                }));
+            }
+        }
+
+        public RelayCommand AddOutResourcePartCommand
+        {
+            get
+            {
+                return addOutResourcePartCommand ?? (addOutResourcePartCommand = new RelayCommand(() =>
+                {
+                    OutParts.Add(ViewStack.Push(RuleSetViewModel.Create<ResourcePartViewModel>(v =>
+                    {
+                        v.ResourcePart = new ResourcePart();
+                    })));
+                }));
+            }
+        }
+
+        public RelayCommand<ResourcePartViewModel> EditResourcePartCommand
+        {
+            get
+            {
+                return editResourcePartCommand ?? (editResourcePartCommand = new RelayCommand<ResourcePartViewModel>(part =>
+                {
+                    ViewStack.Push(part);
+                }));
+            }
+        }
 
         public ReactiveList<ResourcePartViewModel> InParts
         {
-            get { return inParts; }
-            private set { RaiseSetIfChanged(ref inParts, value); }
+            get
+            {
+                return inParts;
+            }
+            private set
+            {
+                RaiseSetIfChanged(ref inParts, value);
+            }
         }
 
         public ReactiveList<ResourcePartViewModel> OutParts
         {
-            get { return outParts; }
-            private set { RaiseSetIfChanged(ref outParts, value); }
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
+            get
             {
-                Dispose(ref beforeInPartAdded);
-                Dispose(ref beforeInPartRemoved);
-                Dispose(ref beforeOutPartAdded);
-                Dispose(ref beforeOutPartRemoved);
-
-                foreach (var part in InParts)
-                    part.Dispose();
-                foreach (var part in OutParts)
-                    part.Dispose();
-
-                InParts.Clear();
-                OutParts.Clear();
-                inParts = null;
-                outParts = null;
+                return outParts;
             }
-            base.Dispose(disposing);
+            private set
+            {
+                RaiseSetIfChanged(ref outParts, value);
+            }
         }
 
-        protected override void OnEffectChanged()
+        public RelayCommand RemoveInResourcePartCommand
         {
-            base.OnEffectChanged();
+            get
+            {
+                return removeInResourcePartCommand ?? (removeInResourcePartCommand = new RelayCommand(() =>
+                {
+                    InParts.Remove(SelectedInPart);
+                }));
+            }
+        }
 
-            InParts = new ReactiveList<ResourcePartViewModel>(Effect.InResources.Select(p => new ResourcePartViewModel()
+        public RelayCommand RemoveOutResourcePartCommand
+        {
+            get
             {
-                RuleSetViewModel = RuleSetViewModel,
-                ResourcePart = p
-            }))
-            {
-                ChangeTrackingEnabled = true
-            };
-            OutParts = new ReactiveList<ResourcePartViewModel>(Effect.OutResources.Select(p => new ResourcePartViewModel()
-            {
-                RuleSetViewModel = RuleSetViewModel,
-                ResourcePart = p
-            }))
-            {
-                ChangeTrackingEnabled = true
-            };
+                return removeOutResourcePartCommand ?? (removeOutResourcePartCommand = new RelayCommand(() =>
+                {
+                    OutParts.Remove(SelectedOutPart);
+                }));
+            }
+        }
 
-            beforeInPartAdded = InParts.BeforeItemsAdded.Subscribe(p => Effect.InResources.Add(p.ResourcePart));
-            beforeInPartRemoved = InParts.BeforeItemsRemoved.Subscribe(p => Effect.InResources.Remove(p.ResourcePart));
-            beforeOutPartAdded = OutParts.BeforeItemsAdded.Subscribe(p => Effect.OutResources.Add(p.ResourcePart));
-            beforeOutPartRemoved = OutParts.BeforeItemsRemoved.Subscribe(p => Effect.OutResources.Remove(p.ResourcePart));
+        public ResourcePartViewModel SelectedInPart
+        {
+            get
+            {
+                return selectedInPart;
+            }
+            set
+            {
+                RaiseSetIfChanged(ref selectedInPart, value);
+            }
+        }
+
+        public ResourcePartViewModel SelectedOutPart
+        {
+            get
+            {
+                return selectedOutPart;
+            }
+            set
+            {
+                RaiseSetIfChanged(ref selectedOutPart, value);
+            }
+        }
+        
+        protected override void OnInitialize()
+        {
+            base.OnInitialize();
+
+            InParts = new ReactiveList<ResourcePartViewModel>() { ChangeTrackingEnabled = true };
+            inPartsListInitializer = InParts.BeforeItemsAdded.Subscribe(c => c.Initialize());
+            inPartsListPostInitializer = InParts.ItemsAdded.Subscribe(c => c.PostInitialize());
+            inPartsListPostDisposer = InParts.BeforeItemsRemoved.Subscribe(c => c.Dispose());
+
+            OutParts = new ReactiveList<ResourcePartViewModel>() { ChangeTrackingEnabled = true };
+            outPartsListInitializer = OutParts.BeforeItemsAdded.Subscribe(c => c.Initialize());
+            outPartsListPostInitializer = OutParts.ItemsAdded.Subscribe(c => c.PostInitialize());
+            outPartsListPostDisposer = OutParts.BeforeItemsRemoved.Subscribe(c => c.Dispose());
+        }
+
+        protected override void OnPostInitialize()
+        {
+            base.OnPostInitialize();
+
+            foreach (var item in Effect.InResources)
+            {
+                InParts.Add(RuleSetViewModel.Create<ResourcePartViewModel>(v =>
+                {
+                    v.ResourcePart = item;
+                }));
+            }
+            inPartsListConstructor = InParts.BeforeItemsAdded.Subscribe(c => c.Construct());
+            inPartsAdded = InParts.BeforeItemsAdded.Subscribe(c => Effect.InResources.Add(c.ResourcePart));
+            inPartsRemoved = InParts.ItemsRemoved.Subscribe(c => Effect.InResources.Remove(c.ResourcePart));
+
+            foreach (var item in Effect.OutResources)
+            {
+                OutParts.Add(RuleSetViewModel.Create<ResourcePartViewModel>(v =>
+                {
+                    v.ResourcePart = item;
+                }));
+            }
+            outPartsListConstructor = OutParts.BeforeItemsAdded.Subscribe(c => c.Construct());
+            outPartsAdded = OutParts.BeforeItemsAdded.Subscribe(c => Effect.OutResources.Add(c.ResourcePart));
+            outPartsRemoved = OutParts.ItemsRemoved.Subscribe(c => Effect.OutResources.Remove(c.ResourcePart));
         }
     }
 }
