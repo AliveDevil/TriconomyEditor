@@ -9,7 +9,9 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels.ElementViewModels
 {
     public class BuildingViewModel : ElementViewModel<Building>
     {
+        private RelayCommand addEventCommand;
         private RelayCommand addUpgradeCommand;
+        private RelayCommand<EventViewModel> editEventCommand;
         private RelayCommand<UpgradeViewModel> editUpgradeCommand;
         private IDisposable eventAdded;
         private IDisposable eventListConstructor;
@@ -18,7 +20,9 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels.ElementViewModels
         private IDisposable eventListPostInitializer;
         private IDisposable eventRemoved;
         private ReactiveList<EventViewModel> events;
+        private RelayCommand removeEventCommand;
         private RelayCommand removeUpgradeCommand;
+        private EventViewModel selectedEvent;
         private UpgradeViewModel selectedUpgrade;
         private IDisposable upgradeAdded;
         private ReactiveList<UpgradeViewModel> upgradeList;
@@ -28,6 +32,20 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels.ElementViewModels
         private IDisposable upgradeListPostInitializer;
         private IDisposable upgradeRemoved;
         private ReactiveProperty<int> variantsProperty;
+
+        public RelayCommand AddEventCommand
+        {
+            get
+            {
+                return addEventCommand ?? (addEventCommand = new RelayCommand(() =>
+                {
+                    Events.Add(ViewStack.Push(RuleSetViewModel.Create<EventViewModel>(e =>
+                    {
+                        e.Event = new Event();
+                    })));
+                }));
+            }
+        }
 
         public RelayCommand AddUpgradeCommand
         {
@@ -39,6 +57,17 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels.ElementViewModels
                     {
                         v.Upgrade = new Upgrade() { Level = 0 };
                     })));
+                }));
+            }
+        }
+
+        public RelayCommand<EventViewModel> EditEventCommand
+        {
+            get
+            {
+                return editEventCommand ?? (editEventCommand = new RelayCommand<EventViewModel>(@event =>
+                {
+                    ViewStack.Push(SelectedEvent = @event);
                 }));
             }
         }
@@ -66,6 +95,17 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels.ElementViewModels
             }
         }
 
+        public RelayCommand RemoveEventCommand
+        {
+            get
+            {
+                return removeEventCommand ?? (removeEventCommand = new RelayCommand(() =>
+                {
+                    Events.Remove(SelectedEvent);
+                }));
+            }
+        }
+
         public RelayCommand RemoveUpgradeCommand
         {
             get
@@ -74,6 +114,18 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels.ElementViewModels
                 {
                     UpgradeList.Remove(SelectedUpgrade);
                 }));
+            }
+        }
+
+        public EventViewModel SelectedEvent
+        {
+            get
+            {
+                return selectedEvent;
+            }
+            set
+            {
+                RaiseSetIfChanged(ref selectedEvent, value);
             }
         }
 

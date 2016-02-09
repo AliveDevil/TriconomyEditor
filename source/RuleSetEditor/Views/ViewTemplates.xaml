@@ -12,6 +12,7 @@
 	<ResourceDictionary.MergedDictionaries>
 		<ResourceDictionary Source="EffectViews/EffectViewTemplates.xaml" />
 		<ResourceDictionary Source="ConditionViews/ConditionViewTemplates.xaml" />
+		<ResourceDictionary Source="EventViews/EventViewTemplates.xaml" />
 		<ResourceDictionary Source="RuleSetViews/RuleSetViewTemplates.xaml" />
 	</ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>

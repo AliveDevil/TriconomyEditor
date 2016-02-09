@@ -6,6 +6,7 @@
 			 xmlns:b="clr-namespace:RuleSetEditor.Behaviors"
 			 xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
 			 xmlns:tk="http://schemas.xceed.com/wpf/xaml/toolkit"
+			 xmlns:cvm="clr-namespace:RuleSetEditor.ViewModels.ConditionViewModels"
 			 xmlns:vm="clr-namespace:RuleSetEditor.ViewModels.RuleSetViewModels.ElementViewModels"
 			 xmlns:effects="clr-namespace:RuleSet.Effects;assembly=RuleSet"
 			 xmlns:local="clr-namespace:RuleSetEditor.Views.RuleSetViews.BuildingViews"
@@ -65,8 +66,8 @@
 					</Grid.RowDefinitions>
 
 					<Label Content="Events" />
-					<ListView ItemsSource="{Binding UpgradeList}"
-							  SelectedItem="{Binding SelectedUpgrade}"
+					<ListView ItemsSource="{Binding Events}"
+							  SelectedItem="{Binding SelectedEvent}"
 							  IsSynchronizedWithCurrentItem="True"
 							  HorizontalContentAlignment="Stretch"
 							  Grid.Column="1"
@@ -82,11 +83,10 @@
 										<ColumnDefinition Width="Auto"
 														  SharedSizeGroup="EditButtonField" />
 									</Grid.ColumnDefinitions>
-									<Label Content="{Binding Level.Value}"
-										   ContentStringFormat="Upgrade Level {0}"
+									<Label Content="Event"
 										   Grid.Column="0" />
 									<Button Content="Edit"
-											Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=ListView}, Path=DataContext.EditUpgradeCommand}"
+											Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=ListView}, Path=DataContext.EditEventCommand}"
 											CommandParameter="{Binding}"
 											Grid.Column="1" />
 								</Grid>
@@ -94,15 +94,15 @@
 						</ListView.ItemTemplate>
 					</ListView>
 					<Button Content="Add"
-							Command="{Binding AddUpgradeCommand}"
+							Command="{Binding AddEventCommand}"
 							Grid.Row="1"
 							Grid.Column="2" />
 					<Button Content="Remove"
-							Command="{Binding RemoveUpgradeCommand}"
+							Command="{Binding RemoveEventCommand}"
 							Grid.Row="1"
 							Grid.Column="3" />
 				</Grid>
-				
+
 				<Grid>
 					<Grid.ColumnDefinitions>
 						<ColumnDefinition Width="Auto"
