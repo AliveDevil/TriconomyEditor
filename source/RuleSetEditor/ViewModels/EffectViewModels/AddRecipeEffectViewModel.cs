@@ -11,10 +11,6 @@ namespace RuleSetEditor.ViewModels.EffectViewModels
     {
         private RelayCommand addInResourcePartCommand;
         private RelayCommand addOutResourcePartCommand;
-        private IDisposable beforeInPartAdded;
-        private IDisposable beforeInPartRemoved;
-        private IDisposable beforeOutPartAdded;
-        private IDisposable beforeOutPartRemoved;
         private RelayCommand<ResourcePartViewModel> editResourcePartCommand;
         private ReactiveList<ResourcePartViewModel> inParts;
         private IDisposable inPartsAdded;

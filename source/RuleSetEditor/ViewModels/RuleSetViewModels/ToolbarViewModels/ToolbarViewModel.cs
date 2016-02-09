@@ -7,8 +7,6 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels.ToolbarViewModels
 {
     public class ToolbarViewModel : RuleSetViewModelBase
     {
-        private IDisposable itemAddedSubscription;
-        private IDisposable itemsRemovedSubscription;
         private ReactiveProperty<string> nameProperty;
         private ToolbarItemViewModel selectedToolbarItem;
         private Toolbar toolbar;

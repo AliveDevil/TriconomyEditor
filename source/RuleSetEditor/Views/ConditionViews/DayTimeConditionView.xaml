@@ -10,6 +10,33 @@
 			 d:DesignHeight="300"
 			 d:DesignWidth="300">
 	<Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="*" />
+			<RowDefinition Height="Auto" />
+		</Grid.RowDefinitions>
 
+		<Label Content="Day Time Condition"
+			   HorizontalContentAlignment="Center"
+			   FontWeight="Light"
+			   FontSize="18" />
+
+		<ScrollViewer VerticalScrollBarVisibility="Auto"
+					  Grid.Row="1">
+			<StackPanel Grid.IsSharedSizeScope="True">
+				<Grid>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="Auto"
+										  SharedSizeGroup="LabelFieldGroup" />
+						<ColumnDefinition Width="*" />
+					</Grid.ColumnDefinitions>
+				</Grid>
+			</StackPanel>
+		</ScrollViewer>
+
+		<Button Content="Back"
+				Command="{Binding CloseCommand}"
+				HorizontalAlignment="Left"
+				Grid.Row="2" />
 	</Grid>
 </UserControl>

@@ -23,6 +23,7 @@ namespace RuleSetEditor.ViewModels.ConditionViewModels
         protected override void OnInitialize()
         {
             base.OnInitialize();
+
             DateTimeProperty = ReactiveProperty.FromObject(Condition, c => c.DateTime);
         }
     }

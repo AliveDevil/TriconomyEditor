@@ -11,10 +11,6 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels.ElementViewModels
     {
         private RelayCommand addCostCommand;
         private RelayCommand<Type> addEffectCommand;
-        private IDisposable beforeCostAdded;
-        private IDisposable beforeCostRemoved;
-        private IDisposable beforeEffectAdded;
-        private IDisposable beforeEffectRemoved;
         private IDisposable costAdded;
         private IDisposable costListConstructor;
         private IDisposable costListInitializer;

@@ -5,7 +5,28 @@
 	<DataTemplate DataType="{x:Type vm:DateTimeConditionViewModel}">
 		<local:DateTimeConditionView />
 	</DataTemplate>
+	<DataTemplate DataType="{x:Type vm:DayTimeConditionViewModel}">
+		<local:DayTimeConditionView />
+	</DataTemplate>
+	<DataTemplate DataType="{x:Type vm:ElementNearByConditionViewModel}">
+		<local:ElementNearByConditionView />
+	</DataTemplate>
+	<DataTemplate DataType="{x:Type vm:ExistingBuildingConditionViewModel}">
+		<local:ExistingBuildingConditionView />
+	</DataTemplate>
+	<DataTemplate DataType="{x:Type vm:LevelConditionViewModel}">
+		<local:LevelConditionView />
+	</DataTemplate>
 	<DataTemplate DataType="{x:Type vm:ResearchConditionViewModel}">
 		<local:ResearchConditionView />
+	</DataTemplate>
+	<DataTemplate DataType="{x:Type vm:TraverseConditionViewModel}">
+		<local:TraverseConditionView />
+	</DataTemplate>
+	<DataTemplate DataType="{x:Type vm:TriggerConditionViewModel}">
+		<local:TriggerConditionView />
+	</DataTemplate>
+	<DataTemplate DataType="{x:Type vm:WorkingConditionViewModel}">
+		<local:WorkingConditionView />
 	</DataTemplate>
 </ResourceDictionary>

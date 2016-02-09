@@ -3,6 +3,8 @@
 			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+			 xmlns:b="clr-namespace:RuleSetEditor.Behaviors"
+			 xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
 			 xmlns:tk="http://schemas.xceed.com/wpf/xaml/toolkit"
 			 xmlns:vm="clr-namespace:RuleSetEditor.ViewModels.RuleSetViewModels.ElementViewModels"
 			 xmlns:evm="clr-namespace:RuleSetEditor.ViewModels.EffectViewModels"
@@ -58,6 +60,9 @@
 							  HorizontalContentAlignment="Stretch"
 							  Grid.Column="1"
 							  Grid.ColumnSpan="3">
+						<i:Interaction.Behaviors>
+							<b:IgnoreMouseWheelBehavior />
+						</i:Interaction.Behaviors>
 						<ListView.ItemTemplate>
 							<DataTemplate>
 								<Grid>
@@ -115,6 +120,9 @@
 							  HorizontalContentAlignment="Stretch"
 							  Grid.Column="1"
 							  Grid.ColumnSpan="3">
+						<i:Interaction.Behaviors>
+							<b:IgnoreMouseWheelBehavior />
+						</i:Interaction.Behaviors>
 						<ListView.ItemTemplate>
 							<DataTemplate>
 								<Grid>

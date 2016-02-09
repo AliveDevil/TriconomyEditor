@@ -12,10 +12,6 @@ namespace RuleSetEditor.ViewModels.RuleSetViewModels.ResearchViewModels
     {
         private RelayCommand<Type> addConditionCommand;
         private RelayCommand addCostCommand;
-        private IDisposable beforeConditionAdded;
-        private IDisposable beforeConditionRemoved;
-        private IDisposable beforeCostAdded;
-        private IDisposable beforeCostRemoved;
         private IDisposable conditionAdded;
         private IDisposable conditionListConstructor;
         private IDisposable conditionListInitializer;
