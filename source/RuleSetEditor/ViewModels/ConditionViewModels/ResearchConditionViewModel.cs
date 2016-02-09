@@ -4,7 +4,7 @@ using ReactiveUI;
 using RuleSet.Conditions;
 using RuleSetEditor.ViewModels.RuleSetViewModels.ResearchViewModels;
 
-namespace RuleSetEditor.ViewModels.RuleSetViewModels.ConditionViewModels
+namespace RuleSetEditor.ViewModels.ConditionViewModels
 {
     public class ResearchConditionViewModel : ConditionViewModel<ResearchCondition>
     {

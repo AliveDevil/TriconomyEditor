@@ -1,8 +1,10 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 					xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-					xmlns:vm="clr-namespace:RuleSetEditor.ViewModels.RuleSetViewModels.ConditionViewModels"
-					xmlns:evm="clr-namespace:RuleSetEditor.ViewModels.RuleSetViewModels.ConditionViewModels."
-					xmlns:local="clr-namespace:RuleSetEditor.Views.RuleSetViews.ConditionViews">
+					xmlns:vm="clr-namespace:RuleSetEditor.ViewModels.ConditionViewModels"
+					xmlns:local="clr-namespace:RuleSetEditor.Views.ConditionViews">
+	<DataTemplate DataType="{x:Type vm:DateTimeConditionViewModel}">
+		<local:DateTimeConditionView />
+	</DataTemplate>
 	<DataTemplate DataType="{x:Type vm:ResearchConditionViewModel}">
 		<local:ResearchConditionView />
 	</DataTemplate>

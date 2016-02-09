@@ -3,7 +3,7 @@ using Reactive.Bindings;
 using ReactiveUI;
 using RuleSet;
 using RuleSet.Elements;
-using RuleSetEditor.ViewModels.RuleSetViewModels.ConditionViewModels;
+using RuleSetEditor.ViewModels.ConditionViewModels;
 using RuleSetEditor.ViewModels.RuleSetViewModels.ElementViewModels;
 
 namespace RuleSetEditor.ViewModels.RuleSetViewModels.ResearchViewModels

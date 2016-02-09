@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace RuleSetEditor.Views.RuleSetViews.ConditionViews
+namespace RuleSetEditor.Views.ConditionViews
 {
     /// <summary>
-    /// Interaktionslogik für ResearchConditionView.xaml
+    /// Interaktionslogik für DayTimeConditionView.xaml
     /// </summary>
-    public partial class ResearchConditionView : UserControl
+    public partial class DayTimeConditionView : UserControl
     {
-        public ResearchConditionView()
+        public DayTimeConditionView()
         {
             InitializeComponent();
         }

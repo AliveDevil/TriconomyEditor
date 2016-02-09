@@ -1,6 +1,6 @@
 ﻿using RuleSet.Conditions;
 
-namespace RuleSetEditor.ViewModels.RuleSetViewModels.ConditionViewModels
+namespace RuleSetEditor.ViewModels.ConditionViewModels
 {
     public class ElementNearByConditionViewModel : ConditionViewModel<ElementNearByCondition>
     {

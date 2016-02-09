@@ -146,10 +146,16 @@
     <Compile Include="ViewModels\RelayCommand`1.cs" />
     <Compile Include="ViewModels\RuleSetViewModel.cs" />
     <Compile Include="ViewModels\RuleSetViewModels\BuildingListViewModel.cs" />
-    <Compile Include="ViewModels\RuleSetViewModels\ConditionViewModels\ConditionViewModel.cs" />
-    <Compile Include="ViewModels\RuleSetViewModels\ConditionViewModels\ElementNearByConditionViewModel.cs" />
-    <Compile Include="ViewModels\RuleSetViewModels\ConditionViewModels\ExistingBuildingConditionViewModel.cs" />
-    <Compile Include="ViewModels\RuleSetViewModels\ConditionViewModels\ResearchConditionViewModel.cs" />
+    <Compile Include="ViewModels\ConditionViewModels\ConditionViewModel.cs" />
+    <Compile Include="ViewModels\ConditionViewModels\DateTimeConditionViewModel.cs" />
+    <Compile Include="ViewModels\ConditionViewModels\DayTimeConditionViewModel.cs" />
+    <Compile Include="ViewModels\ConditionViewModels\ElementNearByConditionViewModel.cs" />
+    <Compile Include="ViewModels\ConditionViewModels\ExistingBuildingConditionViewModel.cs" />
+    <Compile Include="ViewModels\ConditionViewModels\LevelConditionViewModel.cs" />
+    <Compile Include="ViewModels\ConditionViewModels\ResearchConditionViewModel.cs" />
+    <Compile Include="ViewModels\ConditionViewModels\TraverseConditionViewModel.cs" />
+    <Compile Include="ViewModels\ConditionViewModels\TriggerConditionViewModel.cs" />
+    <Compile Include="ViewModels\ConditionViewModels\WorkingConditionViewModel.cs" />
     <Compile Include="ViewModels\RuleSetViewModels\ElementViewModels\BuildingViewModel.cs" />
     <Compile Include="ViewModels\RuleSetViewModels\ElementViewModels\ElementViewModel.cs" />
     <Compile Include="ViewModels\RuleSetViewModels\ElementViewModels\JobViewModel.cs" />
@@ -178,6 +184,30 @@
     <Compile Include="ViewModels\RuleSetViewModels\ToolbarViewModels\ToolbarViewModel.cs" />
     <Compile Include="ViewModels\RuleSetViewModels\WorldResourceListViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
+    <Compile Include="Views\ConditionViews\DateTimeConditionView.xaml.cs">
+      <DependentUpon>DateTimeConditionView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ConditionViews\DayTimeConditionView.xaml.cs">
+      <DependentUpon>DayTimeConditionView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ConditionViews\ElementNearByConditionView.xaml.cs">
+      <DependentUpon>ElementNearByConditionView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ConditionViews\ExistingBuildingConditionView.xaml.cs">
+      <DependentUpon>ExistingBuildingConditionView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ConditionViews\LevelConditionView.xaml.cs">
+      <DependentUpon>LevelConditionView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ConditionViews\TraverseConditionView.xaml.cs">
+      <DependentUpon>TraverseConditionView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ConditionViews\TriggerConditionView.xaml.cs">
+      <DependentUpon>TriggerConditionView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ConditionViews\WorkingConditionView.xaml.cs">
+      <DependentUpon>WorkingConditionView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\EffectViews\AddRecipeEffectView.xaml.cs">
       <DependentUpon>AddRecipeEffectView.xaml</DependentUpon>
     </Compile>
@@ -229,7 +259,7 @@
     <Compile Include="Views\RuleSetViews\BuildingViews\UpgradeView.xaml.cs">
       <DependentUpon>UpgradeView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\RuleSetViews\ConditionViews\ResearchConditionView.xaml.cs">
+    <Compile Include="Views\ConditionViews\ResearchConditionView.xaml.cs">
       <DependentUpon>ResearchConditionView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\RuleSetViews\JobListView.xaml.cs">
@@ -314,6 +344,38 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Views\ConditionViews\DateTimeConditionView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ConditionViews\DayTimeConditionView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ConditionViews\ElementNearByConditionView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ConditionViews\ExistingBuildingConditionView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ConditionViews\LevelConditionView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ConditionViews\TraverseConditionView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ConditionViews\TriggerConditionView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ConditionViews\WorkingConditionView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\EffectViews\AddRecipeEffectView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -398,11 +460,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\RuleSetViews\ConditionViews\ResearchConditionView.xaml">
+    <Page Include="Views\ConditionViews\ResearchConditionView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\RuleSetViews\ConditionViews\ConditionViewTemplates.xaml">
+    <Page Include="Views\ConditionViews\ConditionViewTemplates.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
