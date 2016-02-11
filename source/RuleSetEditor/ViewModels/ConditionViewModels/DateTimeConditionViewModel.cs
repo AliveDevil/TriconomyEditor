@@ -8,7 +8,7 @@ namespace RuleSetEditor.ViewModels.ConditionViewModels
     {
         private ReactiveProperty<DateTime> dateTimeProperty;
 
-        public ReactiveProperty<DateTime> DateTimeProperty
+        public ReactiveProperty<DateTime> DateTime
         {
             get
             {
@@ -24,7 +24,7 @@ namespace RuleSetEditor.ViewModels.ConditionViewModels
         {
             base.OnInitialize();
 
-            DateTimeProperty = ReactiveProperty.FromObject(Condition, c => c.DateTime);
+            DateTime = ReactiveProperty.FromObject(Condition, c => c.DateTime);
         }
     }
 }

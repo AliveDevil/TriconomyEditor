@@ -38,6 +38,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\Versions\RuleSetV3.dll</HintPath>
     </Reference>
+    <Reference Include="RuleSetV4, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\Versions\RuleSetV4.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Serialization" />
@@ -85,6 +89,7 @@
     <Compile Include="EventActions\TriggerRandomAnimationEventAction.cs" />
     <Compile Include="EventActions\TriggerRandomSoundEventAction.cs" />
     <Compile Include="EventFrequency.cs" />
+    <Compile Include="NamedReference.cs" />
     <Compile Include="Research.cs" />
     <Compile Include="Elements\ResourcePart.cs" />
     <Compile Include="Elements\ResourceGroup.cs" />
@@ -105,6 +110,7 @@
     <Compile Include="Versions\V1Serializer.cs" />
     <Compile Include="Versions\V2Serializer.cs" />
     <Compile Include="Versions\V3Serializer.cs" />
+    <Compile Include="Versions\V4Serializer.cs" />
     <Compile Include="Versions\VersionSelector.cs" />
     <Compile Include="Versions\VersionSerializer.cs" />
   </ItemGroup>

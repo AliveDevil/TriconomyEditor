@@ -7,9 +7,9 @@ namespace RuleSet.EventActions
     public class TriggerRandomAnimationEventAction : EventAction
     {
         [ProtoMember(1, OverwriteList = false)]
-        public List<string> Sources
+        public List<NamedReference> Sources
         {
             get;
-        } = new List<string>();
+        } = new List<NamedReference>();
     }
 }

@@ -9,9 +9,19 @@ namespace RuleSetEditor.ViewModels.EventViewModels
     public class EventViewModel : RuleSetViewModelBase
     {
         private Event @event;
+        private RelayCommand<Type> addEventActionCommand;
         private RelayCommand<Type> addResetCommand;
         private RelayCommand<Type> addSetCommand;
         private RelayCommand<ConditionViewModel> editCommand;
+        private RelayCommand<EventActionViewModel> editEventActionCommand;
+        private IDisposable eventActionAdded;
+        private IDisposable eventActionListConstructor;
+        private IDisposable eventActionListInitializer;
+        private IDisposable eventActionListPostDisposer;
+        private IDisposable eventActionListPostInitializer;
+        private IDisposable eventActionRemoved;
+        private ReactiveList<EventActionViewModel> eventActions;
+        private RelayCommand removeEventActionCommand;
         private RelayCommand removeResetCommand;
         private RelayCommand removeSetCommand;
         private ReactiveList<ConditionViewModel> reset;
@@ -21,6 +31,7 @@ namespace RuleSetEditor.ViewModels.EventViewModels
         private IDisposable resetListPostDisposer;
         private IDisposable resetListPostInitializer;
         private IDisposable resetRemoved;
+        private EventActionViewModel selectedEventAction;
         private ConditionViewModel selectedReset;
         private ConditionViewModel selectedSet;
         private ReactiveList<ConditionViewModel> set;
@@ -31,13 +42,24 @@ namespace RuleSetEditor.ViewModels.EventViewModels
         private IDisposable setListPostInitializer;
         private IDisposable setRemoved;
 
+        public RelayCommand<Type> AddEventActionCommand
+        {
+            get
+            {
+                return addEventActionCommand ?? (addEventActionCommand = new RelayCommand<Type>(t =>
+                {
+                    AddItem(EventActions, EventActionViewModel.Resolve(New<EventAction>(t), RuleSetViewModel));
+                }));
+            }
+        }
+
         public RelayCommand<Type> AddResetCommand
         {
             get
             {
                 return addResetCommand ?? (addResetCommand = new RelayCommand<Type>(t =>
                 {
-                    AddCondition(Reset, ConditionViewModel.FindViewModel(New<Condition>(t), RuleSetViewModel));
+                    AddItem(Reset, ConditionViewModel.FindViewModel(New<Condition>(t), RuleSetViewModel));
                 }));
             }
         }
@@ -48,7 +70,7 @@ namespace RuleSetEditor.ViewModels.EventViewModels
             {
                 return addSetCommand ?? (addSetCommand = new RelayCommand<Type>(t =>
                 {
-                    AddCondition(Set, ConditionViewModel.FindViewModel(New<Condition>(t), RuleSetViewModel));
+                    AddItem(Set, ConditionViewModel.FindViewModel(New<Condition>(t), RuleSetViewModel));
                 }));
             }
         }
@@ -64,6 +86,17 @@ namespace RuleSetEditor.ViewModels.EventViewModels
             }
         }
 
+        public RelayCommand<EventActionViewModel> EditEventActionCommand
+        {
+            get
+            {
+                return editEventActionCommand ?? (editEventActionCommand = new RelayCommand<EventActionViewModel>(viewModel =>
+                {
+                    ViewStack.Push(viewModel);
+                }));
+            }
+        }
+
         public Event Event
         {
             get
@@ -73,6 +106,29 @@ namespace RuleSetEditor.ViewModels.EventViewModels
             set
             {
                 RaiseSetIfChanged(ref @event, value);
+            }
+        }
+
+        public ReactiveList<EventActionViewModel> EventActions
+        {
+            get
+            {
+                return eventActions;
+            }
+            private set
+            {
+                RaiseSetIfChanged(ref eventActions, value);
+            }
+        }
+
+        public RelayCommand RemoveEventActionCommand
+        {
+            get
+            {
+                return removeEventActionCommand ?? (removeEventActionCommand = new RelayCommand(() =>
+                {
+                    EventActions.Remove(SelectedEventAction);
+                }));
             }
         }
 
@@ -107,6 +163,18 @@ namespace RuleSetEditor.ViewModels.EventViewModels
             private set
             {
                 RaiseSetIfChanged(ref reset, value);
+            }
+        }
+
+        public EventActionViewModel SelectedEventAction
+        {
+            get
+            {
+                return selectedEventAction;
+            }
+            set
+            {
+                RaiseSetIfChanged(ref selectedEventAction, value);
             }
         }
 
@@ -152,6 +220,7 @@ namespace RuleSetEditor.ViewModels.EventViewModels
 
             Set = new ReactiveList<ConditionViewModel>() { ChangeTrackingEnabled = true };
             Reset = new ReactiveList<ConditionViewModel>() { ChangeTrackingEnabled = true };
+            EventActions = new ReactiveList<EventActionViewModel>() { ChangeTrackingEnabled = true };
 
             setListInitializer = Set.BeforeItemsAdded.Subscribe(u => u.Initialize());
             setListPostInitializer = Set.ItemsAdded.Subscribe(u => u.PostInitialize());
@@ -159,6 +228,9 @@ namespace RuleSetEditor.ViewModels.EventViewModels
             resetListInitializer = Reset.BeforeItemsAdded.Subscribe(u => u.Initialize());
             resetListPostInitializer = Reset.ItemsAdded.Subscribe(u => u.PostInitialize());
             resetListPostDisposer = Reset.BeforeItemsRemoved.Subscribe(u => u.Dispose());
+            eventActionListInitializer = EventActions.BeforeItemsAdded.Subscribe(u => u.Initialize());
+            eventActionListPostInitializer = EventActions.ItemsAdded.Subscribe(u => u.PostInitialize());
+            eventActionListPostDisposer = EventActions.BeforeItemsRemoved.Subscribe(u => u.Dispose());
         }
 
         protected override void OnPostInitialize()
@@ -173,6 +245,10 @@ namespace RuleSetEditor.ViewModels.EventViewModels
             {
                 Reset.Add(ConditionViewModel.FindViewModel(item, RuleSetViewModel));
             }
+            foreach (var item in Event.Actions)
+            {
+                EventActions.Add(EventActionViewModel.Resolve(item, RuleSetViewModel));
+            }
 
             setListConstructor = Set.BeforeItemsAdded.Subscribe(u => u.Construct());
             setAdded = Set.BeforeItemsAdded.Subscribe(u => Event.Set.Add(u.Condition));
@@ -180,6 +256,9 @@ namespace RuleSetEditor.ViewModels.EventViewModels
             resetListConstructor = Reset.BeforeItemsAdded.Subscribe(u => u.Construct());
             resetAdded = Reset.BeforeItemsAdded.Subscribe(u => Event.Set.Add(u.Condition));
             resetRemoved = Reset.ItemsRemoved.Subscribe(u => Event.Set.Remove(u.Condition));
+            eventActionListConstructor = EventActions.BeforeItemsAdded.Subscribe(u => u.Construct());
+            eventActionAdded = EventActions.BeforeItemsAdded.Subscribe(u => Event.Actions.Add(u.EventAction));
+            eventActionRemoved = EventActions.ItemsRemoved.Subscribe(u => Event.Actions.Remove(u.EventAction));
         }
 
         private static T New<T>(Type type)
@@ -187,7 +266,7 @@ namespace RuleSetEditor.ViewModels.EventViewModels
             return (T)Activator.CreateInstance(type);
         }
 
-        private void AddCondition<T>(ICollection<T> collection, T element)
+        private void AddItem<T>(ICollection<T> collection, T element)
                     where T : ViewModelBase
         {
             collection.Add(ViewStack.Push(element));

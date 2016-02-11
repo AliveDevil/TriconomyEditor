@@ -5,14 +5,45 @@
 			 xmlns:b="clr-namespace:RuleSetEditor.Behaviors"
 			 xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
 			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+			 xmlns:eventactions="clr-namespace:RuleSet.EventActions;assembly=RuleSet"
 			 xmlns:conditions="clr-namespace:RuleSet.Conditions;assembly=RuleSet"
-			 xmlns:vm="clr-namespace:RuleSetEditor.ViewModels.ConditionViewModels"
+			 xmlns:eavm="clr-namespace:RuleSetEditor.ViewModels.EventViewModels.EventActionViewModels"
+			 xmlns:cvm="clr-namespace:RuleSetEditor.ViewModels.ConditionViewModels"
 			 xmlns:vm="clr-namespace:RuleSetEditor.ViewModels.EventViewModels"
 			 xmlns:local="clr-namespace:RuleSetEditor.Views.EventViews"
 			 mc:Ignorable="d"
 			 d:DataContext="{d:DesignInstance Type=vm:EventViewModel}"
 			 d:DesignHeight="300"
 			 d:DesignWidth="300">
+	<UserControl.Resources>
+		<DataTemplate DataType="{x:Type cvm:DateTimeConditionViewModel}">
+			<Label Content="Date Time Condition" />
+		</DataTemplate>
+		<DataTemplate DataType="{x:Type cvm:DayTimeConditionViewModel}">
+			<Label Content="Day Time Condition" />
+		</DataTemplate>
+		<DataTemplate DataType="{x:Type cvm:ElementNearByConditionViewModel}">
+			<Label Content="Element Near By Condition" />
+		</DataTemplate>
+		<DataTemplate DataType="{x:Type cvm:ExistingBuildingConditionViewModel}">
+			<Label Content="Existing Building Condition" />
+		</DataTemplate>
+		<DataTemplate DataType="{x:Type cvm:LevelConditionViewModel}">
+			<Label Content="Level Condition" />
+		</DataTemplate>
+		<DataTemplate DataType="{x:Type cvm:ResearchConditionViewModel}">
+			<Label Content="Research Condition" />
+		</DataTemplate>
+		<DataTemplate DataType="{x:Type cvm:TraverseConditionViewModel}">
+			<Label Content="Traversing Condition" />
+		</DataTemplate>
+		<DataTemplate DataType="{x:Type cvm:TriggerConditionViewModel}">
+			<Label Content="Trigger Condition" />
+		</DataTemplate>
+		<DataTemplate DataType="{x:Type cvm:WorkingConditionViewModel}">
+			<Label Content="Working Condition" />
+		</DataTemplate>
+	</UserControl.Resources>
 	<Grid>
 		<Grid.RowDefinitions>
 			<RowDefinition Height="Auto" />
@@ -51,6 +82,75 @@
 						<RowDefinition Height="Auto" />
 						<RowDefinition Height="Auto" />
 					</Grid.RowDefinitions>
+					<Label Content="Actions" />
+					<ListView ItemsSource="{Binding EventActions}"
+							  SelectedItem="{Binding SelectedEventAction}"
+							  IsSynchronizedWithCurrentItem="True"
+							  HorizontalContentAlignment="Stretch"
+							  Grid.Column="1"
+							  Grid.ColumnSpan="3">
+						<i:Interaction.Behaviors>
+							<b:IgnoreMouseWheelBehavior />
+						</i:Interaction.Behaviors>
+						<ListView.ItemTemplate>
+							<DataTemplate>
+								<Grid>
+									<Grid.ColumnDefinitions>
+										<ColumnDefinition Width="*" />
+										<ColumnDefinition Width="Auto"
+														  SharedSizeGroup="EditButtonField" />
+									</Grid.ColumnDefinitions>
+									<ContentPresenter Content="{Binding}"
+													  Grid.Column="0" />
+									<Button Content="Edit"
+											Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=ListView}, Path=DataContext.EditEventActionCommand}"
+											CommandParameter="{Binding}"
+											Grid.Column="1" />
+								</Grid>
+							</DataTemplate>
+						</ListView.ItemTemplate>
+					</ListView>
+
+					<Button Content="Add"
+							Click="Button_Click"
+							Grid.Row="1"
+							Grid.Column="2">
+						<Button.ContextMenu>
+							<ContextMenu Placement="Bottom"
+										 DataContext="{Binding RelativeSource={RelativeSource Self}, Path=PlacementTarget.DataContext}">
+								<MenuItem Header="Play Animation"
+										  Command="{Binding AddEventActionCommand}"
+										  CommandParameter="{x:Type eventactions:PlayAnimationEventAction}" />
+								<MenuItem Header="Play Sound"
+										  Command="{Binding AddEventActionCommand}"
+										  CommandParameter="{x:Type eventactions:PlaySoundEventAction}" />
+								<MenuItem Header="Trigger Random Animation"
+										  Command="{Binding AddEventActionCommand}"
+										  CommandParameter="{x:Type eventactions:TriggerRandomAnimationEventAction}" />
+								<MenuItem Header="Trigger Random Sound"
+										  Command="{Binding AddEventActionCommand}"
+										  CommandParameter="{x:Type eventactions:TriggerRandomSoundEventAction}" />
+							</ContextMenu>
+						</Button.ContextMenu>
+					</Button>
+					<Button Content="Remove"
+							Command="{Binding RemoveEventActionCommand}"
+							Grid.Row="1"
+							Grid.Column="3" />
+				</Grid>
+
+				<Grid>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="Auto"
+										  SharedSizeGroup="LabelFieldGroup" />
+						<ColumnDefinition Width="*" />
+						<ColumnDefinition Width="Auto" />
+						<ColumnDefinition Width="Auto" />
+					</Grid.ColumnDefinitions>
+					<Grid.RowDefinitions>
+						<RowDefinition Height="Auto" />
+						<RowDefinition Height="Auto" />
+					</Grid.RowDefinitions>
 					<Label Content="Setter" />
 					<ListView ItemsSource="{Binding Set}"
 							  SelectedItem="{Binding SelectedSet}"
@@ -61,26 +161,23 @@
 						<i:Interaction.Behaviors>
 							<b:IgnoreMouseWheelBehavior />
 						</i:Interaction.Behaviors>
-						<ListView.Resources>
-							<DataTemplate DataType="{x:Type }"
-						</ListView.Resources>
-								<ListView.ItemTemplate>
-									<DataTemplate>
-										<Grid>
-											<Grid.ColumnDefinitions>
-												<ColumnDefinition Width="*" />
-												<ColumnDefinition Width="Auto"
-																  SharedSizeGroup="EditButtonField" />
-											</Grid.ColumnDefinitions>
-											<Label Content="{Binding Condition}"
-												   Grid.Column="0" />
-											<Button Content="Edit"
-													Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=ListView}, Path=DataContext.EditEffectCommand}"
-													CommandParameter="{Binding}"
-													Grid.Column="1" />
-										</Grid>
-									</DataTemplate>
-								</ListView.ItemTemplate>
+						<ListView.ItemTemplate>
+							<DataTemplate>
+								<Grid>
+									<Grid.ColumnDefinitions>
+										<ColumnDefinition Width="*" />
+										<ColumnDefinition Width="Auto"
+														  SharedSizeGroup="EditButtonField" />
+									</Grid.ColumnDefinitions>
+									<ContentPresenter Content="{Binding}"
+													  Grid.Column="0" />
+									<Button Content="Edit"
+											Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=ListView}, Path=DataContext.EditCommand}"
+											CommandParameter="{Binding}"
+											Grid.Column="1" />
+								</Grid>
+							</DataTemplate>
+						</ListView.ItemTemplate>
 					</ListView>
 
 					<Button Content="Add"
@@ -159,7 +256,7 @@
 									<Label Content="{Binding}"
 										   Grid.Column="0" />
 									<Button Content="Edit"
-											Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=ListView}, Path=DataContext.EditEffectCommand}"
+											Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=ListView}, Path=DataContext.EditCommand}"
 											CommandParameter="{Binding}"
 											Grid.Column="1" />
 								</Grid>

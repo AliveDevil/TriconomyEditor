@@ -1,12 +1,12 @@
 ﻿using ProtoBuf;
 
-namespace RuleSet.EventActions
+namespace RuleSet
 {
     [ProtoContract(UseProtoMembersOnly = true)]
-    public class PlaySoundEventAction : EventAction
+    public class NamedReference
     {
         [ProtoMember(1)]
-        public NamedReference Source
+        public string Name
         {
             get; set;
         }

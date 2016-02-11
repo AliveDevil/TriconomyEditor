@@ -6,7 +6,7 @@ namespace RuleSet.EventActions
     public class PlayAnimationEventAction : EventAction
     {
         [ProtoMember(1)]
-        public string Animation
+        public NamedReference Animation
         {
             get; set;
         }

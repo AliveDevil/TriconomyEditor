@@ -126,6 +126,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Behaviors\IgnoreMouseWheelBehavior.cs" />
+    <Compile Include="Common\GenericValue.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="ViewModels\EffectViewModels\AddRecipeEffectViewModel.cs" />
@@ -143,8 +144,14 @@
     <Compile Include="ViewModels\EffectViewModels\StorageEffectViewModel.cs" />
     <Compile Include="ViewModels\EffectViewModels\UseResourceEffectViewModel.cs" />
     <Compile Include="ViewModels\EffectViewModels\WorkplaceEffectViewModel.cs" />
+    <Compile Include="ViewModels\EventViewModels\EventActionViewModel.cs" />
+    <Compile Include="ViewModels\EventViewModels\EventActionViewModels\PlayAnimationEventActionViewModel.cs" />
+    <Compile Include="ViewModels\EventViewModels\EventActionViewModels\PlaySoundEventActionViewModel.cs" />
+    <Compile Include="ViewModels\EventViewModels\EventActionViewModels\TriggerRandomSoundEventActionViewModel.cs" />
+    <Compile Include="ViewModels\EventViewModels\EventActionViewModels\TriggerRandomAnimationEventActionViewModel.cs" />
     <Compile Include="ViewModels\EventViewModels\EventViewModel.cs" />
     <Compile Include="ViewModels\LandingPageViewModel.cs" />
+    <Compile Include="ViewModels\NamedReferenceViewModel.cs" />
     <Compile Include="ViewModels\RelayCommand.cs" />
     <Compile Include="ViewModels\RelayCommand`1.cs" />
     <Compile Include="ViewModels\RuleSetViewModel.cs" />
