@@ -1,0 +1,17 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+					xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+					xmlns:vm="clr-namespace:RuleSetEditor.ViewModels.EventViewModels.EventActionViewModels"
+					xmlns:local="clr-namespace:RuleSetEditor.Views.EventViews.EventActionViews">
+	<DataTemplate DataType="{x:Type vm:PlayAnimationEventActionViewModel}">
+		<local:PlayAnimationEventActionView />
+	</DataTemplate>
+	<DataTemplate DataType="{x:Type vm:PlaySoundEventActionViewModel}">
+		<local:PlaySoundEventActionView />
+	</DataTemplate>
+	<DataTemplate DataType="{x:Type vm:TriggerRandomAnimationEventActionViewModel}">
+		<local:TriggerRandomAnimationEventActionView />
+	</DataTemplate>
+	<DataTemplate DataType="{x:Type vm:TriggerRandomSoundEventActionViewModel}">
+		<local:TriggerRandomSoundEventActionView />
+	</DataTemplate>
+</ResourceDictionary>

@@ -22,7 +22,19 @@ namespace RuleSetEditor.ViewModels.EventViewModels.EventActionViewModels
         protected override void OnInitialize()
         {
             base.OnInitialize();
-            Animation = new NamedReferenceViewModel() { RuleSetViewModel = RuleSetViewModel, ViewStack = ViewStack, NamedReference = EventAction.Animation ?? (EventAction.Animation = new RuleSet.NamedReference()) };
+            Animation = new NamedReferenceViewModel()
+            {
+                RuleSetViewModel = RuleSetViewModel,
+                ViewStack = ViewStack,
+                NamedReference = EventAction.Animation ?? (EventAction.Animation = new RuleSet.NamedReference())
+            };
+        }
+
+        protected override void OnPostInitialize()
+        {
+            base.OnPostInitialize();
+            Animation.Initialize();
+            Animation.PostInitialize();
         }
     }
 }

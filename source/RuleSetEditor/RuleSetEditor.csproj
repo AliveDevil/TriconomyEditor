@@ -260,6 +260,18 @@
     <Compile Include="Views\EffectViews\WorkplaceEffectView.xaml.cs">
       <DependentUpon>WorkplaceEffectView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\EventViews\EventActionViews\PlayAnimationEventActionView.xaml.cs">
+      <DependentUpon>PlayAnimationEventActionView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\EventViews\EventActionViews\PlaySoundEventActionView.xaml.cs">
+      <DependentUpon>PlaySoundEventActionView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\EventViews\EventActionViews\TriggerRandomAnimationEventActionView.xaml.cs">
+      <DependentUpon>TriggerRandomAnimationEventActionView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\EventViews\EventActionViews\TriggerRandomSoundEventActionView.xaml.cs">
+      <DependentUpon>TriggerRandomSoundEventActionView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\EventViews\EventView.xaml.cs">
       <DependentUpon>EventView.xaml</DependentUpon>
     </Compile>
@@ -446,6 +458,26 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\EffectViews\WorkplaceEffectView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\EventViews\EventActionViews\EventActionViewTemplates.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\EventViews\EventActionViews\PlayAnimationEventActionView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\EventViews\EventActionViews\PlaySoundEventActionView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\EventViews\EventActionViews\TriggerRandomAnimationEventActionView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\EventViews\EventActionViews\TriggerRandomSoundEventActionView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

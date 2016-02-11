@@ -21,7 +21,19 @@ namespace RuleSetEditor.ViewModels.EventViewModels.EventActionViewModels
         protected override void OnInitialize()
         {
             base.OnInitialize();
-            Source = new NamedReferenceViewModel() { RuleSetViewModel = RuleSetViewModel, ViewStack = ViewStack, NamedReference = EventAction.Source ?? (EventAction.Source = new RuleSet.NamedReference()) };
+            Source = new NamedReferenceViewModel()
+            {
+                RuleSetViewModel = RuleSetViewModel,
+                ViewStack = ViewStack,
+                NamedReference = EventAction.Source ?? (EventAction.Source = new RuleSet.NamedReference())
+            };
+        }
+
+        protected override void OnPostInitialize()
+        {
+            base.OnPostInitialize();
+            Source.Initialize();
+            Source.PostInitialize();
         }
     }
 }

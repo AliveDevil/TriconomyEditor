@@ -36,7 +36,7 @@ namespace RuleSetEditor.ViewModels.EventViewModels
             if (viewModel != null)
             {
                 viewModel.RuleSetViewModel = ruleSetViewModel;
-                viewModel.ViewStack = ruleSetViewModel.ViewStack;
+                viewModel.ViewStack = ruleSetViewModel;
                 viewModel.EventAction = eventAction;
             }
 

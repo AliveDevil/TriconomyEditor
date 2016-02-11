@@ -43,6 +43,19 @@
 		<DataTemplate DataType="{x:Type cvm:WorkingConditionViewModel}">
 			<Label Content="Working Condition" />
 		</DataTemplate>
+
+		<DataTemplate DataType="{x:Type eavm:PlayAnimationEventActionViewModel}">
+			<Label Content="Play Animation" />
+		</DataTemplate>
+		<DataTemplate DataType="{x:Type eavm:PlaySoundEventActionViewModel}">
+			<Label Content="Play Sound" />
+		</DataTemplate>
+		<DataTemplate DataType="{x:Type eavm:TriggerRandomAnimationEventActionViewModel}">
+			<Label Content="Trigger Random Animation" />
+		</DataTemplate>
+		<DataTemplate DataType="{x:Type eavm:TriggerRandomSoundEventActionViewModel}">
+			<Label Content="Trigger Random Sound" />
+		</DataTemplate>
 	</UserControl.Resources>
 	<Grid>
 		<Grid.RowDefinitions>

@@ -1,0 +1,59 @@
+﻿<UserControl x:Class="RuleSetEditor.Views.EventViews.EventActionViews.TriggerRandomSoundEventActionView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+			 xmlns:b="clr-namespace:RuleSetEditor.Behaviors"
+			 xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+			 xmlns:vm="clr-namespace:RuleSetEditor.ViewModels.EventViewModels.EventActionViewModels"
+			 xmlns:local="clr-namespace:RuleSetEditor.Views.EventViews.EventActionViews"
+			 mc:Ignorable="d"
+			 d:DataContext="{d:DesignInstance Type=vm:TriggerRandomSoundEventActionViewModel}"
+             d:DesignHeight="300" d:DesignWidth="300">
+    <Grid>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="Auto" />
+			<ColumnDefinition Width="*" />
+			<ColumnDefinition Width="Auto" />
+			<ColumnDefinition Width="Auto" />
+		</Grid.ColumnDefinitions>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="*" />
+			<RowDefinition Height="Auto" />
+		</Grid.RowDefinitions>
+
+		<Label Content="Trigger Random Sound Event"
+			   HorizontalContentAlignment="Center"
+			   FontWeight="Light"
+			   FontSize="18"
+			   Grid.ColumnSpan="4" />
+
+		<ListView ItemsSource="{Binding Sounds}"
+				  SelectedItem="{Binding SelectedSound}"
+				  IsSynchronizedWithCurrentItem="True"
+				  HorizontalContentAlignment="Stretch"
+				  Grid.Row="1"
+				  Grid.ColumnSpan="4">
+			<ListView.ItemTemplate>
+				<DataTemplate>
+					<TextBox Text="{Binding Name.Value}" />
+				</DataTemplate>
+			</ListView.ItemTemplate>
+		</ListView>
+
+		<Button Content="Add"
+				Command="{Binding AddReferenceCommand}"
+				Grid.Row="2"
+				Grid.Column="2" />
+		<Button Content="Remove"
+				Command="{Binding RemoveReferenceCommand}"
+				Grid.Row="2"
+				Grid.Column="3" />
+
+		<Button Content="Back"
+				Command="{Binding CloseCommand}"
+				HorizontalAlignment="Left"
+				Grid.Row="2" />
+	</Grid>
+</UserControl>

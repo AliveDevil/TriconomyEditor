@@ -5,4 +5,8 @@
 	<DataTemplate DataType="{x:Type vm:EventViewModel}">
 		<local:EventView />
 	</DataTemplate>
+
+	<ResourceDictionary.MergedDictionaries>
+		<ResourceDictionary Source="EventActionViews/EventActionViewTemplates.xaml" />
+	</ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>
