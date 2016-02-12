@@ -42,6 +42,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\Versions\RuleSetV4.dll</HintPath>
     </Reference>
+    <Reference Include="RuleSetV5, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\Versions\RuleSetV5.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Serialization" />
@@ -61,6 +65,7 @@
     <Compile Include="Conditions\TraverseCondition.cs" />
     <Compile Include="Conditions\TriggerCondition.cs" />
     <Compile Include="Conditions\WorkingCondition.cs" />
+    <Compile Include="DayTime.cs" />
     <Compile Include="Effects\AddRecipeEffect.cs" />
     <Compile Include="Effects\AssemblyPointEffect.cs" />
     <Compile Include="Effects\DeliverEffect.cs" />
@@ -111,6 +116,7 @@
     <Compile Include="Versions\V2Serializer.cs" />
     <Compile Include="Versions\V3Serializer.cs" />
     <Compile Include="Versions\V4Serializer.cs" />
+    <Compile Include="Versions\V5Serializer.cs" />
     <Compile Include="Versions\VersionSelector.cs" />
     <Compile Include="Versions\VersionSerializer.cs" />
   </ItemGroup>

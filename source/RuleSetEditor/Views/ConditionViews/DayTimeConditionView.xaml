@@ -30,6 +30,12 @@
 										  SharedSizeGroup="LabelFieldGroup" />
 						<ColumnDefinition Width="*" />
 					</Grid.ColumnDefinitions>
+					<Label Content="Day Time" />
+					<ComboBox ItemsSource="{x:Static vm:DayTimeConditionViewModel.Options}"
+							  DisplayMemberPath="Value"
+							  SelectedValuePath="Key"
+							  SelectedValue="{Binding DayTime.Value}"
+							  Grid.Column="1" />
 				</Grid>
 			</StackPanel>
 		</ScrollViewer>

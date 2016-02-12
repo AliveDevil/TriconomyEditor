@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Reactive.Bindings;
 using ReactiveUI;
 using RuleSet;
 using RuleSetEditor.ViewModels.ConditionViewModels;
@@ -8,6 +9,17 @@ namespace RuleSetEditor.ViewModels.EventViewModels
 {
     public class EventViewModel : RuleSetViewModelBase
     {
+        public static Dictionary<EventFrequency, string> Options
+        {
+            get;
+        } = new Dictionary<RuleSet.EventFrequency, string>()
+        {
+            { RuleSet.EventFrequency.Second, "Every Second" },
+            { RuleSet.EventFrequency.Minute, "Every Minute" },
+            { RuleSet.EventFrequency.Hour, "Every Hour" },
+            { RuleSet.EventFrequency.Day, "Every Day" }
+        };
+
         private Event @event;
         private RelayCommand<Type> addEventActionCommand;
         private RelayCommand<Type> addResetCommand;
@@ -132,6 +144,21 @@ namespace RuleSetEditor.ViewModels.EventViewModels
             }
         }
 
+
+        private ReactiveProperty<EventFrequency> eventFrequency;
+
+        public ReactiveProperty<EventFrequency> EventFrequency
+        {
+            get
+            {
+                return eventFrequency;
+            }
+            private set
+            {
+                RaiseSetIfChanged(ref eventFrequency, value);
+            }
+        }
+
         public RelayCommand RemoveResetCommand
         {
             get
@@ -217,6 +244,8 @@ namespace RuleSetEditor.ViewModels.EventViewModels
         protected override void OnInitialize()
         {
             base.OnInitialize();
+
+            EventFrequency = ReactiveProperty.FromObject(Event, e => e.Frequency);
 
             Set = new ReactiveList<ConditionViewModel>() { ChangeTrackingEnabled = true };
             Reset = new ReactiveList<ConditionViewModel>() { ChangeTrackingEnabled = true };

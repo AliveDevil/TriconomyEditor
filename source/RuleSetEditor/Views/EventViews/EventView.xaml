@@ -79,8 +79,12 @@
 						<ColumnDefinition Width="*" />
 					</Grid.ColumnDefinitions>
 
-					<Label Content="Frequency"
-						   Grid.Column="0" />
+					<Label Content="Frequency" />
+					<ComboBox ItemsSource="{x:Static vm:EventViewModel.Options}"
+							  DisplayMemberPath="Value"
+							  SelectedValuePath="Key"
+							  SelectedValue="{Binding EventFrequency.Value}"
+							  Grid.Column="1" />
 				</Grid>
 
 				<Grid>

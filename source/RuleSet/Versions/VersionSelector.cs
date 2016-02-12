@@ -37,6 +37,10 @@ namespace RuleSet.Versions
                     case 4:
                         serializer = new V4Serializer();
                         break;
+
+                    case 5:
+                        serializer = new V5Serializer();
+                        break;
                 }
                 LoadedSerializers[value] = serializer;
             }
@@ -45,7 +49,7 @@ namespace RuleSet.Versions
 
         public static void Save(RuleSet ruleSet, Stream stream)
         {
-            GetSerializer(4).Serialize(ruleSet, stream);
+            GetSerializer(5).Serialize(ruleSet, stream);
         }
     }
 }
